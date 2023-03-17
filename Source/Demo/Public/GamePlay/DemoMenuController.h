@@ -13,5 +13,9 @@ UCLASS()
 class DEMO_API ADemoMenuController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+	ADemoMenuController();
+protected:
+
+	virtual void BeginPlay() override;
 };

@@ -7,8 +7,22 @@ public class Demo : ModuleRules
 	public Demo(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+
+        PublicDependencyModuleNames.AddRange(new string[] {
+            "Core",
+            "CoreUObject",
+            "Engine",
+            "InputCore",
+            "Slate",                // Slate UI组件
+            "SlateCore",            // Slate UI组件
+            //"Json",
+            //"JsonUtilities",
+            //"UMG",
+            //"AIModule",
+            //"GameplayTasks",
+        });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

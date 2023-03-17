@@ -13,5 +13,9 @@ UCLASS()
 class DEMO_API ADemoMenuGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
 	
+	ADemoMenuGameMode();
+
+
 };

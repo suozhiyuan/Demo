@@ -13,5 +13,9 @@ UCLASS()
 class DEMO_API ADemoMenuHUD : public AHUD
 {
 	GENERATED_BODY()
-	
+
+	ADemoMenuHUD();
+
+	TSharedPtr<class SDemoMenuHUDWidget> MenuHUDWidget;
+
 };
