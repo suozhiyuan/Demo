@@ -32,11 +32,11 @@ struct DEMO_API FDemoMenuStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = MenuHUD)
 		FSlateBrush MenuHUDBackgroundBrush;					// FSlateBrush 笔刷
 
-	///*
-	//* 指定Menu的背景图片
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Menu)
-	//	FSlateBrush MenuBackgroundBrush;
+	/*
+	* 指定Menu的背景图片
+	*/
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateBrush MenuBackgroundBrush;
 
 	///*
 	//* Menu左图标的Brush
