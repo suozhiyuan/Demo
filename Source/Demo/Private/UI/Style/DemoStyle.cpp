@@ -2,17 +2,17 @@
 
 
 #include "UI/Style/DemoStyle.h"
-
 #include "Slate/SlateGameResources.h"
 #include "Styling/SlateStyleRegistry.h"
 
+TSharedPtr<FSlateStyleSet> DemoStyle::DemoStyleInstance = NULL;				// 如果是单例，变量不能放到构造函数
 
 void DemoStyle::Initialze()
 {
 	if (!DemoStyleInstance.IsValid()) 
 	{
 		DemoStyleInstance = Create();
-		FSlateStyleRegistry::RegisterSlateStyle(*DemoStyleInstance);
+		FSlateStyleRegistry::RegisterSlateStyle(*DemoStyleInstance);			// 注册进系统里边
 	}
 }
 
@@ -38,6 +38,6 @@ const ISlateStyle& DemoStyle::Get()
 TSharedRef<class FSlateStyleSet> DemoStyle::Create()
 {
 	TSharedRef<FSlateStyleSet> StyleRef = FSlateGameResources::New(DemoStyle::GetStyleSetName(), "/Game/UI/Style", "/Game/UI/Style");
-	StyleRef->Set("MenuItemFont", FSlateFontInfo("Roboto-Regular.ttf", 50));
+	//StyleRef->Set("MenuItemFont", FSlateFontInfo("Roboto-Regular.ttf", 50));
 	return StyleRef;
 }

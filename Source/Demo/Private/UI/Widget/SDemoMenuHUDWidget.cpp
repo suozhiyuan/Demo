@@ -3,19 +3,28 @@
 
 #include "UI/Widget/SDemoMenuHUDWidget.h"
 #include "SlateOptMacros.h"
+#include "Widgets/Images/SImage.h"
+#include "UI/Style/DemoStyle.h"
+#include "UI/Style/DemoMenuWidgetStyle.h"
+
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
+
 void SDemoMenuHUDWidget::Construct(const FArguments& InArgs)
 {
-	
+	//获取编辑器的MenuStyle
+	MenuStyle = &DemoStyle::Get().GetWidgetStyle<FDemoMenuStyle>("BPDemoMenuStyle");
+	////绑定缩放规则方法
+	//UIScaler.Bind(this, &SSlAiMenuHUDWidget::GetUIScaler);
+
 	ChildSlot
 		[
-			SNew(SButton)
+			//SNew(SButton)
+			SNew(SImage)
+			.Image(&MenuStyle->MenuHUDBackgroundBrush)	// 实例化一个Image组件，添加Image并且添加一个笔刷
 		];
-		////获取编辑器的MenuStyle
-		//MenuStyle = &SlAiStyle::Get().GetWidgetStyle<FSlAiMenuStyle>("BPSlAiMenuStyle");
-		////绑定缩放规则方法
-		//UIScaler.Bind(this, &SSlAiMenuHUDWidget::GetUIScaler);
+
+
 
 		//ChildSlot
 		//	[
