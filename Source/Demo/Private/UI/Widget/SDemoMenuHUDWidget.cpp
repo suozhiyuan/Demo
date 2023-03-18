@@ -25,7 +25,6 @@ void SDemoMenuHUDWidget::Construct(const FArguments& InArgs)
 		];
 
 
-
 		//ChildSlot
 		//	[
 		//		SNew(SDPIScaler)
