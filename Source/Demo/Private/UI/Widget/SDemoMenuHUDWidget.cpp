@@ -24,7 +24,6 @@ void SDemoMenuHUDWidget::Construct(const FArguments& InArgs)
 			.Image(&MenuStyle->MenuHUDBackgroundBrush)	// 实例化一个Image组件，添加Image并且添加一个笔刷
 		];
 
-
 		//ChildSlot
 		//	[
 		//		SNew(SDPIScaler)
