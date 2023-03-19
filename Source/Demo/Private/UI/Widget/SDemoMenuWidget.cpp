@@ -20,6 +20,8 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 	////播放背景音乐
 	//FSlateApplication::Get().PlaySound(MenuStyle->MenuBackgroundMusic);
 
+	//FInternationalization::Get().SetCurrentLanguage(TEXT("en"));
+	//FInternationalization::Get().SetCurrentLanguage(TEXT("zh"));
 
 	ChildSlot
 		[
@@ -71,8 +73,8 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 							[
 								SAssignNew(TitleText, STextBlock)			// 文本子控件
 								.Font(DemoStyle::Get().GetFontStyle("MenuItemFont"))
-								//.Text(NSLOCTEXT("DemoMenu", "Menu", "Menu"))
-								.Text(FText::FromString("ABC"))
+								.Text(NSLOCTEXT("DemoMenu", "Menu", "Menu"))
+								//.Text(FText::FromString("ABC"))
 							]
 						]
 				    

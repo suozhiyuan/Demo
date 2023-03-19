@@ -37,6 +37,6 @@ const ISlateStyle& DemoStyle::Get()
 TSharedRef<class FSlateStyleSet> DemoStyle::Create()
 {
 	TSharedRef<FSlateStyleSet> StyleRef = FSlateGameResources::New(DemoStyle::GetStyleSetName(), "/Game/UI/Style", "/Game/UI/Style");
-	StyleRef->Set("MenuItemFont", FSlateFontInfo("Roboto-Regular.ttf", 50));
+	StyleRef->Set("MenuItemFont", FSlateFontInfo("Roboto-Regular.ttf", 50));	// FSlateFontInfo   Slate中字体的表示形式。
 	return StyleRef;
 }
