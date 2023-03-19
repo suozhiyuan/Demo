@@ -6,7 +6,10 @@
 #include "UI/Style/DemoMenuWidgetStyle.h"
 #include "UI/Style/DemoStyle.h"
 #include "Widgets/Images/SImage.h"
-
+#include "Widgets/Input/SVectorInputBox.h"
+#include "UI/Widget/SDemoMenuItemWidget.h"
+#include "Data/DemoType.h"
+#include "Kismet/GameplayStatics.h"
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -73,6 +76,7 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 							[
 								SAssignNew(TitleText, STextBlock)			// 文本子控件
 								.Font(DemoStyle::Get().GetFontStyle("MenuItemFont"))
+								.Font(MenuStyle->Font_60)
 								.Text(NSLOCTEXT("DemoMenu", "Menu", "Menu"))
 								//.Text(FText::FromString("ABC"))
 							]
@@ -80,14 +84,29 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 				    
 					]
 
-				//+ SOverlay::Slot()
-				//	.HAlign(HAlign_Center)
-				//	.VAlign(VAlign_Top)
-				//	.Padding(FMargin(0.f, 130.f, 0.f, 0.f))
-				//	[
-				//		SAssignNew(ContentBox, SVerticalBox)
+				+ SOverlay::Slot()
+					.HAlign(HAlign_Center)
+					.VAlign(VAlign_Top)
+					.Padding(FMargin(0.f, 130.f, 0.f, 0.f))
+					[
+						SAssignNew(ContentBox, SVerticalBox)		// SVerticalBox 一个垂直框面板。更多信息请参见 SBoxPanel
 
-				//	]
+						/*
+						 * 在垂直列表中添加一个插槽，并且New一个 SDemoMenuItemWidget
+						 * 等同于在 ChildSlot 之外这样写
+						 * ContentBox->AddSlot()
+						 * [
+						 *		SNew(SDemoMenuItemWidget)
+						 * ];
+						 */
+						+SVerticalBox::Slot()						
+						[
+							SNew(SDemoMenuItemWidget)
+							.ItemText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"))
+							.ItemType(EMenuItem::StartGame)
+							.OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked)
+						]
+					]
 
 			]
 		];
@@ -99,6 +118,66 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 	//InitializedMenuList();
 
 	//InitializedAnimation();
+}
+
+
+void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
+{
+	TitleText->SetText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"));
+
+	////如果锁住了,直接return
+	//if (ControlLocked) return;
+	////设置锁住了按钮
+	//ControlLocked = true;
+
+	//switch (ItemType)
+	//{
+	//case EMenuItem::StartGame:
+	//	PlayClose(EMenuType::StartGame);
+	//	break;
+	//case EMenuItem::GameOption:
+	//	PlayClose(EMenuType::GameOption);
+	//	break;
+	//case EMenuItem::QuitGame:
+	//	//退出游戏,播放声音并且延时调用退出函数
+	//	DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->ExitGameSound, this, &DemoMenuWidget::QuitGame);
+	//	break;
+	//case EMenuItem::NewGame:
+	//	PlayClose(EMenuType::NewGame);
+	//	break;
+	//case EMenuItem::LoadRecord:
+	//	PlayClose(EMenuType::ChooseRecord);
+	//	break;
+	//case EMenuItem::StartGameGoBack:
+	//	PlayClose(EMenuType::MainMenu);
+	//	break;
+	//case EMenuItem::GameOptionGoBack:
+	//	PlayClose(EMenuType::MainMenu);
+	//	break;
+	//case EMenuItem::NewGameGoBack:
+	//	PlayClose(EMenuType::StartGame);
+	//	break;
+	//case EMenuItem::ChooseRecordGoBack:
+	//	PlayClose(EMenuType::StartGame);
+	//	break;
+	//case EMenuItem::EnterGame:
+	//	//检测是否可以进入游戏
+	//	if (NewGameWidget->AllowEnterGame())
+	//	{
+	//		DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
+	//	}
+	//	else
+	//	{
+	//		//解锁按钮
+	//		ControlLocked = false;
+	//	}
+	//	break;
+	//case EMenuItem::EnterRecord:
+	//	//告诉选择存档更新存档名
+	//	ChooseRecordWidget->UpdateRecordName();
+	//	SlAiHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
+	//	break;
+	//}
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -147,62 +226,6 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 //}
 //
 //
-//void SSlAiMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
-//{
-//	//如果锁住了,直接return
-//	if (ControlLocked) return;
-//	//设置锁住了按钮
-//	ControlLocked = true;
-//
-//	switch (ItemType)
-//	{
-//	case EMenuItem::StartGame:
-//		PlayClose(EMenuType::StartGame);
-//		break;
-//	case EMenuItem::GameOption:
-//		PlayClose(EMenuType::GameOption);
-//		break;
-//	case EMenuItem::QuitGame:
-//		//退出游戏,播放声音并且延时调用退出函数
-//		SlAiHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->ExitGameSound, this, &SSlAiMenuWidget::QuitGame);
-//		break;
-//	case EMenuItem::NewGame:
-//		PlayClose(EMenuType::NewGame);
-//		break;
-//	case EMenuItem::LoadRecord:
-//		PlayClose(EMenuType::ChooseRecord);
-//		break;
-//	case EMenuItem::StartGameGoBack:
-//		PlayClose(EMenuType::MainMenu);
-//		break;
-//	case EMenuItem::GameOptionGoBack:
-//		PlayClose(EMenuType::MainMenu);
-//		break;
-//	case EMenuItem::NewGameGoBack:
-//		PlayClose(EMenuType::StartGame);
-//		break;
-//	case EMenuItem::ChooseRecordGoBack:
-//		PlayClose(EMenuType::StartGame);
-//		break;
-//	case EMenuItem::EnterGame:
-//		//检测是否可以进入游戏
-//		if (NewGameWidget->AllowEnterGame())
-//		{
-//			SlAiHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SSlAiMenuWidget::EnterGame);
-//		}
-//		else
-//		{
-//			//解锁按钮
-//			ControlLocked = false;
-//		}
-//		break;
-//	case EMenuItem::EnterRecord:
-//		//告诉选择存档更新存档名
-//		ChooseRecordWidget->UpdateRecordName();
-//		SlAiHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SSlAiMenuWidget::EnterGame);
-//		break;
-//	}
-//}
 //
 //void SSlAiMenuWidget::ChangeCulture(ECultureTeam Culture)
 //{

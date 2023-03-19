@@ -57,30 +57,30 @@ struct DEMO_API FDemoMenuStyle : public FSlateWidgetStyle
 		FSlateBrush TitleBorderBrush;
 
 
-	///*
-	//* MenuItem的Brush
-	//*/
-	//UPROPERTY(EditAnywhere, Category = MenuItem)
-	//	FSlateBrush MenuItemBrush;
+	/*
+	* MenuItem的Brush
+	*/
+	UPROPERTY(EditAnywhere, Category = MenuItem)
+		FSlateBrush MenuItemBrush;
 
 
-	///*
-	//* 60号字体
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Common)
-	//	FSlateFontInfo Font_60;
+	/*
+	* 60号字体
+	*/
+	UPROPERTY(EditAnywhere, Category = Common)
+		FSlateFontInfo Font_60;
 
-	///*
-	//* 40号字体
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Common)
-	//	FSlateFontInfo Font_40;
+	/*
+	* 40号字体
+	*/
+	UPROPERTY(EditAnywhere, Category = Common)
+		FSlateFontInfo Font_40;
 
-	///*
-	//* 30号字体
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Common)
-	//	FSlateFontInfo Font_30;
+	/*
+	* 30号字体
+	*/
+	UPROPERTY(EditAnywhere, Category = Common)
+		FSlateFontInfo Font_30;
 
 	///*
 	//* 黑色颜色

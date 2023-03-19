@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Data/DemoType.h"
 #include "Widgets/SCompoundWidget.h"
 
 /**
@@ -25,8 +26,10 @@ public:
 
 private:
 
-	//	//绑定到各个MenuItem的方法
-	//	void MenuItemOnClicked(EMenuItem::Type ItemType);
+	//绑定到各个MenuItem的方法
+	void MenuItemOnClicked(EMenuItem::Type ItemType);
+
+
 	//	//修改语言
 	//	void ChangeCulture(ECultureTeam Culture);
 	//	//修改音量
@@ -51,14 +54,15 @@ private:
 	//获取MenuStyle
 	const struct FDemoMenuStyle* MenuStyle;
 
-	//保存根节点的
+	//保存的根节点
 	TSharedPtr<SBox> RootSizeBox;
 
 	//保存标题
 	TSharedPtr<STextBlock> TitleText;
 
-	//	//用来保存垂直列表
-	//	TSharedPtr<SVerticalBox> ContentBox;
+	//用来保存垂直列表
+	TSharedPtr<SVerticalBox> ContentBox;
+
 	//	//保存菜单组
 	//	TMap<EMenuType::Type, TSharedPtr<MenuGroup>> MenuMap;
 	//	//游戏设置Widget的指引
