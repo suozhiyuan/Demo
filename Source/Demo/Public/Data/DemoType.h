@@ -21,17 +21,17 @@ namespace EMenuItem
 	enum Type
 	{
 		None,
-		StartGame,
-		GameOption,
-		QuitGame,
-		NewGame,
-		LoadRecord,
-		StartGameGoBack,
-		GameOptionGoBack,
-		NewGameGoBack,
-		ChooseRecordGoBack,
-		EnterGame,
-		EnterRecord
+		StartGame,				// 开始游戏
+		GameOption,				// 游戏设置
+		QuitGame,				// 退出游戏
+		NewGame,				// 新游戏
+		LoadRecord,				// 加载存档
+		StartGameGoBack,		// 开始游戏的返回
+		GameOptionGoBack,		// 游戏设置的返回
+		NewGameGoBack,			// 新游戏的返回
+		ChooseRecordGoBack,		// 选择存档的返回
+		EnterGame,				// 进入游戏
+		EnterRecord				// 进入存档
 	};
 }
 
