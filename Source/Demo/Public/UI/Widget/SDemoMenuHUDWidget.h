@@ -25,6 +25,13 @@ private:
 	//获取屏幕尺寸
 	FVector2D GetViewportSize() const;
 
+	///*
+	// * Reply是一个Slate事件返回给系统的东西，通知它一个事件是如何处理的。
+	// * 例如，一个小部件可能会处理一个OnlouseDown事件，要求系统给一个特定的小部件鼠标捕获。
+	// * 为此，返回FReply::CaptureMouse (NewMouseCapture)
+	// */
+	//FReply OnClick();		
+
 
 private:
 	//获取Menu样式
@@ -33,7 +40,9 @@ private:
 	//DPI缩放系数
 	TAttribute<float> UIScaler;
 
-	////菜单指针
-	//TSharedPtr<class SDemoMenuWidget> MenuWidget;
+	//菜单指针
+	TSharedPtr<class SDemoMenuWidget> MenuWidget;
 
+	//// 获取Image的Slot 对其进行修改, 这个变量要在要修改的 + SOverlay::Slot() 下进行 .Expose(ImageSlot)
+	//SOverlay::FOverlaySlot* ImageSlot;
 };

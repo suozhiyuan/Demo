@@ -7,6 +7,7 @@
 #include "UI/Style/DemoStyle.h"
 #include "UI/Style/DemoMenuWidgetStyle.h"
 #include "Widgets/Layout/SDPIScaler.h"
+#include "UI/Widget/SDemoMenuWidget.h"
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -21,7 +22,7 @@ void SDemoMenuHUDWidget::Construct(const FArguments& InArgs)
 	ChildSlot
 		[
 			SNew(SDPIScaler)
-			.DPIScale(UIScaler)		// 下一层级所有的组件都会更具 UIScaler 的值进行缩放
+			.DPIScale(UIScaler)										// 下一层级所有的组件都会更具 UIScaler 的值进行缩放
 			[
 				SNew(SOverlay)
 
@@ -37,10 +38,18 @@ void SDemoMenuHUDWidget::Construct(const FArguments& InArgs)
 					.HAlign(HAlign_Center)
 					.VAlign(VAlign_Center)
 					[
-						//SAssignNew(MenuWidget, SSlAiMenuWidget)
-						SNew(SImage)
-						.Image(&MenuStyle->MenuBackgroundBrush)
+						SAssignNew(MenuWidget, SDemoMenuWidget)
 					]
+
+				// //用来测试，通过FOverlaySlot对组件进行修改
+				//+ SOverlay::Slot()
+				//	.HAlign(HAlign_Left)
+				//	.VAlign(VAlign_Top)
+				//	.Expose(ImageSlot)				// 绑定ImageSlot
+				//	[
+				//		SNew(SButton)
+				//		.OnClicked(this, &SDemoMenuHUDWidget::OnClick)
+				//	]
 			]
 		];
 }
@@ -59,5 +68,11 @@ FVector2D SDemoMenuHUDWidget::GetViewportSize() const
 		GEngine->GameViewport->GetViewportSize(Result);
 	return Result;
 }
+
+//FReply SDemoMenuHUDWidget::OnClick()
+//{
+//	ImageSlot->HAlign(HAlign_Right).VAlign(VAlign_Bottom);
+//	return FReply::Handled();			// 一个事件应该返回一个FReply:: Handled来让系统知道一个事件被处理了。
+//}
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

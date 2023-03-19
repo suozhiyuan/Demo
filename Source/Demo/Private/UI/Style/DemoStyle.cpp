@@ -5,7 +5,7 @@
 #include "Slate/SlateGameResources.h"
 #include "Styling/SlateStyleRegistry.h"
 
-TSharedPtr<FSlateStyleSet> DemoStyle::DemoStyleInstance = NULL;				// 如果是单例，变量不能放到构造函数
+TSharedPtr<FSlateStyleSet> DemoStyle::DemoStyleInstance = NULL;					// 如果是单例，变量不能放到构造函数
 
 void DemoStyle::Initialze()
 {
@@ -20,13 +20,12 @@ FName DemoStyle::GetStyleSetName()
 {
 	static FName StyleSetName(TEXT("DemoStyle"));
 	return StyleSetName;
-
 }
 
 void DemoStyle::ShutDown()
 {
 	FSlateStyleRegistry::UnRegisterSlateStyle(*DemoStyleInstance);
-	ensure(DemoStyleInstance.IsUnique());		// 如果这是对该对象的唯一共享引用，则返回true
+	ensure(DemoStyleInstance.IsUnique());								// 如果这是对该对象的唯一共享引用，则返回true
 	DemoStyleInstance.Reset();
 }
 
