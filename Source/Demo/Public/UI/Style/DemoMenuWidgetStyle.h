@@ -38,23 +38,23 @@ struct DEMO_API FDemoMenuStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = Menu)
 		FSlateBrush MenuBackgroundBrush;
 
-	///*
-	//* Menu左图标的Brush
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Menu)
-	//	FSlateBrush LeftIconBrush;
+	/*
+	* Menu左图标的Brush
+	*/
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateBrush LeftIconBrush;
 
-	///*
-	//* Menu右图标的Brush
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Menu)
-	//	FSlateBrush RightIconBrush;
+	/*
+	* Menu右图标的Brush
+	*/
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateBrush RightIconBrush;
 
-	///*
-	//* Menu标题Border的Brush
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Menu)
-	//	FSlateBrush TitleBorderBrush;
+	/*
+	* Menu标题Border的Brush
+	*/
+	UPROPERTY(EditAnywhere, Category = Menu)
+		FSlateBrush TitleBorderBrush;
 
 
 	///*
