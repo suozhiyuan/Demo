@@ -9,7 +9,7 @@
 #include "Widgets/Input/SVectorInputBox.h"
 #include "UI/Widget/SDemoMenuItemWidget.h"
 #include "Data/DemoType.h"
-#include "Kismet/GameplayStatics.h"
+#include "Common/DemoHelper.h"
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -123,7 +123,9 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 
 void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 {
-	TitleText->SetText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"));
+	//TitleText->SetText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"));			// 修改标题文字
+	DemoHelper::Debug(FString("Test"), 5.f);
+
 
 	////如果锁住了,直接return
 	//if (ControlLocked) return;
