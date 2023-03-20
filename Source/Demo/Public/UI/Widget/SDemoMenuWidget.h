@@ -29,11 +29,13 @@ private:
 	//绑定到各个MenuItem的方法
 	void MenuItemOnClicked(EMenuItem::Type ItemType);
 
+	//修改语言
+	void ChangeCulture(ECultureTeam Culture);
 
-	//	//修改语言
-	//	void ChangeCulture(ECultureTeam Culture);
-	//	//修改音量
-	//	void ChangeVolume(const float MusicVolume, const float SoundVolume);
+	//修改音量
+	void ChangeVolume(const float MusicVolume, const float SoundVolume);
+
+
 	//	//初始化所有的控件
 	//	void InitializedMenuList();
 	//	//选择显示的界面

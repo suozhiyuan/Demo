@@ -20,10 +20,18 @@ public:
 	//修改中英文
 	void ChangeLocalizationCulture(ECultureTeam Culture);
 
+	//修改菜单音量
+	void ResetMenuVolume(float MusicVol, float SoundVol);
+
+	////修改游戏音量
+	//void ResetGameVolume(float MusicVol, float SoundVol);
+
 public:
 	//当前语言
 	ECultureTeam CurrentCulture;
-
+	//音量
+	float MusicVolume;
+	float SoundVolume;
 
 private:
 	//创建单例
@@ -36,22 +44,15 @@ private:
 
 
 
-//	//修改菜单音量
-//	void ResetMenuVolume(float MusicVol, float SoundVol);
-//	//修改游戏音量
-//	void ResetGameVolume(float MusicVol, float SoundVol);
+
 //	//游戏数据初始化
 //	void InitializeGameData();
 //	//添加新存档名
 //	void AddNewRecord();
 //
+	
 
 
-
-
-//	//音量
-//	float MusicVolume;
-//	float SoundVolume;
 //	//存档数据
 //	TArray<FString> RecordDataList;
 //	//存档名

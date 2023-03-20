@@ -118,35 +118,35 @@ struct DEMO_API FDemoMenuStyle : public FSlateWidgetStyle
 		FSlateBrush SliderBarBrush;
 
 	/*
-	* 指定Slider的样式
+	* 指定Slider(滑动条)的样式
 	*/
 	UPROPERTY(EditAnywhere, Category = GameOption)
 		FSliderStyle SliderStyle;
 
 
-	///*
-	//* 开始游戏声音
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Sound)
-	//	FSlateSound StartGameSound;
+	/*
+	* 开始游戏声音
+	*/
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound StartGameSound;
 
-	///*
-	//* 结束游戏声音
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Sound)
-	//	FSlateSound ExitGameSound;
+	/*
+	* 结束游戏声音
+	*/
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound ExitGameSound;
 
-	///*
-	//* 转换按钮声音
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Sound)
-	//	FSlateSound MenuItemChangeSound;
+	/*
+	* 转换按钮声音
+	*/
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound MenuItemChangeSound;
 
-	///*
-	//* Menu背景声音
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Sound)
-	//	FSlateSound MenuBackgroundMusic;
+	/*
+	* Menu背景声音
+	*/
+	UPROPERTY(EditAnywhere, Category = Sound)
+		FSlateSound MenuBackgroundMusic;
 
 };
 

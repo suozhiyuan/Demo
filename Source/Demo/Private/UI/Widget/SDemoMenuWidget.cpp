@@ -3,6 +3,7 @@
 
 #include "UI/Widget/SDemoMenuWidget.h"
 #include "SlateOptMacros.h"
+#include "Data/DemoDataHandle.h"
 #include "UI/Style/DemoMenuWidgetStyle.h"
 #include "UI/Style/DemoStyle.h"
 #include "Widgets/Images/SImage.h"
@@ -78,7 +79,7 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 								//.Text(FText::FromString("ABC"))
 							]
 						]
-				    
+
 					]
 
 				+ SOverlay::Slot()
@@ -87,11 +88,12 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 					.Padding(FMargin(0.f, 130.f, 0.f, 0.f))
 					[
 						SAssignNew(ContentBox, SVerticalBox)		// SVerticalBox 一个垂直框面板。更多信息请参见 SBoxPanel
-
 						+ SVerticalBox::Slot()
-						[
-							SNew(SDemoGameOptionWidget)
-						]
+							[
+								SNew(SDemoGameOptionWidget)
+								.ChangeCulture(this, &SDemoMenuWidget::ChangeCulture)			// SDemoGameOptionWidget 下的委托
+								.ChangeVolume(this, &SDemoMenuWidget::ChangeVolume)			// SDemoGameOptionWidget 下的委托
+							]
 						///*
 						// * 在垂直列表中添加一个插槽，并且New一个 SDemoMenuItemWidget
 						// * 等同于在 ChildSlot 之外这样写
@@ -178,7 +180,7 @@ void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 	//case EMenuItem::EnterRecord:
 	//	//告诉选择存档更新存档名
 	//	ChooseRecordWidget->UpdateRecordName();
-	//	SlAiHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
+	//	DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
 	//	break;
 	//}
 }
@@ -186,7 +188,7 @@ void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 //
-//void SSlAiMenuWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+//void SDemoMenuWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 //{
 //	switch (AnimState)
 //	{
@@ -230,72 +232,76 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 //
 //
 //
-//void SSlAiMenuWidget::ChangeCulture(ECultureTeam Culture)
-//{
-//	SlAiDataHandle::Get()->ChangeLocalizationCulture(Culture);
-//}
+
+// 修改语言
+void SDemoMenuWidget::ChangeCulture(ECultureTeam Culture)
+{
+	DemoDataHandle::Get()->ChangeLocalizationCulture(Culture);
+}
+
+// 修改音量
+void SDemoMenuWidget::ChangeVolume(const float MusicVolume, const float SoundVolume)
+{
+	DemoDataHandle::Get()->ResetMenuVolume(MusicVolume, SoundVolume);
+}
+
 //
-//void SSlAiMenuWidget::ChangeVolume(const float MusicVolume, const float SoundVolume)
-//{
-//	SlAiDataHandle::Get()->ResetMenuVolume(MusicVolume, SoundVolume);
-//}
-//
-//void SSlAiMenuWidget::InitializedMenuList()
+//void SDemoMenuWidget::InitializedMenuList()
 //{
 //
 //	//实例化主界面
 //	TArray<TSharedPtr<SCompoundWidget>> MainMenuList;
-//	MainMenuList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "StartGame", "StartGame")).ItemType(EMenuItem::StartGame).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
-//	MainMenuList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "GameOption", "GameOption")).ItemType(EMenuItem::GameOption).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
-//	MainMenuList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "QuitGame", "QuitGame")).ItemType(EMenuItem::QuitGame).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
+//	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame")).ItemType(EMenuItem::StartGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+//	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GameOption", "GameOption")).ItemType(EMenuItem::GameOption).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+//	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "QuitGame", "QuitGame")).ItemType(EMenuItem::QuitGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
 //
-//	MenuMap.Add(EMenuType::MainMenu, MakeShareable(new MenuGroup(NSLOCTEXT("SlAiMenu", "Menu", "Menu"), 510.f, &MainMenuList)));
+//	MenuMap.Add(EMenuType::MainMenu, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "Menu", "Menu"), 510.f, &MainMenuList)));
 //
 //
 //	//开始游戏界面
 //	TArray<TSharedPtr<SCompoundWidget>> StartGameList;
-//	StartGameList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "NewGame", "NewGame")).ItemType(EMenuItem::NewGame).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
-//	StartGameList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "LoadRecord", "LoadRecord")).ItemType(EMenuItem::LoadRecord).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
-//	StartGameList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "GoBack", "GoBack")).ItemType(EMenuItem::StartGameGoBack).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
+//	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "NewGame", "NewGame")).ItemType(EMenuItem::NewGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+//	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "LoadRecord", "LoadRecord")).ItemType(EMenuItem::LoadRecord).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+//	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::StartGameGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
 //
-//	MenuMap.Add(EMenuType::StartGame, MakeShareable(new MenuGroup(NSLOCTEXT("SlAiMenu", "StartGame", "StartGame"), 510.f, &StartGameList)));
+//	MenuMap.Add(EMenuType::StartGame, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"), 510.f, &StartGameList)));
 //
 //
 //	//游戏设置界面
 //	TArray<TSharedPtr<SCompoundWidget>> GameOptionList;
 //	//实例化游戏设置的Widget
-//	SAssignNew(GameOptionWidget, SSlAiGameOptionWidget)
-//		.ChangeCulture(this, &SSlAiMenuWidget::ChangeCulture)
-//		.ChangeVolume(this, &SSlAiMenuWidget::ChangeVolume);
+//	SAssignNew(GameOptionWidget, SDemoGameOptionWidget)
+//		.ChangeCulture(this, &SDemoMenuWidget::ChangeCulture)
+//		.ChangeVolume(this, &SDemoMenuWidget::ChangeVolume);
 //	//添加控件到数组
 //	GameOptionList.Add(GameOptionWidget);
-//	GameOptionList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "GoBack", "GoBack")).ItemType(EMenuItem::GameOptionGoBack).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
+//	GameOptionList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::GameOptionGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
 //
-//	MenuMap.Add(EMenuType::GameOption, MakeShareable(new MenuGroup(NSLOCTEXT("SlAiMenu", "GameOption", "GameOption"), 610.f, &GameOptionList)));
+//	MenuMap.Add(EMenuType::GameOption, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "GameOption", "GameOption"), 610.f, &GameOptionList)));
 //
 //
 //	//开始新游戏界面
 //	TArray<TSharedPtr<SCompoundWidget>> NewGameList;
-//	SAssignNew(NewGameWidget, SSlAiNewGameWidget);
+//	SAssignNew(NewGameWidget, SDemoNewGameWidget);
 //	NewGameList.Add(NewGameWidget);
-//	NewGameList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "EnterGame", "EnterGame")).ItemType(EMenuItem::EnterGame).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
-//	NewGameList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "GoBack", "GoBack")).ItemType(EMenuItem::NewGameGoBack).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
+//	NewGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "EnterGame", "EnterGame")).ItemType(EMenuItem::EnterGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+//	NewGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::NewGameGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
 //
-//	MenuMap.Add(EMenuType::NewGame, MakeShareable(new MenuGroup(NSLOCTEXT("SlAiMenu", "NewGame", "NewGame"), 510.f, &NewGameList)));
+//	MenuMap.Add(EMenuType::NewGame, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "NewGame", "NewGame"), 510.f, &NewGameList)));
 //
 //	//选择存档界面
 //	TArray<TSharedPtr<SCompoundWidget>> ChooseRecordList;
-//	SAssignNew(ChooseRecordWidget, SSlAiChooseRecordWidget);
+//	SAssignNew(ChooseRecordWidget, SDemoChooseRecordWidget);
 //	ChooseRecordList.Add(ChooseRecordWidget);
-//	ChooseRecordList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "EnterRecord", "EnterRecord")).ItemType(EMenuItem::EnterRecord).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
-//	ChooseRecordList.Add(SNew(SSlAiMenuItemWidget).ItemText(NSLOCTEXT("SlAiMenu", "GoBack", "GoBack")).ItemType(EMenuItem::ChooseRecordGoBack).OnClicked(this, &SSlAiMenuWidget::MenuItemOnClicked));
+//	ChooseRecordList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "EnterRecord", "EnterRecord")).ItemType(EMenuItem::EnterRecord).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+//	ChooseRecordList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::ChooseRecordGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
 //
-//	MenuMap.Add(EMenuType::ChooseRecord, MakeShareable(new MenuGroup(NSLOCTEXT("SlAiMenu", "LoadRecord", "LoadRecord"), 510.f, &ChooseRecordList)));
+//	MenuMap.Add(EMenuType::ChooseRecord, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "LoadRecord", "LoadRecord"), 510.f, &ChooseRecordList)));
 //
 //
 //}
 //
-//void SSlAiMenuWidget::ChooseWidget(EMenuType::Type WidgetType)
+//void SDemoMenuWidget::ChooseWidget(EMenuType::Type WidgetType)
 //{
 //	//定义是否已经显示菜单
 //	IsMenuShow = WidgetType != EMenuType::None;
@@ -313,14 +319,14 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 //}
 //
 ////如果不修改高度,NewHeight转入-1
-//void SSlAiMenuWidget::ResetWidgetSize(float NewWidget, float NewHeight)
+//void SDemoMenuWidget::ResetWidgetSize(float NewWidget, float NewHeight)
 //{
 //	RootSizeBox->SetWidthOverride(NewWidget);
 //	if (NewHeight < 0) return;
 //	RootSizeBox->SetHeightOverride(NewHeight);
 //}
 //
-//void SSlAiMenuWidget::InitializedAnimation()
+//void SDemoMenuWidget::InitializedAnimation()
 //{
 //	//开始延时
 //	const float StartDelay = 0.3f;
@@ -340,7 +346,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 //	MenuAnimation.JumpToEnd();
 //}
 //
-//void SSlAiMenuWidget::PlayClose(EMenuType::Type NewMenu)
+//void SDemoMenuWidget::PlayClose(EMenuType::Type NewMenu)
 //{
 //	//设置新的界面
 //	CurrentMenu = NewMenu;
@@ -354,12 +360,12 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 //	FSlateApplication::Get().PlaySound(MenuStyle->MenuItemChangeSound);
 //}
 //
-//void SSlAiMenuWidget::QuitGame()
+//void SDemoMenuWidget::QuitGame()
 //{
-//	Cast<ASlAiMenuController>(UGameplayStatics::GetPlayerController(GWorld, 0))->ConsoleCommand("quit");
+//	Cast<ADemoMenuController>(UGameplayStatics::GetPlayerController(GWorld, 0))->ConsoleCommand("quit");
 //}
 //
-//void SSlAiMenuWidget::EnterGame()
+//void SDemoMenuWidget::EnterGame()
 //{
 //	UGameplayStatics::OpenLevel(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), FName("GameMap"));
 //}

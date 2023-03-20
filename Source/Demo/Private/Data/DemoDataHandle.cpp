@@ -10,12 +10,15 @@ TSharedPtr<DemoDataHandle> DemoDataHandle::DataInstance = NULL;
 
 DemoDataHandle::DemoDataHandle()
 {
+	// 初始化为中文（临时）
 	CurrentCulture = ECultureTeam::ZH;
 
-	////初始化存档数据
+	//初始化存档数据
 	//InitRecordData();
-	////初始化音乐数据
+	//初始化音乐数据
 	//InitializedMenuAudio();
+	MusicVolume = 0.5f;	// 临时
+	SoundVolume = 0.5f;	// 临时
 }
 
 void DemoDataHandle::Initialize()
@@ -58,36 +61,33 @@ TSharedRef<DemoDataHandle> DemoDataHandle::Create()
 }
 
 
+void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
+{
+	if (MusicVol > 0)
+	{
+		MusicVolume = MusicVol;
+		////循环设置背景音量
+		//for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Music"))->CreateIterator()); It; ++It)
+		//{
+		//	//设置音量
+		//	(*It)->VolumeMultiplier = MusicVolume;
+		//}
+	}
+	if (SoundVol > 0)
+	{
+		SoundVolume = SoundVol;
+		//for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Sound"))->CreateIterator()); It; ++It)
+		//{
+		//	//指针的指针
+		//	(*It)->VolumeMultiplier = SoundVolume;
+		//}
+	}
 
 
+	////更新存档数据
+	//DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
+}
 
-//void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
-//{
-//	if (MusicVol > 0)
-//	{
-//		MusicVolume = MusicVol;
-//		//循环设置背景音量
-//		for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Music"))->CreateIterator()); It; ++It)
-//		{
-//			//设置音量
-//			(*It)->VolumeMultiplier = MusicVolume;
-//		}
-//	}
-//	if (SoundVol > 0)
-//	{
-//		SoundVolume = SoundVol;
-//		for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Sound"))->CreateIterator()); It; ++It)
-//		{
-//			//指针的指针
-//			(*It)->VolumeMultiplier = SoundVolume;
-//		}
-//	}
-//	//更新存档数据
-//	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
-//}
-//
-//
-//
 //void DemoDataHandle::ResetGameVolume(float MusicVol, float SoundVol)
 //{
 //	if (MusicVol > 0)
@@ -105,7 +105,7 @@ TSharedRef<DemoDataHandle> DemoDataHandle::Create()
 //	//更新存档数据
 //	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 //}
-//
+
 //template<typename TEnum>
 //FString DemoDataHandle::GetEnumValueAsString(const FString& Name, TEnum Value)
 //{

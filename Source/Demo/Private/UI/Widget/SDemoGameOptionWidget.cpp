@@ -19,12 +19,12 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SDemoGameOptionWidget::Construct(const FArguments& InArgs)
 {
 
-	//获取MenuStyle
+	// 获取 MenuStyle
 	MenuStyle = &DemoStyle::Get().GetWidgetStyle<FDemoMenuStyle>("BPDemoMenuStyle");
 
-	////获取委托
-	//ChangeCulture = InArgs._ChangeCulture;
-	//ChangeVolume = InArgs._ChangeVolume;
+	// 获取委托
+	ChangeCulture = InArgs._ChangeCulture;
+	ChangeVolume = InArgs._ChangeVolume;
 
 	ChildSlot
 		[
@@ -57,7 +57,7 @@ void SDemoGameOptionWidget::Construct(const FArguments& InArgs)
 					[
 						SNew(SHorizontalBox)
 
-						+ SHorizontalBox::Slot()
+						+ SHorizontalBox::Slot()		// 语言选项1
 						.HAlign(HAlign_Center)
 						.VAlign(VAlign_Center)
 						.FillWidth(1.f)							//填充宽度
@@ -73,7 +73,7 @@ void SDemoGameOptionWidget::Construct(const FArguments& InArgs)
 							]
 						]
 
-						+ SHorizontalBox::Slot()
+						+ SHorizontalBox::Slot()		// 语言选项2
 						.HAlign(HAlign_Center)
 						.VAlign(VAlign_Center)
 						.FillWidth(1.f)
@@ -85,7 +85,6 @@ void SDemoGameOptionWidget::Construct(const FArguments& InArgs)
 								.Font(MenuStyle->Font_40)
 								.ColorAndOpacity(MenuStyle->FontColor_Black)
 								.Text(NSLOCTEXT("DemoMenu", "English", "English"))
-								
 							]
 						]
 					]
@@ -99,53 +98,53 @@ void SDemoGameOptionWidget::Construct(const FArguments& InArgs)
 					[
 						SNew(SOverlay)
 
-					//	+ SOverlay::Slot()
-					//		.HAlign(HAlign_Left)
-					//		.VAlign(VAlign_Center)
-					//		[
-					//			SNew(STextBlock)
-					//			.Font(MenuStyle->Font_40)
-					//			.ColorAndOpacity(MenuStyle->FontColor_Black)
-					//			.Text(NSLOCTEXT("DemoMenu", "Music", "Music"))
-					//		]
+						+ SOverlay::Slot()					// 滑动条左侧文字
+							.HAlign(HAlign_Left)
+							.VAlign(VAlign_Center)
+							[
+								SNew(STextBlock)
+								.Font(MenuStyle->Font_40)
+								.ColorAndOpacity(MenuStyle->FontColor_Black)
+								.Text(NSLOCTEXT("DemoMenu", "Music", "Music"))
+							]
 
-					//	+ SOverlay::Slot()
-					//	.HAlign(HAlign_Center)
-					//	.VAlign(VAlign_Center)
-					//	[
-					//		SNew(SBox)
-					//		.WidthOverride(240.f)
-					//		[
-					//			SNew(SOverlay)
+						+ SOverlay::Slot()					// 滑动条
+						.HAlign(HAlign_Center)
+						.VAlign(VAlign_Center)
+						[
+							SNew(SBox)
+							.WidthOverride(240.f)					// 滑动条宽度
+							[
+								SNew(SOverlay)                      
 
-					//			+ SOverlay::Slot()
-					//			.HAlign(HAlign_Fill)
-					//			.VAlign(VAlign_Center)
-					//			.Padding(FMargin(30.f, 0.f))
-					//			[
-					//				SNew(SImage)
-					//				.Image(&MenuStyle->SliderBarBrush)
-					//			]
+								+ SOverlay::Slot()					// 底图滑动条
+								.HAlign(HAlign_Fill)
+								.VAlign(VAlign_Center)
+								.Padding(FMargin(30.f, 0.f))
+								[
+									SNew(SImage)
+									.Image(&MenuStyle->SliderBarBrush)
+								]
 
-					//			+ SOverlay::Slot()
-					//			.HAlign(HAlign_Fill)
-					//			.VAlign(VAlign_Center)
-					//			[
-					//				SAssignNew(MuSlider, SSlider)
-					//				.Style(&MenuStyle->SliderStyle)
-					//				.OnValueChanged(this, &SDemoGameOptionWidget::MusicSliderChanged)
-					//			]
-					//		]
-					//	]
+								+ SOverlay::Slot()					// 滑动块
+								.HAlign(HAlign_Fill)
+								.VAlign(VAlign_Center)
+								[
+									SAssignNew(MuSlider, SSlider)
+									.Style(&MenuStyle->SliderStyle)
+									.OnValueChanged(this, &SDemoGameOptionWidget::MusicSliderChanged)		// OnValueChanged 当有变化时运行的委托,并且将当前值传入方法
+								]
+							]
+						]
 
-					//	+ SOverlay::Slot()
-					//	.HAlign(HAlign_Right)
-					//	.VAlign(VAlign_Center)
-					//	[
-					//		SAssignNew(MuTextBlock, STextBlock)
-					//		.Font(MenuStyle->Font_40)
-					//		.ColorAndOpacity(MenuStyle->FontColor_Black)
-					//	]
+						+ SOverlay::Slot()				// 进度条百分百文字
+						.HAlign(HAlign_Right)
+						.VAlign(VAlign_Center)
+						[
+							SAssignNew(MuTextBlock, STextBlock)
+							.Font(MenuStyle->Font_40)
+							.ColorAndOpacity(MenuStyle->FontColor_Black)
+						]
 					]
 
 
@@ -157,53 +156,53 @@ void SDemoGameOptionWidget::Construct(const FArguments& InArgs)
 					[
 						SNew(SOverlay)
 
-					//	+ SOverlay::Slot()
-					//	.HAlign(HAlign_Left)
-					//	.VAlign(VAlign_Center)
-					//	[
-					//		SNew(STextBlock)
-					//		.Font(MenuStyle->Font_40)
-					//		.ColorAndOpacity(MenuStyle->FontColor_Black)
-					//		.Text(NSLOCTEXT("DemoMenu", "Sound", "Sound"))
-					//	]
+						+ SOverlay::Slot()
+						.HAlign(HAlign_Left)
+						.VAlign(VAlign_Center)
+						[
+							SNew(STextBlock)
+							.Font(MenuStyle->Font_40)
+							.ColorAndOpacity(MenuStyle->FontColor_Black)
+							.Text(NSLOCTEXT("DemoMenu", "Sound", "Sound"))
+						]
 
-					//	+ SOverlay::Slot()
-					//	.HAlign(HAlign_Center)
-					//	.VAlign(VAlign_Center)
-					//	[
-					//		SNew(SBox)
-					//		.WidthOverride(240.f)
-					//		[
-					//			SNew(SOverlay)
+						+ SOverlay::Slot()
+						.HAlign(HAlign_Center)
+						.VAlign(VAlign_Center)
+						[
+							SNew(SBox)
+							.WidthOverride(240.f)
+							[
+								SNew(SOverlay)
 
-					//			+ SOverlay::Slot()
-					//			.HAlign(HAlign_Fill)
-					//			.VAlign(VAlign_Center)
-					//			.Padding(FMargin(30.f, 0.f))
-					//			[
-					//				SNew(SImage)
-					//				.Image(&MenuStyle->SliderBarBrush)
-					//			]
+								+ SOverlay::Slot()
+								.HAlign(HAlign_Fill)
+								.VAlign(VAlign_Center)
+								.Padding(FMargin(30.f, 0.f))
+								[
+									SNew(SImage)
+									.Image(&MenuStyle->SliderBarBrush)
+								]
 
-					//			+ SOverlay::Slot()
-					//			.HAlign(HAlign_Fill)
-					//			.VAlign(VAlign_Center)
-					//			[
-					//				SAssignNew(SoSlider, SSlider)
-					//				.Style(&MenuStyle->SliderStyle)
-					//			.OnValueChanged(this, &SDemoGameOptionWidget::SoundSliderChanged)
-					//			]
-					//		]
-					//	]
+								+ SOverlay::Slot()
+								.HAlign(HAlign_Fill)
+								.VAlign(VAlign_Center)
+								[
+									SAssignNew(SoSlider, SSlider)
+									.Style(&MenuStyle->SliderStyle)
+								.OnValueChanged(this, &SDemoGameOptionWidget::SoundSliderChanged)
+								]
+							]
+						]
 
-					//	+ SOverlay::Slot()
-					//	.HAlign(HAlign_Right)
-					//	.VAlign(VAlign_Center)
-					//	[
-					//		SAssignNew(SoTextBlock, STextBlock)
-					//		.Font(MenuStyle->Font_40)
-					//		.ColorAndOpacity(MenuStyle->FontColor_Black)
-					//	]
+						+ SOverlay::Slot()
+						.HAlign(HAlign_Right)
+						.VAlign(VAlign_Center)
+						[
+							SAssignNew(SoTextBlock, STextBlock)
+							.Font(MenuStyle->Font_40)
+							.ColorAndOpacity(MenuStyle->FontColor_Black)
+						]
 					]
 				]
 			]
@@ -245,11 +244,11 @@ void SDemoGameOptionWidget::StyleInitialize()
 			break;
 	}
 
-	//MuSlider->SetValue(DemoDataHandle::Get()->MusicVolume);
-	//SoSlider->SetValue(DemoDataHandle::Get()->SoundVolume);
-
-	//MuTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(DemoDataHandle::Get()->MusicVolume * 100)) + FString("%")));
-	//SoTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(DemoDataHandle::Get()->SoundVolume * 100)) + FString("%")));
+	MuSlider->SetValue(DemoDataHandle::Get()->MusicVolume);
+	SoSlider->SetValue(DemoDataHandle::Get()->SoundVolume);
+	// 设置 音量 音效 文本的百分比
+	MuTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(DemoDataHandle::Get()->MusicVolume * 100)) + FString("%")));
+	SoTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(DemoDataHandle::Get()->SoundVolume * 100)) + FString("%")));
 
 }
 
@@ -263,8 +262,8 @@ void SDemoGameOptionWidget::ZhCheckBoxStateChanged(ECheckBoxState NewState)
 	EnCheckBox->SetIsChecked(ECheckBoxState::Unchecked);
 	ZhCheckBox->SetIsChecked(ECheckBoxState::Checked);
 	//告诉数据控制类转换为中文
-	DemoDataHandle::Get()->ChangeLocalizationCulture(ECultureTeam::ZH);
-	//ChangeCulture.ExecuteIfBound(ECultureTeam::ZH);
+	//DemoDataHandle::Get()->ChangeLocalizationCulture(ECultureTeam::ZH);
+	ChangeCulture.ExecuteIfBound(ECultureTeam::ZH);			// ExecuteIfBound 执行委托(没太看明白，这个委托怎么改的值)
 }
 
 //英文CheckBox事件
@@ -274,24 +273,27 @@ void SDemoGameOptionWidget::EnCheckBoxStateChanged(ECheckBoxState NewState)
 	EnCheckBox->SetIsChecked(ECheckBoxState::Checked);
 	ZhCheckBox->SetIsChecked(ECheckBoxState::Unchecked);
 	//告诉数据控制类转换为中文
-	DemoDataHandle::Get()->ChangeLocalizationCulture(ECultureTeam::EN);
-	//ChangeCulture.ExecuteIfBound(ECultureTeam::EN);
+	//DemoDataHandle::Get()->ChangeLocalizationCulture(ECultureTeam::EN);
+	ChangeCulture.ExecuteIfBound(ECultureTeam::EN);
 }
 
-//void SDemoGameOptionWidget::MusicSliderChanged(float Value)
-//{
-//	//显示百分比
-//	MuTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(Value * 100)) + FString("%")));
-//	//修改音量
-//	//DemoDataHandle::Get()->ResetMenuVolume(Value, -1.f);
-//	ChangeVolume.ExecuteIfBound(Value, -1.f);
-//}
-//
-//void SDemoGameOptionWidget::SoundSliderChanged(float Value)
-//{
-//	//显示百分比
-//	SoTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(Value * 100)) + FString("%")));
-//	//修改音量
-//	//DemoDataHandle::Get()->ResetMenuVolume(-1.f, Value);
-//	ChangeVolume.ExecuteIfBound(-1.f, Value);
-//}
+// 音量变化事件 音乐
+void SDemoGameOptionWidget::MusicSliderChanged(float Value)
+{
+	//显示百分比， RoundToInt 取整
+	MuTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(Value * 100)) + FString("%")));
+
+	//修改音量
+	//DemoDataHandle::Get()->ResetMenuVolume(Value, -1.f);
+	ChangeVolume.ExecuteIfBound(Value, -1.f);
+}
+
+// 音量变化事件 音效
+void SDemoGameOptionWidget::SoundSliderChanged(float Value)
+{
+	//显示百分比
+	SoTextBlock->SetText(FText::FromString(FString::FromInt(FMath::RoundToInt(Value * 100)) + FString("%")));
+	//修改音量
+	//DemoDataHandle::Get()->ResetMenuVolume(-1.f, Value);
+	ChangeVolume.ExecuteIfBound(-1.f, Value);
+}
