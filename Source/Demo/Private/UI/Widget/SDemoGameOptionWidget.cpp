@@ -261,9 +261,8 @@ void SDemoGameOptionWidget::ZhCheckBoxStateChanged(ECheckBoxState NewState)
 	//设置被选中的框
 	EnCheckBox->SetIsChecked(ECheckBoxState::Unchecked);
 	ZhCheckBox->SetIsChecked(ECheckBoxState::Checked);
-	//告诉数据控制类转换为中文
-	//DemoDataHandle::Get()->ChangeLocalizationCulture(ECultureTeam::ZH);
-	ChangeCulture.ExecuteIfBound(ECultureTeam::ZH);			// ExecuteIfBound 执行委托(没太看明白，这个委托怎么改的值)
+	//DemoDataHandle::Get()->ChangeLocalizationCulture(ECultureTeam::ZH);		//告诉数据控制类转换为中文，放到 SDemoMenuWidget 委托里调用了
+	ChangeCulture.ExecuteIfBound(ECultureTeam::ZH);								// ExecuteIfBound 执行委托
 }
 
 //英文CheckBox事件
@@ -272,8 +271,7 @@ void SDemoGameOptionWidget::EnCheckBoxStateChanged(ECheckBoxState NewState)
 	//设置被选中的框
 	EnCheckBox->SetIsChecked(ECheckBoxState::Checked);
 	ZhCheckBox->SetIsChecked(ECheckBoxState::Unchecked);
-	//告诉数据控制类转换为中文
-	//DemoDataHandle::Get()->ChangeLocalizationCulture(ECultureTeam::EN);
+	//DemoDataHandle::Get()->ChangeLocalizationCulture(ECultureTeam::EN);		//告诉数据控制类转换为英文，放到 SDemoMenuWidget 委托里调用了
 	ChangeCulture.ExecuteIfBound(ECultureTeam::EN);
 }
 
