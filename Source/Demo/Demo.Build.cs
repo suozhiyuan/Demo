@@ -17,8 +17,8 @@ public class Demo : ModuleRules
             "InputCore",
             "Slate",                // Slate UI组件
             "SlateCore",            // Slate UI组件
-            //"Json",
-            //"JsonUtilities",
+            "Json",                 // Json 工具
+            "JsonUtilities",        // Json 工具
             //"UMG",
             //"AIModule",
             //"GameplayTasks",

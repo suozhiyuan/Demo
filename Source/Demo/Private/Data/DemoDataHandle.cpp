@@ -106,26 +106,31 @@ void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 //	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 //}
 
-//template<typename TEnum>
-//FString DemoDataHandle::GetEnumValueAsString(const FString& Name, TEnum Value)
-//{
-//	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, *Name, true);
-//	if (!EnumPtr) {
-//		return FString("InValid");
-//	}
-//	return EnumPtr->GetEnumName((int32)Value);
-//}
-//
-//template<typename TEnum>
-//TEnum DemoDataHandle::GetEnumValueFromString(const FString& Name, FString Value)
-//{
-//	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, *Name, true);
-//	if (!EnumPtr) {
-//		return TEnum(0);
-//	}
-//	return (TEnum)EnumPtr->GetIndexByName(FName(*FString(Value)));
-//}
-//
+
+// 根据enum类型获取字符串
+template<typename TEnum>
+FString DemoDataHandle::GetEnumValueAsString(const FString& Name, TEnum Value)
+{
+	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, *Name, true);		// 可通过 FindObject 从 ANY_PACKAGE 里查找 Name
+	if (!EnumPtr) 
+	{
+		return FString("InValid");
+	}
+	//return EnumPtr->GetEnumName((int32)Value);			// GetEnumName 已弃用
+	return EnumPtr->GetNameStringByIndex((int32)Value);
+}
+
+// 根据字符串获取Enum值
+template<typename TEnum>
+TEnum DemoDataHandle::GetEnumValueFromString(const FString& Name, FString Value)
+{
+	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, *Name, true);
+	if (!EnumPtr) {
+		return TEnum(0);
+	}
+	return (TEnum)EnumPtr->GetIndexByName(FName(*FString(Value)));		//GetIndexByName 获取enum中名称的索引，返回INDEX_NONE，如果没有找到名称，则可选地返回错误。
+}
+
 //void DemoDataHandle::InitRecordData()
 //{
 //	RecordName = FString("");
