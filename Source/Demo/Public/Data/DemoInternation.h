@@ -17,7 +17,7 @@ public:
 
 };
 
-#define LOCTEXT_NAMESPACE "DemoMenu"	//LocTextµÄÃüÃû¿Õ¼ä¿ªÊ¼£¬»òÕßÏÂ·½Ğ´³É DemoInternation::Register(NSLOCTEXT ("DemoMenu","Menu", "Menu"));
+#define LOCTEXT_NAMESPACE "DemoMenu"		//LocTextµÄÃüÃû¿Õ¼ä¿ªÊ¼£¬»òÕßÏÂ·½Ğ´³É DemoInternation::Register(NSLOCTEXT ("DemoMenu","Menu", "Menu"));
 
 // Ö÷½çÃæ
 DemoInternation::Register(LOCTEXT("Menu", "Menu"));								//²Ëµ¥
@@ -32,8 +32,8 @@ DemoInternation::Register(LOCTEXT("ChooseRecord", "ChooseRecord"));				//Ñ¡Ôñ´æµ
 DemoInternation::Register(LOCTEXT("RecordName", "RecordName"));						//´æµµÃû
 DemoInternation::Register(LOCTEXT("EnterGame", "EnterGame"));						//½øÈëÓÎÏ·
 DemoInternation::Register(LOCTEXT("EnterRecord", "EnterRecord"));					//½øÈë´æµµ
-DemoInternation::Register(LOCTEXT("RecordNameHint", "Input Record Name!");			//ÊäÈë´æµµÃû
-DemoInternation::Register(LOCTEXT("NameRepeatedHint", "Record Name Repeated!");		//´æµµÃû³ÆÖØ¸´
+DemoInternation::Register(LOCTEXT("RecordNameHint", "Input Record Name!"));			//ÊäÈë´æµµÃû
+DemoInternation::Register(LOCTEXT("NameRepeatedHint", "Record Name Repeated!"));		//´æµµÃû³ÆÖØ¸´
 
 // ÓÎÏ·ÉèÖÃ½çÃæ
 DemoInternation::Register(LOCTEXT("Chinese", "Chinese"));			//ÖĞÎÄ

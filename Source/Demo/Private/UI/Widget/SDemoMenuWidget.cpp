@@ -7,9 +7,8 @@
 #include "UI/Style/DemoStyle.h"
 #include "Widgets/Images/SImage.h"
 #include "Widgets/Input/SVectorInputBox.h"
-#include "UI/Widget/SDemoMenuItemWidget.h"
 #include "Data/DemoType.h"
-#include "Common/DemoHelper.h"
+#include "UI/Widget/SDemoGameOptionWidget.h"
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -50,7 +49,6 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 						.Image(&MenuStyle->LeftIconBrush)
 					]
 
-
 				+ SOverlay::Slot()
 					.HAlign(HAlign_Right)
 					.VAlign(VAlign_Center)
@@ -64,7 +62,6 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 					.HAlign(HAlign_Center)
 					.VAlign(VAlign_Top)
 					[
-
 						SNew(SBox)
 						.WidthOverride(400.f)
 						.HeightOverride(100.f)
@@ -91,21 +88,25 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 					[
 						SAssignNew(ContentBox, SVerticalBox)		// SVerticalBox 一个垂直框面板。更多信息请参见 SBoxPanel
 
-						/*
-						 * 在垂直列表中添加一个插槽，并且New一个 SDemoMenuItemWidget
-						 * 等同于在 ChildSlot 之外这样写
-						 * ContentBox->AddSlot()
-						 * [
-						 *		SNew(SDemoMenuItemWidget)
-						 * ];
-						 */
-						+SVerticalBox::Slot()						
+						+ SVerticalBox::Slot()
 						[
-							SNew(SDemoMenuItemWidget)
-							.ItemText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"))
-							.ItemType(EMenuItem::StartGame)
-							.OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked)
+							SNew(SDemoGameOptionWidget)
 						]
+						///*
+						// * 在垂直列表中添加一个插槽，并且New一个 SDemoMenuItemWidget
+						// * 等同于在 ChildSlot 之外这样写
+						// * ContentBox->AddSlot()
+						// * [
+						// *		SNew(SDemoMenuItemWidget)
+						// * ];
+						// */
+						//+SVerticalBox::Slot()						
+						//[
+						//	SNew(SDemoMenuItemWidget)
+						//	.ItemText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"))
+						//	.ItemType(EMenuItem::StartGame)
+						//	.OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked)
+						//]
 					]
 
 			]
@@ -124,7 +125,7 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 {
 	//TitleText->SetText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"));			// 修改标题文字
-	DemoHelper::Debug(FString("Test"), 5.f);
+	//DemoHelper::Debug(FString("Test"), 5.f);
 
 
 	////如果锁住了,直接return

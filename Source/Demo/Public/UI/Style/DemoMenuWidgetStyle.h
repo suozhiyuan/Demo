@@ -63,7 +63,6 @@ struct DEMO_API FDemoMenuStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = MenuItem)
 		FSlateBrush MenuItemBrush;
 
-
 	/*
 	* 60号字体
 	*/
@@ -82,51 +81,47 @@ struct DEMO_API FDemoMenuStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = Common)
 		FSlateFontInfo Font_30;
 
-	///*
-	//* 黑色颜色
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Common)
-	//	FLinearColor FontColor_White;
+	/*
+	* 黑色颜色
+	*/
+	UPROPERTY(EditAnywhere, Category = Common)
+		FLinearColor FontColor_White;
 
-	///*
-	//* 白色颜色
-	//*/
-	//UPROPERTY(EditAnywhere, Category = Common)
-	//	FLinearColor FontColor_Black;
+	/*
+	* 白色颜色
+	*/
+	UPROPERTY(EditAnywhere, Category = Common)
+		FLinearColor FontColor_Black;
 
+	/*
+	* GameSet的背景
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush GameOptionBGBrush;
 
-	///*
-	//* GameSet的背景
-	//*/
-	//UPROPERTY(EditAnywhere, Category = GameOption)
-	//	FSlateBrush GameOptionBGBrush;
+	/*
+	* CheckedBox 的 Brush 被选中
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush CheckedBoxBrush;
 
+	/*
+	* CheckedBox 的 Brush 不被选中
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush UnCheckedBoxBrush;
 
-	///*
-	//* CheckedBox的Brush被选中
-	//*/
-	//UPROPERTY(EditAnywhere, Category = GameOption)
-	//	FSlateBrush CheckedBoxBrush;
+	/*
+	* Slider的背景Brush
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSlateBrush SliderBarBrush;
 
-
-	///*
-	//* CheckedBox的Brush不被选中
-	//*/
-	//UPROPERTY(EditAnywhere, Category = GameOption)
-	//	FSlateBrush UnCheckedBoxBrush;
-
-
-	///*
-	//* Slider的背景Brush
-	//*/
-	//UPROPERTY(EditAnywhere, Category = GameOption)
-	//	FSlateBrush SliderBarBrush;
-
-	///*
-	//* 指定Slider的样式
-	//*/
-	//UPROPERTY(EditAnywhere, Category = GameOption)
-	//	FSliderStyle SliderStyle;
+	/*
+	* 指定Slider的样式
+	*/
+	UPROPERTY(EditAnywhere, Category = GameOption)
+		FSliderStyle SliderStyle;
 
 
 	///*

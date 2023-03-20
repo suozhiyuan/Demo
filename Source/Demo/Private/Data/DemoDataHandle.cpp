@@ -2,7 +2,7 @@
 
 
 #include "Data/DemoDataHandle.h"
-
+#include "Internationalization/Internationalization.h"
 #include "Data/DemoType.h"
 
 
@@ -10,6 +10,8 @@ TSharedPtr<DemoDataHandle> DemoDataHandle::DataInstance = NULL;
 
 DemoDataHandle::DemoDataHandle()
 {
+	CurrentCulture = ECultureTeam::ZH;
+
 	////初始化存档数据
 	//InitRecordData();
 	////初始化音乐数据

@@ -19,10 +19,9 @@ public:
 
 	static const ISlateStyle& Get();		// 给外部调用，获取这个单例
 
-
 private:
 
 	static TSharedRef<class FSlateStyleSet> Create();		//FSlateStyleSet类模板，一个包含外观的属性集合,用来注册样式
-	static TSharedPtr<FSlateStyleSet> DemoStyleInstance;	//作为单例模式，这个变量一定不能放到构造函数里取实现
+	static TSharedPtr<FSlateStyleSet> DemoStyleInstance;	//作为单例模式，这个变量一定不能放到构造函数里去实现
 
 };
