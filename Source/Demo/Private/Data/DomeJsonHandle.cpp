@@ -18,32 +18,37 @@ DemoJsonHandle::DemoJsonHandle()
 
 }
 
-//void DemoJsonHandle::RecordDataJsonRead(FString& Culture, float& MusicVolume, float& SoundVolume, TArray<FString>& RecordDataList)
-//{
-//	FString JsonValue;
-//	LoadStringFromFile(RecordDataFileName, RelativePath, JsonValue);
-//
-//	TArray<TSharedPtr<FJsonValue>> JsonParsed;
-//	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);
-//
-//	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed)) {
-//		//获取数据
-//		Culture = JsonParsed[0]->AsObject()->GetStringField(FString("Culture"));
-//		MusicVolume = JsonParsed[1]->AsObject()->GetNumberField(FString("MusicVolume"));
-//		SoundVolume = JsonParsed[2]->AsObject()->GetNumberField(FString("SoundVolume"));
-//		//获取存档数据
-//		TArray<TSharedPtr<FJsonValue>> RecordDataArray = JsonParsed[3]->AsObject()->GetArrayField(FString("RecordData"));
-//		for (int i = 0; i < RecordDataArray.Num(); ++i) {
-//			FString RecordDataName = RecordDataArray[i]->AsObject()->GetStringField(FString::FromInt(i));
-//			RecordDataList.Add(RecordDataName);
-//		}
-//	}
-//	else {
-//		DemoHelper::Debug(FString("Deserialize Failed"));
-//	}
-//
-//}
-//
+// 解析存档方法
+void DemoJsonHandle::RecordDataJsonRead(FString& Culture, float& MusicVolume, float& SoundVolume, TArray<FString>& RecordDataList)
+{
+	FString JsonValue;
+	LoadStringFromFile(RecordDataFileName, RelativePath, JsonValue);					// 读取Json文件到字符串
+
+	TArray<TSharedPtr<FJsonValue>> JsonParsed;														// 保存解析出来的数据
+	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);		// 将数据存到 TJsonReader 指针
+
+	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))		// 解析，成功返回true
+	{
+		//获取数据
+		Culture = JsonParsed[0]->AsObject()->GetStringField(FString("Culture"));					// GetStringField：通过 Key 获取一个 String 类型的变量
+		MusicVolume = JsonParsed[1]->AsObject()->GetNumberField(FString("MusicVolume"));			// GetNumberField：通过 Key 获取一个 Int 类型的变量
+		SoundVolume = JsonParsed[2]->AsObject()->GetNumberField(FString("SoundVolume"));
+
+		//获取存档数据
+		TArray<TSharedPtr<FJsonValue>> RecordDataArray = JsonParsed[3]->AsObject()->GetArrayField(FString("RecordData"));	// GetArrayField：通过 Key 获取一个 Array 类型的变量
+		for (int i = 0; i < RecordDataArray.Num(); ++i) 
+		{
+			FString RecordDataName = RecordDataArray[i]->AsObject()->GetStringField(FString::FromInt(i));	// FromInt：将整数转换为字符串
+			RecordDataList.Add(RecordDataName);
+		}
+	}
+	else 
+	{
+		DemoHelper::Debug(FString("Deserialize Failed"));
+	}
+
+}
+
 //void DemoJsonHandle::UpdateRecordData(FString Culture, float MusicVolume, float SoundVolume, TArray<FString>* RecordDataList)
 //{
 //	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);

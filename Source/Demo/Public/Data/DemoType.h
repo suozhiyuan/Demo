@@ -155,7 +155,8 @@ struct ShortcutContainer
 	}
 
 	//设置是否选中当前的物品,true就是要选中,返回物品类型
-	int SetChoosed(bool Option) {
+	int SetChoosed(bool Option)
+	{
 		if (Option)
 		{
 			ContainerBorder->SetBorderImage(ChoosedContainerBrush);
@@ -167,20 +168,24 @@ struct ShortcutContainer
 	}
 
 	//设置Index
-	ShortcutContainer* SetObject(int NewIndex) {
+	ShortcutContainer* SetObject(int NewIndex)
+	{
 		ObjectIndex = NewIndex;
 		ObjectImage->SetBorderImage((*ObjectBrushList)[ObjectIndex]);
 		return this;
 	}
 
 	//设置数量
-	ShortcutContainer* SetObjectNum(int Num = 0) {
+	ShortcutContainer* SetObjectNum(int Num = 0)
+	{
 		ObjectNum = Num;
 		//如果数量为0或者1,不显示数字
-		if (ObjectNum == 0 || ObjectNum == 1) {
+		if (ObjectNum == 0 || ObjectNum == 1) 
+		{
 			ObjectNumText->SetText(FString(""));
 		}
-		else {
+		else 
+		{
 			ObjectNumText->SetText(FString::FromInt(ObjectNum));
 		}
 		return this;

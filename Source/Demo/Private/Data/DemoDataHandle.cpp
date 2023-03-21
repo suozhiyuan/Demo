@@ -2,23 +2,24 @@
 
 
 #include "Data/DemoDataHandle.h"
+
+#include "Common/DemoHelper.h"
+#include "Data/DemoSingleton.h"
 #include "Internationalization/Internationalization.h"
 #include "Data/DemoType.h"
+#include "Data/DomeJsonHandle.h"
 
 
 TSharedPtr<DemoDataHandle> DemoDataHandle::DataInstance = NULL;
 
 DemoDataHandle::DemoDataHandle()
 {
-	// 初始化为中文（临时）
-	CurrentCulture = ECultureTeam::ZH;
-
 	//初始化存档数据
-	//InitRecordData();
+	InitRecordData();
+
 	//初始化音乐数据
 	//InitializedMenuAudio();
-	MusicVolume = 0.5f;	// 临时
-	SoundVolume = 0.5f;	// 临时
+
 }
 
 void DemoDataHandle::Initialize()
@@ -131,20 +132,30 @@ TEnum DemoDataHandle::GetEnumValueFromString(const FString& Name, FString Value)
 	return (TEnum)EnumPtr->GetIndexByName(FName(*FString(Value)));		//GetIndexByName 获取enum中名称的索引，返回INDEX_NONE，如果没有找到名称，则可选地返回错误。
 }
 
-//void DemoDataHandle::InitRecordData()
-//{
-//	RecordName = FString("");
-//	//获取语言
-//	FString Culture;
-//	//读取存档数据
-//	DemoSingleton<DemoJsonHandle>::Get()->RecordDataJsonRead(Culture, MusicVolume, SoundVolume, RecordDataList);
-//
-//	//初始化语言
-//	ChangeLocalizationCulture(GetEnumValueFromString<ECultureTeam>(FString("ECultureTeam"), Culture));
-//
-//
-//}
-//
+void DemoDataHandle::InitRecordData()
+{
+	//RecordName = FString("");
+
+	//获取语言
+	FString Culture;
+
+	//读取存档数据
+	DemoSingleton<DemoJsonHandle>::Get()->RecordDataJsonRead(Culture, MusicVolume, SoundVolume, RecordDataList);
+
+	//初始化语言
+	ChangeLocalizationCulture(GetEnumValueFromString<ECultureTeam>(FString("ECultureTeam"), Culture));
+
+	// 输出一下
+	DemoHelper::Debug(Culture + FString("--") + FString::SanitizeFloat(MusicVolume) + FString("--") + FString::SanitizeFloat(SoundVolume), 20.f);
+
+	// 循环读取 RecordDataList
+	for (TArray<FString>::TIterator It(RecordDataList); It; It++)
+	{
+		DemoHelper::Debug(*It, 20.f);
+	}
+}
+
+
 //void DemoDataHandle::InitializedMenuAudio()
 //{
 //	//获取MenuStyle

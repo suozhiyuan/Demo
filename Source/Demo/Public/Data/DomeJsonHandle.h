@@ -15,8 +15,8 @@ public:
 
 	DemoJsonHandle();
 
-	////解析存档方法
-	//void RecordDataJsonRead(FString& Culture, float& MusicVolume, float& SoundVolume, TArray<FString>& RecordDataList);
+	//解析存档方法
+	void RecordDataJsonRead(FString& Culture, float& MusicVolume, float& SoundVolume, TArray<FString>& RecordDataList);
 
 	////修改存档
 	//void UpdateRecordData(FString Culture, float MusicVolume, float SoundVolume, TArray<FString>* RecordDataList);

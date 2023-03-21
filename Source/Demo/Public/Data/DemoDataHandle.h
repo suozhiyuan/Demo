@@ -29,9 +29,13 @@ public:
 public:
 	//当前语言
 	ECultureTeam CurrentCulture;
+
 	//音量
 	float MusicVolume;
 	float SoundVolume;
+
+	//存档数据
+	TArray<FString> RecordDataList;
 
 private:
 	//创建单例
@@ -45,6 +49,30 @@ private:
 	template<typename TEnum>
 	TEnum GetEnumValueFromString(const FString& Name, FString Value);
 
+	//初始化存档数据
+	void InitRecordData();
+
+	////游戏数据初始化
+	//void InitializeGameData();
+
+//	//初始化Menu声音数据
+//	void InitializedMenuAudio();
+
+//	//初始化物品属性图
+//	void InitObjectAttr();
+
+//	//初始化资源属性图
+//	void InitResourceAttrMap();
+
+//	//初始化合成表图
+//	void InitCompoundTableMap();
+
+//	//初始化Game声音数据
+//	void InitializeGameAudio();
+
+	//	//添加新存档名
+//	void AddNewRecord();
+
 private:
 	static TSharedPtr<DemoDataHandle> DataInstance;
 
@@ -52,16 +80,6 @@ private:
 
 
 
-//	//游戏数据初始化
-//	void InitializeGameData();
-//	//添加新存档名
-//	void AddNewRecord();
-//
-	
-
-
-//	//存档数据
-//	TArray<FString> RecordDataList;
 //	//存档名
 //	FString RecordName;
 //	//物品属性图
@@ -72,27 +90,6 @@ private:
 //	TMap<int, TSharedPtr<ResourceAttribute>> ResourceAttrMap;
 //	//合成表图
 //	TArray<TSharedPtr<CompoundTable>> CompoundTableMap;
-//
-
-//
-
-
-
-
-//
-//	//初始化存档数据
-//	void InitRecordData();
-//	//初始化Menu声音数据
-//	void InitializedMenuAudio();
-//	//初始化物品属性图
-//	void InitObjectAttr();
-//	//初始化资源属性图
-//	void InitResourceAttrMap();
-//	//初始化合成表图
-//	void InitCompoundTableMap();
-//	//初始化Game声音数据
-//	void InitializeGameAudio();
-//
 
 
 
