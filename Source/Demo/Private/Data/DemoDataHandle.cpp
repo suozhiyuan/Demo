@@ -36,7 +36,7 @@ TSharedPtr<DemoDataHandle> DemoDataHandle::Get()
 	return DataInstance;
 }
 
-//修改中英文
+// 修改中英文
 void DemoDataHandle::ChangeLocalizationCulture(ECultureTeam Culture)
 {
 	switch (Culture)
@@ -51,8 +51,8 @@ void DemoDataHandle::ChangeLocalizationCulture(ECultureTeam Culture)
 	//赋值
 	CurrentCulture = Culture;
 
-	////更新存档数据
-	//DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
+	//更新存档数据
+	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 }
 
 TSharedRef<DemoDataHandle> DemoDataHandle::Create()
@@ -61,7 +61,7 @@ TSharedRef<DemoDataHandle> DemoDataHandle::Create()
 	return DataRef;
 }
 
-
+// 修改菜单音量
 void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 {
 	if (MusicVol > 0)
@@ -83,10 +83,9 @@ void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 		//	(*It)->VolumeMultiplier = SoundVolume;
 		//}
 	}
-
-
-	////更新存档数据
-	//DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
+	
+	//更新存档数据
+	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 }
 
 //void DemoDataHandle::ResetGameVolume(float MusicVol, float SoundVol)

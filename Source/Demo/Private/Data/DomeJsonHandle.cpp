@@ -49,60 +49,61 @@ void DemoJsonHandle::RecordDataJsonRead(FString& Culture, float& MusicVolume, fl
 
 }
 
-//void DemoJsonHandle::UpdateRecordData(FString Culture, float MusicVolume, float SoundVolume, TArray<FString>* RecordDataList)
-//{
-//	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
-//
-//	TArray<TSharedPtr<FJsonValue>> BaseDataArray;
-//
-//	TSharedPtr<FJsonObject> CultureObject = MakeShareable(new FJsonObject);
-//	CultureObject->SetStringField("Culture", Culture);
-//	TSharedPtr<FJsonValueObject> CultureValue = MakeShareable(new FJsonValueObject(CultureObject));
-//
-//	TSharedPtr<FJsonObject> MusicVolumeObject = MakeShareable(new FJsonObject);
-//	MusicVolumeObject->SetNumberField("MusicVolume", MusicVolume);
-//	TSharedPtr<FJsonValueObject> MusicVolumeValue = MakeShareable(new FJsonValueObject(MusicVolumeObject));
-//
-//	TSharedPtr<FJsonObject> SoundVolumeObject = MakeShareable(new FJsonObject);
-//	SoundVolumeObject->SetNumberField("SoundVolume", SoundVolume);
-//	TSharedPtr<FJsonValueObject> SoundVolumeValue = MakeShareable(new FJsonValueObject(SoundVolumeObject));
-//
-//	TArray<TSharedPtr<FJsonValue>> RecordDataArray;
-//
-//	for (int i = 0; i < RecordDataList->Num(); ++i) {
-//		TSharedPtr<FJsonObject> RecordItem = MakeShareable(new FJsonObject);
-//		RecordItem->SetStringField(FString::FromInt(i), (*RecordDataList)[i]);
-//		TSharedPtr<FJsonValueObject> RecordDataValue = MakeShareable(new FJsonValueObject(RecordItem));
-//		RecordDataArray.Add(RecordDataValue);
-//	}
-//
-//	TSharedPtr<FJsonObject> RecordDataObject = MakeShareable(new FJsonObject);
-//	RecordDataObject->SetArrayField("RecordData", RecordDataArray);
-//	TSharedPtr<FJsonValueObject> RecordDataValue = MakeShareable(new FJsonValueObject(RecordDataObject));
-//
-//	BaseDataArray.Add(CultureValue);
-//	BaseDataArray.Add(MusicVolumeValue);
-//	BaseDataArray.Add(SoundVolumeValue);
-//	BaseDataArray.Add(RecordDataValue);
-//
-//	JsonObject->SetArrayField("T", BaseDataArray);
-//
-//	FString JsonStr;
-//	GetFStringInJsonData(JsonObject, JsonStr);
-//
-//	//DemoHelper::Debug(FString("Origin Str : " + JsonStr), 60.f);
-//
-//	//去掉多余字符
-//	JsonStr.RemoveAt(0, 8);
-//	JsonStr.RemoveFromEnd(FString("}"));
-//
-//	//DemoHelper::Debug(FString("Final Str : " + JsonStr), 60.f);
-//
-//	//写入文件
-//	WriteFileWithJsonData(JsonStr, RelativePath, RecordDataFileName);
-//
-//}
-//
+// 修改存档
+void DemoJsonHandle::UpdateRecordData(FString Culture, float MusicVolume, float SoundVolume, TArray<FString>* RecordDataList)
+{
+	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
+
+	TArray<TSharedPtr<FJsonValue>> BaseDataArray;
+
+	TSharedPtr<FJsonObject> CultureObject = MakeShareable(new FJsonObject);
+	CultureObject->SetStringField("Culture", Culture);				// SetStringField:添加一个名为 参数1 的字段，值为 参数2 字符串类型
+	TSharedPtr<FJsonValueObject> CultureValue = MakeShareable(new FJsonValueObject(CultureObject));
+
+	TSharedPtr<FJsonObject> MusicVolumeObject = MakeShareable(new FJsonObject);
+	MusicVolumeObject->SetNumberField("MusicVolume", MusicVolume);			// SetNumberField :添加一个名为 参数1 的字段，值为 参数2 数字类型
+	TSharedPtr<FJsonValueObject> MusicVolumeValue = MakeShareable(new FJsonValueObject(MusicVolumeObject));
+
+	TSharedPtr<FJsonObject> SoundVolumeObject = MakeShareable(new FJsonObject);
+	SoundVolumeObject->SetNumberField("SoundVolume", SoundVolume);
+	TSharedPtr<FJsonValueObject> SoundVolumeValue = MakeShareable(new FJsonValueObject(SoundVolumeObject));
+
+	TArray<TSharedPtr<FJsonValue>> RecordDataArray;
+	for (int i = 0; i < RecordDataList->Num(); ++i) {
+		TSharedPtr<FJsonObject> RecordItem = MakeShareable(new FJsonObject);
+		RecordItem->SetStringField(FString::FromInt(i), (*RecordDataList)[i]);
+		TSharedPtr<FJsonValueObject> RecordDataValue = MakeShareable(new FJsonValueObject(RecordItem));
+		RecordDataArray.Add(RecordDataValue);
+	}
+
+	// RecordDataArray 前方的头指针 RecordData
+	TSharedPtr<FJsonObject> RecordDataObject = MakeShareable(new FJsonObject);
+	RecordDataObject->SetArrayField("RecordData", RecordDataArray);		// SetArrayField :添加一个名为 参数1 的字段，值为 参数2 数组类型
+	TSharedPtr<FJsonValueObject> RecordDataValue = MakeShareable(new FJsonValueObject(RecordDataObject));
+
+	// 添加进总数组
+	BaseDataArray.Add(CultureValue);
+	BaseDataArray.Add(MusicVolumeValue);
+	BaseDataArray.Add(SoundVolumeValue);
+	BaseDataArray.Add(RecordDataValue);
+	JsonObject->SetArrayField("T", BaseDataArray);
+
+	// FJsonObject 转换为 Json 格式的字符串
+	FString JsonStr;
+	GetFStringInJsonData(JsonObject, JsonStr);
+
+	DemoHelper::Debug(FString("Origin Str : " + JsonStr), 60.f);
+
+	//去掉多余字符
+	JsonStr.RemoveAt(0, 8);					// 前8个字符
+	JsonStr.RemoveFromEnd(FString("}"));		// 后边的 大括号
+
+	DemoHelper::Debug(FString("Final Str : " + JsonStr), 60.f);
+
+	//将 Json 格式的字符串 写入 Json 文件
+	WriteFileWithJsonData(JsonStr, RelativePath, RecordDataFileName);
+}
+
 //void DemoJsonHandle::ObjectAttrJsonRead(TMap<int, TSharedPtr<ObjectAttribute>>& ObjectAttrMap)
 //{
 //	FString JsonValue;
@@ -249,37 +250,44 @@ bool DemoJsonHandle::LoadStringFromFile(const FString& FileName, const FString& 
 	return false;
 }
 
-//bool DemoJsonHandle::GetFStringInJsonData(const TSharedPtr<FJsonObject>& JsonObj, FString& JsonStr)
-//{
-//	if (JsonObj.IsValid() && JsonObj->Values.Num() > 0)
-//	{
-//		TSharedRef<TJsonWriter<TCHAR>> JsonWriter = TJsonWriterFactory<TCHAR>::Create(&JsonStr);
-//		FJsonSerializer::Serialize(JsonObj.ToSharedRef(), JsonWriter);
-//		return true;
-//	}
-//	return false;
-//}
-//
-//bool DemoJsonHandle::WriteFileWithJsonData(const FString& JsonStr, const FString& RelaPath, const FString& FileName)
-//{
-//	if (!JsonStr.IsEmpty()) {
-//		if (!FileName.IsEmpty()) {
-//			FString AbsoPath = FPaths::GameContentDir() + RelaPath + FileName;
-//			//保存
-//			if (FFileHelper::SaveStringToFile(JsonStr, *AbsoPath)) {
-//
-//				return true;
-//			}
-//			else {
-//				DemoHelper::Debug(FString("Save") + AbsoPath + FString("-->Failed"), 10.f);
-//			}
-//		}
-//
-//	}
-//	return false;
-//}
-//
-//
+// FJsonObject转换为Json格式的字符串
+bool DemoJsonHandle::GetFStringInJsonData(const TSharedPtr<FJsonObject>& JsonObj, FString& JsonStr)
+{
+	if (JsonObj.IsValid() && JsonObj->Values.Num() > 0)
+	{
+		TSharedRef<TJsonWriter<TCHAR>> JsonWriter = TJsonWriterFactory<TCHAR>::Create(&JsonStr);
+		FJsonSerializer::Serialize(JsonObj.ToSharedRef(), JsonWriter);
+		return true;
+	}
+	return false;
+}
+
+// 保存字符串到文件
+bool DemoJsonHandle::WriteFileWithJsonData(const FString& JsonStr, const FString& RelaPath, const FString& FileName)
+{
+	if (!JsonStr.IsEmpty()) 
+	{
+		if (!FileName.IsEmpty()) 
+		{
+			FString AbsoPath = FPaths::ProjectContentDir() + RelaPath + FileName;
+
+			//保存
+			if (FFileHelper::SaveStringToFile(JsonStr, *AbsoPath))		// SaveStringToFile 将FString写入文件
+			{
+
+				return true;
+			}
+			else 
+			{
+				DemoHelper::Debug(FString("Save") + AbsoPath + FString("-->Failed"), 10.f);
+			}
+		}
+
+	}
+	return false;
+}
+
+
 //EObjectType::Type DemoJsonHandle::StringToObjectType(const FString ArgStr)
 //{
 //	if (ArgStr.Equals(FString("Normal"))) return EObjectType::Normal;
