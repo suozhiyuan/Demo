@@ -12,10 +12,32 @@
 #include "UI/Widget/SDemoGameOptionWidget.h"
 #include "UI/Widget/SDemoNewGameWidget.h"
 #include "UI/Widget/SDemoChooseRecordWidget.h"
+#include "UI/Widget/SDemoMenuItemWidget.h"
 
+struct MenuGroup
+{
+	//菜单标题
+	FText MenuName;
+
+	//菜单高度
+	float MenuHeight;
+
+	//下属组件
+	TArray<TSharedPtr<SCompoundWidget>> ChildWidget;
+
+	//构造函数
+	MenuGroup(const FText Name, const float Height, TArray<TSharedPtr<SCompoundWidget>>* Children)
+	{
+		MenuName = Name;
+		MenuHeight = Height;
+		for (TArray<TSharedPtr<SCompoundWidget>>::TIterator It(*Children); It; ++It)
+		{
+			ChildWidget.Add(*It);
+		}
+	}
+};
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
-
 void SDemoMenuWidget::Construct(const FArguments& InArgs)
 {
 
@@ -89,15 +111,13 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 					.Padding(FMargin(0.f, 130.f, 0.f, 0.f))
 					[
 						SAssignNew(ContentBox, SVerticalBox)		// SVerticalBox 一个垂直框面板。更多信息请参见 SBoxPanel
-						+ SVerticalBox::Slot()
-							[
-								//SNew(SDemoGameOptionWidget)
-								//.ChangeCulture(this, &SDemoMenuWidget::ChangeCulture)			// SDemoGameOptionWidget 下的委托
-								//.ChangeVolume(this, &SDemoMenuWidget::ChangeVolume)			// SDemoGameOptionWidget 下的委托
 
-								//SNew(SDemoNewGameWidget)
-								SNew(SDemoChooseRecordWidget)
-							]
+						//+ SVerticalBox::Slot()
+						//	[
+						//		//SNew(SDemoGameOptionWidget)
+						//		//.ChangeCulture(this, &SDemoMenuWidget::ChangeCulture)			// SDemoGameOptionWidget 下的委托
+						//		//.ChangeVolume(this, &SDemoMenuWidget::ChangeVolume)			// SDemoGameOptionWidget 下的委托
+						//	]
 						///*
 						// * 在垂直列表中添加一个插槽，并且New一个 SDemoMenuItemWidget
 						// * 等同于在 ChildSlot 之外这样写
@@ -233,9 +253,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 //		break;
 //	}
 //}
-//
-//
-//
+
 
 // 修改语言
 void SDemoMenuWidget::ChangeCulture(ECultureTeam Culture)
@@ -249,87 +267,91 @@ void SDemoMenuWidget::ChangeVolume(const float MusicVolume, const float SoundVol
 	DemoDataHandle::Get()->ResetMenuVolume(MusicVolume, SoundVolume);
 }
 
-//
-//void SDemoMenuWidget::InitializedMenuList()
-//{
-//
-//	//实例化主界面
-//	TArray<TSharedPtr<SCompoundWidget>> MainMenuList;
-//	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame")).ItemType(EMenuItem::StartGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GameOption", "GameOption")).ItemType(EMenuItem::GameOption).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "QuitGame", "QuitGame")).ItemType(EMenuItem::QuitGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//
-//	MenuMap.Add(EMenuType::MainMenu, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "Menu", "Menu"), 510.f, &MainMenuList)));
-//
-//
-//	//开始游戏界面
-//	TArray<TSharedPtr<SCompoundWidget>> StartGameList;
-//	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "NewGame", "NewGame")).ItemType(EMenuItem::NewGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "LoadRecord", "LoadRecord")).ItemType(EMenuItem::LoadRecord).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::StartGameGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//
-//	MenuMap.Add(EMenuType::StartGame, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"), 510.f, &StartGameList)));
-//
-//
-//	//游戏设置界面
-//	TArray<TSharedPtr<SCompoundWidget>> GameOptionList;
-//	//实例化游戏设置的Widget
-//	SAssignNew(GameOptionWidget, SDemoGameOptionWidget)
-//		.ChangeCulture(this, &SDemoMenuWidget::ChangeCulture)
-//		.ChangeVolume(this, &SDemoMenuWidget::ChangeVolume);
-//	//添加控件到数组
-//	GameOptionList.Add(GameOptionWidget);
-//	GameOptionList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::GameOptionGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//
-//	MenuMap.Add(EMenuType::GameOption, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "GameOption", "GameOption"), 610.f, &GameOptionList)));
-//
-//
-//	//开始新游戏界面
-//	TArray<TSharedPtr<SCompoundWidget>> NewGameList;
-//	SAssignNew(NewGameWidget, SDemoNewGameWidget);
-//	NewGameList.Add(NewGameWidget);
-//	NewGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "EnterGame", "EnterGame")).ItemType(EMenuItem::EnterGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//	NewGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::NewGameGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//
-//	MenuMap.Add(EMenuType::NewGame, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "NewGame", "NewGame"), 510.f, &NewGameList)));
-//
-//	//选择存档界面
-//	TArray<TSharedPtr<SCompoundWidget>> ChooseRecordList;
-//	SAssignNew(ChooseRecordWidget, SDemoChooseRecordWidget);
-//	ChooseRecordList.Add(ChooseRecordWidget);
-//	ChooseRecordList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "EnterRecord", "EnterRecord")).ItemType(EMenuItem::EnterRecord).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//	ChooseRecordList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::ChooseRecordGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
-//
-//	MenuMap.Add(EMenuType::ChooseRecord, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "LoadRecord", "LoadRecord"), 510.f, &ChooseRecordList)));
-//
-//
-//}
-//
-//void SDemoMenuWidget::ChooseWidget(EMenuType::Type WidgetType)
-//{
-//	//定义是否已经显示菜单
-//	IsMenuShow = WidgetType != EMenuType::None;
-//	//移出所有组件
-//	ContentBox->ClearChildren();
-//	//如果Menutype是None
-//	if (WidgetType == EMenuType::None) return;
-//	//循环添加组件
-//	for (TArray<TSharedPtr<SCompoundWidget>>::TIterator It((*MenuMap.Find(WidgetType))->ChildWidget); It; ++It) {
-//		ContentBox->AddSlot().AutoHeight()[(*It)->AsShared()];
-//	}
-//	//更改标题
-//	TitleText->SetText((*MenuMap.Find(WidgetType))->MenuName);
-//
-//}
-//
-////如果不修改高度,NewHeight转入-1
-//void SDemoMenuWidget::ResetWidgetSize(float NewWidget, float NewHeight)
-//{
-//	RootSizeBox->SetWidthOverride(NewWidget);
-//	if (NewHeight < 0) return;
-//	RootSizeBox->SetHeightOverride(NewHeight);
-//}
-//
+
+void SDemoMenuWidget::InitializedMenuList()
+{
+	// 实例化主界面
+	TArray<TSharedPtr<SCompoundWidget>> MainMenuList;		// 主界面中各个按钮的实例
+	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame")).ItemType(EMenuItem::StartGame).OnClicked(this, 	&SDemoMenuWidget::MenuItemOnClicked));
+	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GameOption", "GameOption")).ItemType(EMenuItem::GameOption).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+	MainMenuList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "QuitGame", "QuitGame")).ItemType(EMenuItem::QuitGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::MainMenu, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "Menu", "Menu"), 510.f, &MainMenuList)));
+
+
+	// 开始游戏界面
+	TArray<TSharedPtr<SCompoundWidget>> StartGameList;
+	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "NewGame", "NewGame")).ItemType(EMenuItem::NewGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "LoadRecord", "LoadRecord")).ItemType(EMenuItem::LoadRecord).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+	StartGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::StartGameGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::StartGame, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"), 510.f, &StartGameList)));
+
+
+	// 游戏设置界面
+	TArray<TSharedPtr<SCompoundWidget>> GameOptionList;
+	// 实例化游戏设置的Widget
+	SAssignNew(GameOptionWidget, SDemoGameOptionWidget).ChangeCulture(this, &SDemoMenuWidget::ChangeCulture).ChangeVolume(this, &SDemoMenuWidget::ChangeVolume);
+	GameOptionList.Add(GameOptionWidget);
+	GameOptionList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::GameOptionGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::GameOption, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "GameOption", "GameOption"), 610.f, &GameOptionList)));
+
+
+	// 开始新游戏界面
+	TArray<TSharedPtr<SCompoundWidget>> NewGameList;
+	SAssignNew(NewGameWidget, SDemoNewGameWidget);
+	NewGameList.Add(NewGameWidget);
+	NewGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "EnterGame", "EnterGame")).ItemType(EMenuItem::EnterGame).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+	NewGameList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::NewGameGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::NewGame, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "NewGame", "NewGame"), 510.f, &NewGameList)));
+
+	// 选择存档界面
+	TArray<TSharedPtr<SCompoundWidget>> ChooseRecordList;
+	SAssignNew(ChooseRecordWidget, SDemoChooseRecordWidget);
+	ChooseRecordList.Add(ChooseRecordWidget);
+	ChooseRecordList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "EnterRecord", "EnterRecord")).ItemType(EMenuItem::EnterRecord).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+	ChooseRecordList.Add(SNew(SDemoMenuItemWidget).ItemText(NSLOCTEXT("DemoMenu", "GoBack", "GoBack")).ItemType(EMenuItem::ChooseRecordGoBack).OnClicked(this, &SDemoMenuWidget::MenuItemOnClicked));
+
+	MenuMap.Add(EMenuType::ChooseRecord, MakeShareable(new MenuGroup(NSLOCTEXT("DemoMenu", "LoadRecord", "LoadRecord"), 510.f, &ChooseRecordList)));
+
+	// 临时选择主菜单
+	ChooseWidget(EMenuType::MainMenu);
+}
+
+void SDemoMenuWidget::ChooseWidget(EMenuType::Type WidgetType)
+{
+	////定义是否已经显示菜单
+	//IsMenuShow = WidgetType != EMenuType::None;
+
+	// 移出所有组件
+	ContentBox->ClearChildren();
+
+	// 如果 Menutype 是 None
+	if (WidgetType == EMenuType::None) return;
+
+	// 循环添加组件
+	for (TArray<TSharedPtr<SCompoundWidget>>::TIterator It((*MenuMap.Find(WidgetType))->ChildWidget); It; ++It) 
+	{
+		ContentBox->AddSlot().AutoHeight()[(*It)->AsShared()];			// 回头好好理解下
+	}
+
+	// 更改标题
+	TitleText->SetText((*MenuMap.Find(WidgetType))->MenuName);
+
+	// 临时修改高度
+	ResetWidgetSize(600.f, (*MenuMap.Find(WidgetType))->MenuHeight);
+}
+
+// 修改菜单的大小，如果不修改高度，NewHeight转入-1
+void SDemoMenuWidget::ResetWidgetSize(float NewWidget, float NewHeight)
+{
+	RootSizeBox->SetWidthOverride(NewWidget);
+	if (NewHeight < 0) return;
+	RootSizeBox->SetHeightOverride(NewHeight);
+}
+
 //void SDemoMenuWidget::InitializedAnimation()
 //{
 //	//开始延时
@@ -349,7 +371,7 @@ void SDemoMenuWidget::ChangeVolume(const float MusicVolume, const float SoundVol
 //	//设置动画播放器跳到结尾,也就是1
 //	MenuAnimation.JumpToEnd();
 //}
-//
+
 //void SDemoMenuWidget::PlayClose(EMenuType::Type NewMenu)
 //{
 //	//设置新的界面

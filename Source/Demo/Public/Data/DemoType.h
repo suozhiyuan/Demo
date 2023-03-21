@@ -14,7 +14,6 @@ enum class ECultureTeam : uint8 {
 	ZH
 };
 
-
 //Menu按钮的类型
 namespace EMenuItem
 {
@@ -35,18 +34,17 @@ namespace EMenuItem
 	};
 }
 
-
 //Menu界面类型
 namespace EMenuType
 {
 	enum Type
 	{
 		None,
-		MainMenu,
-		StartGame,
-		GameOption,
-		NewGame,
-		ChooseRecord
+		MainMenu,				// 主菜单
+		StartGame,				// 开始游戏戏菜单
+		GameOption,				// 游戏设置菜单
+		NewGame,				// 新游戏菜单
+		ChooseRecord			// 选择存档菜单
 	};
 }
 
@@ -55,9 +53,9 @@ namespace EMenuAnim
 {
 	enum Type
 	{
-		Stop, //停止动画
-		Close, //关闭Menu
-		Open  //打开Menu
+		Stop,					// 停止动画
+		Close,					// 关闭Menu
+		Open					// 打开Menu
 	};
 }
 
@@ -69,7 +67,6 @@ namespace EGameViewMode {
 		Third
 	};
 }
-
 
 //上半身动画的状态
 namespace EUpperBody
@@ -85,7 +82,6 @@ namespace EUpperBody
 	};
 }
 
-
 //物品类型
 namespace EObjectType
 {
@@ -97,7 +93,6 @@ namespace EObjectType
 		Weapon//武器,剑
 	};
 }
-
 
 //物品属性结构体
 struct ObjectAttribute
@@ -123,7 +118,6 @@ struct ObjectAttribute
 	}
 
 };
-
 
 //快捷栏容器结构体
 struct ShortcutContainer
@@ -190,11 +184,7 @@ struct ShortcutContainer
 		}
 		return this;
 	}
-
-
 };
-
-
 
 //资源类型
 namespace EResourceType {
@@ -205,7 +195,6 @@ namespace EResourceType {
 		Animal
 	};
 }
-
 
 //资源属性结构体
 struct ResourceAttribute
@@ -231,10 +220,7 @@ struct ResourceAttribute
 			FlobObjectInfo.Add(FlobObjectInfoItem);
 		}
 	}
-
-
 };
-
 
 //Game界面分类
 namespace EGameUIType
@@ -299,7 +285,6 @@ struct CompoundTable
 		}
 	}
 
-
 	//根据输入的的物品ID和输出ID序列以及生产数量查询出是否匹配这个合成表并且输出消耗数组
 	bool DetectExpend(TArray<int>* TableMap, int ProductNum, TArray<int>& ExpendMap)
 	{
@@ -328,11 +313,7 @@ struct CompoundTable
 		//返回是否匹配
 		return IsMatch;
 	}
-
-
 };
-
-
 
 //敌人AI状态
 UENUM(BlueprintType)
@@ -347,9 +328,6 @@ enum  class EEnemyAIState : uint8
 	ES_Dead      UMETA(DisplayName = "Dead")
 };
 
-
-
-
 //敌人攻击状态
 UENUM(BlueprintType)
 enum class EEnemyAttackType : uint8
@@ -358,7 +336,6 @@ enum class EEnemyAttackType : uint8
 	EA_Dash     UMETA(DisplayName = "Dash"),
 	EA_Pursuit  UMETA(DisplayName = "Pursuit")
 };
-
 
 //小地图缩放状态
 namespace EMiniMapSizeMode
