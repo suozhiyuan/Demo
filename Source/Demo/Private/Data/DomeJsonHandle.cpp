@@ -92,13 +92,13 @@ void DemoJsonHandle::UpdateRecordData(FString Culture, float MusicVolume, float 
 	FString JsonStr;
 	GetFStringInJsonData(JsonObject, JsonStr);
 
-	DemoHelper::Debug(FString("Origin Str : " + JsonStr), 60.f);
+	//DemoHelper::Debug(FString("Origin Str : " + JsonStr), 60.f);
 
 	//去掉多余字符
 	JsonStr.RemoveAt(0, 8);					// 前8个字符
 	JsonStr.RemoveFromEnd(FString("}"));		// 后边的 大括号
 
-	DemoHelper::Debug(FString("Final Str : " + JsonStr), 60.f);
+	//DemoHelper::Debug(FString("Final Str : " + JsonStr), 60.f);
 
 	//将 Json 格式的字符串 写入 Json 文件
 	WriteFileWithJsonData(JsonStr, RelativePath, RecordDataFileName);

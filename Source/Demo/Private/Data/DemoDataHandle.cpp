@@ -133,7 +133,7 @@ TEnum DemoDataHandle::GetEnumValueFromString(const FString& Name, FString Value)
 
 void DemoDataHandle::InitRecordData()
 {
-	//RecordName = FString("");
+	RecordName = FString("");
 
 	//ªÒ»°”Ô—‘
 	FString Culture;

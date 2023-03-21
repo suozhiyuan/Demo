@@ -10,6 +10,8 @@
 #include "Widgets/Input/SVectorInputBox.h"
 #include "Data/DemoType.h"
 #include "UI/Widget/SDemoGameOptionWidget.h"
+#include "UI/Widget/SDemoNewGameWidget.h"
+#include "UI/Widget/SDemoChooseRecordWidget.h"
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -76,7 +78,6 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 								.Font(DemoStyle::Get().GetFontStyle("MenuItemFont"))
 								.Font(MenuStyle->Font_60)
 								.Text(NSLOCTEXT("DemoMenu", "Menu", "Menu"))
-								//.Text(FText::FromString("ABC"))
 							]
 						]
 
@@ -90,9 +91,12 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 						SAssignNew(ContentBox, SVerticalBox)		// SVerticalBox 一个垂直框面板。更多信息请参见 SBoxPanel
 						+ SVerticalBox::Slot()
 							[
-								SNew(SDemoGameOptionWidget)
-								.ChangeCulture(this, &SDemoMenuWidget::ChangeCulture)			// SDemoGameOptionWidget 下的委托
-								.ChangeVolume(this, &SDemoMenuWidget::ChangeVolume)			// SDemoGameOptionWidget 下的委托
+								//SNew(SDemoGameOptionWidget)
+								//.ChangeCulture(this, &SDemoMenuWidget::ChangeCulture)			// SDemoGameOptionWidget 下的委托
+								//.ChangeVolume(this, &SDemoMenuWidget::ChangeVolume)			// SDemoGameOptionWidget 下的委托
+
+								//SNew(SDemoNewGameWidget)
+								SNew(SDemoChooseRecordWidget)
 							]
 						///*
 						// * 在垂直列表中添加一个插槽，并且New一个 SDemoMenuItemWidget

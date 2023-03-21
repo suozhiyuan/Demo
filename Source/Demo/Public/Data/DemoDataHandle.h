@@ -37,6 +37,9 @@ public:
 	//存档数据
 	TArray<FString> RecordDataList;
 
+	//存档名
+	FString RecordName;
+
 private:
 	//创建单例
 	static TSharedRef<DemoDataHandle> Create();
@@ -80,8 +83,6 @@ private:
 
 
 
-//	//存档名
-//	FString RecordName;
 //	//物品属性图
 //	TMap<int, TSharedPtr<ObjectAttribute>> ObjectAttrMap;
 //	//物品贴图资源数组
