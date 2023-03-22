@@ -8,17 +8,19 @@
 #include "Internationalization/Internationalization.h"
 #include "Data/DemoType.h"
 #include "Data/DomeJsonHandle.h"
-
+#include "UI/Style/DemoStyle.h"
+#include "UI/Style/DemoMenuWidgetStyle.h"
+#include "Sound/SoundCue.h"
 
 TSharedPtr<DemoDataHandle> DemoDataHandle::DataInstance = NULL;
 
 DemoDataHandle::DemoDataHandle()
 {
-	//初始化存档数据
+	// 初始化存档数据
 	InitRecordData();
 
-	//初始化音乐数据
-	//InitializedMenuAudio();
+	// 初始化音乐数据
+	InitializedMenuAudio();
 
 }
 
@@ -67,23 +69,22 @@ void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 	if (MusicVol > 0)
 	{
 		MusicVolume = MusicVol;
-		////循环设置背景音量
-		//for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Music"))->CreateIterator()); It; ++It)
-		//{
-		//	//设置音量
-		//	(*It)->VolumeMultiplier = MusicVolume;
-		//}
+		//循环设置背景音量
+		for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Music"))->CreateIterator()); It; ++It)
+		{
+			//设置音量
+			(*It)->VolumeMultiplier = MusicVolume;			// VolumeMultiplier 设置音量
+		}
 	}
 	if (SoundVol > 0)
 	{
 		SoundVolume = SoundVol;
-		//for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Sound"))->CreateIterator()); It; ++It)
-		//{
-		//	//指针的指针
-		//	(*It)->VolumeMultiplier = SoundVolume;
-		//}
+		for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Sound"))->CreateIterator()); It; ++It)
+		{
+			//指针的指针
+			(*It)->VolumeMultiplier = SoundVolume;
+		}
 	}
-	
 	//更新存档数据
 	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 }
@@ -155,28 +156,28 @@ void DemoDataHandle::InitRecordData()
 }
 
 
-//void DemoDataHandle::InitializedMenuAudio()
-//{
-//	//获取MenuStyle
-//	MenuStyle = &DemoStyle::Get().GetWidgetStyle<FDemoMenuStyle>("BPDemoMenuStyle");
-//
-//	//添加资源文件到资源列表
-//	TArray<USoundCue*> MusicList;
-//	MusicList.Add(Cast<USoundCue>(MenuStyle->MenuBackgroundMusic.GetResourceObject()));
-//
-//	TArray<USoundCue*> SoundList;
-//	SoundList.Add(Cast<USoundCue>(MenuStyle->StartGameSound.GetResourceObject()));
-//	SoundList.Add(Cast<USoundCue>(MenuStyle->ExitGameSound.GetResourceObject()));
-//	SoundList.Add(Cast<USoundCue>(MenuStyle->MenuItemChangeSound.GetResourceObject()));
-//
-//	//添加资源到Map
-//	MenuAudioResource.Add(FString("Music"), MusicList);
-//	MenuAudioResource.Add(FString("Sound"), SoundList);
-//
-//	//重置一下声音
-//	ResetMenuVolume(MusicVolume, SoundVolume);
-//}
-//
+void DemoDataHandle::InitializedMenuAudio()
+{
+	//获取MenuStyle
+	MenuStyle = &DemoStyle::Get().GetWidgetStyle<FDemoMenuStyle>("BPDemoMenuStyle");
+
+	//添加资源文件到资源列表
+	TArray<USoundCue*> MusicList;
+	MusicList.Add(Cast<USoundCue>(MenuStyle->MenuBackgroundMusic.GetResourceObject()));
+
+	TArray<USoundCue*> SoundList;
+	SoundList.Add(Cast<USoundCue>(MenuStyle->StartGameSound.GetResourceObject()));
+	SoundList.Add(Cast<USoundCue>(MenuStyle->ExitGameSound.GetResourceObject()));
+	SoundList.Add(Cast<USoundCue>(MenuStyle->MenuItemChangeSound.GetResourceObject()));
+
+	//添加资源到Map
+	MenuAudioResource.Add(FString("Music"), MusicList);
+	MenuAudioResource.Add(FString("Sound"), SoundList);
+
+	//重置一下声音
+	ResetMenuVolume(MusicVolume, SoundVolume);
+}
+
 //void DemoDataHandle::InitializeGameData()
 //{
 //	//初始化物品属性图

@@ -17,6 +17,7 @@
 #include "UI/Widget/SDemoChooseRecordWidget.h"
 #include "UI/Widget/SDemoMenuItemWidget.h"
 
+
 struct MenuGroup
 {
 	//菜单标题
@@ -47,8 +48,8 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 
 	//获取MenuStyle
 	MenuStyle = &DemoStyle::Get().GetWidgetStyle<FDemoMenuStyle>("BPDemoMenuStyle");					//获取编辑器的 MenuStyle
-	////播放背景音乐
-	//FSlateApplication::Get().PlaySound(MenuStyle->MenuBackgroundMusic);
+	//播放背景音乐
+	FSlateApplication::Get().PlaySound(MenuStyle->MenuBackgroundMusic);
 
 	//FInternationalization::Get().SetCurrentLanguage(TEXT("en"));
 	//FInternationalization::Get().SetCurrentLanguage(TEXT("zh"));
@@ -167,7 +168,7 @@ void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 		break;
 	case EMenuItem::QuitGame:
 		//退出游戏,播放声音并且延时调用退出函数
-	//	DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->ExitGameSound, this, &DemoMenuWidget::QuitGame);
+		DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->ExitGameSound, this, &SDemoMenuWidget::QuitGame);
 		break;
 	case EMenuItem::NewGame:
 		PlayClose(EMenuType::NewGame);
@@ -191,7 +192,7 @@ void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 		//检测是否可以进入游戏
 		//if (NewGameWidget->AllowEnterGame())
 		//{
-		//	DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
+		DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
 		//}
 		//else
 		//{
@@ -202,7 +203,7 @@ void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 	case EMenuItem::EnterRecord:
 		//告诉选择存档更新存档名
 		//ChooseRecordWidget->UpdateRecordName();
-		//DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
+		DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
 		break;
 	}
 }
@@ -408,16 +409,18 @@ void SDemoMenuWidget::PlayClose(EMenuType::Type NewMenu)
 	//播放反向动画，菜单切换时先播放的关闭动画
 	MenuAnimation.PlayReverse(this->AsShared());
 
-	////播放切换菜单音乐
-	//FSlateApplication::Get().PlaySound(MenuStyle->MenuItemChangeSound);
+	//播放切换菜单音乐
+	FSlateApplication::Get().PlaySound(MenuStyle->MenuItemChangeSound);
 }
 
-//void SDemoMenuWidget::QuitGame()
-//{
-//	Cast<ADemoMenuController>(UGameplayStatics::GetPlayerController(GWorld, 0))->ConsoleCommand("quit");
-//}
-//
-//void SDemoMenuWidget::EnterGame()
-//{
-//	UGameplayStatics::OpenLevel(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), FName("GameMap"));
-//}
+void SDemoMenuWidget::QuitGame()
+{
+	// 使用控制台结束游戏
+	Cast<ADemoMenuController>(UGameplayStatics::GetPlayerController(GWorld, 0))->ConsoleCommand("quit");		// 在控制台上执行命令
+}
+
+void SDemoMenuWidget::EnterGame()
+{
+	DemoHelper::Debug("EnterGame");
+	//UGameplayStatics::OpenLevel(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), FName("GameMap"));
+}

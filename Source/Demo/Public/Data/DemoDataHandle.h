@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 
+class USoundCue;
 enum class ECultureTeam : uint8;
 /**
  * 
@@ -40,6 +41,16 @@ public:
 	//存档名
 	FString RecordName;
 
+	//	//物品属性图
+//	TMap<int, TSharedPtr<ObjectAttribute>> ObjectAttrMap;
+//	//物品贴图资源数组
+//	TArray<const FSlateBrush*> ObjectBrushList;
+//	//资源属性图
+//	TMap<int, TSharedPtr<ResourceAttribute>> ResourceAttrMap;
+//	//合成表图
+//	TArray<TSharedPtr<CompoundTable>> CompoundTableMap;
+
+
 private:
 	//创建单例
 	static TSharedRef<DemoDataHandle> Create();
@@ -58,8 +69,8 @@ private:
 	////游戏数据初始化
 	//void InitializeGameData();
 
-//	//初始化Menu声音数据
-//	void InitializedMenuAudio();
+	//初始化Menu声音数据
+	void InitializedMenuAudio();
 
 //	//初始化物品属性图
 //	void InitObjectAttr();
@@ -79,31 +90,26 @@ private:
 private:
 	static TSharedPtr<DemoDataHandle> DataInstance;
 
-
-
-
-
-//	//物品属性图
-//	TMap<int, TSharedPtr<ObjectAttribute>> ObjectAttrMap;
-//	//物品贴图资源数组
-//	TArray<const FSlateBrush*> ObjectBrushList;
-//	//资源属性图
-//	TMap<int, TSharedPtr<ResourceAttribute>> ResourceAttrMap;
-//	//合成表图
-//	TArray<TSharedPtr<CompoundTable>> CompoundTableMap;
-
-
-
-
 	//保存Menu的声音
-//	TMap<FString, TArray<USoundCue*>> MenuAudioResource;
-//	//获取MenuStyle,里面存放有声音文件
-//	const struct FDemoMenuStyle* MenuStyle;
-//	//获取GameStyle
-//	const struct FDemoGameStyle* GameStyle;
-//	//音乐组件
-//	class USoundMix* DemoSoundMix;
-//	class USoundClass* DemoMusicClass;
-//	USoundClass* DemoSoundClass;
-//	class FAudioDevice* AudioDevice;
+	TMap<FString, TArray<USoundCue*>> MenuAudioResource;
+
+	//获取MenuStyle,里面存放有声音文件
+	const struct FDemoMenuStyle* MenuStyle;
+
+	////获取GameStyle
+	//const struct FDemoGameStyle* GameStyle;
+	////音乐组件
+	//class USoundMix* DemoSoundMix;
+	//class USoundClass* DemoMusicClass;
+	//USoundClass* DemoSoundClass;
+	//class FAudioDevice* AudioDevice;
+
+
+
+
+
+
+
+
+
 };
