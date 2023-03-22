@@ -3,12 +3,15 @@
 
 #include "UI/Widget/SDemoMenuWidget.h"
 #include "SlateOptMacros.h"
+#include "Common/DemoHelper.h"
 #include "Data/DemoDataHandle.h"
 #include "UI/Style/DemoMenuWidgetStyle.h"
 #include "UI/Style/DemoStyle.h"
 #include "Widgets/Images/SImage.h"
 #include "Widgets/Input/SVectorInputBox.h"
 #include "Data/DemoType.h"
+#include "GamePlay/DemoMenuController.h"
+#include "Kismet/GameplayStatics.h"
 #include "UI/Widget/SDemoGameOptionWidget.h"
 #include "UI/Widget/SDemoNewGameWidget.h"
 #include "UI/Widget/SDemoChooseRecordWidget.h"
@@ -137,14 +140,9 @@ void SDemoMenuWidget::Construct(const FArguments& InArgs)
 
 			]
 		];
-
-	RootSizeBox->SetWidthOverride(600.f);
-	RootSizeBox->SetHeightOverride(510.f);
-
-
-	//InitializedMenuList();
-
-	//InitializedAnimation();
+	
+	InitializedMenuList();
+	InitializedAnimation();
 }
 
 
@@ -153,106 +151,108 @@ void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 	//TitleText->SetText(NSLOCTEXT("DemoMenu", "StartGame", "StartGame"));			// 修改标题文字
 	//DemoHelper::Debug(FString("Test"), 5.f);
 
+	//如果锁住了,直接return
+	if (ControlLocked) return;
 
-	////如果锁住了,直接return
-	//if (ControlLocked) return;
-	////设置锁住了按钮
-	//ControlLocked = true;
+	//设置锁住了按钮
+	ControlLocked = true;
 
-	//switch (ItemType)
-	//{
-	//case EMenuItem::StartGame:
-	//	PlayClose(EMenuType::StartGame);
-	//	break;
-	//case EMenuItem::GameOption:
-	//	PlayClose(EMenuType::GameOption);
-	//	break;
-	//case EMenuItem::QuitGame:
-	//	//退出游戏,播放声音并且延时调用退出函数
+	switch (ItemType)
+	{
+	case EMenuItem::StartGame:
+		PlayClose(EMenuType::StartGame);
+		break;
+	case EMenuItem::GameOption:
+		PlayClose(EMenuType::GameOption);
+		break;
+	case EMenuItem::QuitGame:
+		//退出游戏,播放声音并且延时调用退出函数
 	//	DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->ExitGameSound, this, &DemoMenuWidget::QuitGame);
-	//	break;
-	//case EMenuItem::NewGame:
-	//	PlayClose(EMenuType::NewGame);
-	//	break;
-	//case EMenuItem::LoadRecord:
-	//	PlayClose(EMenuType::ChooseRecord);
-	//	break;
-	//case EMenuItem::StartGameGoBack:
-	//	PlayClose(EMenuType::MainMenu);
-	//	break;
-	//case EMenuItem::GameOptionGoBack:
-	//	PlayClose(EMenuType::MainMenu);
-	//	break;
-	//case EMenuItem::NewGameGoBack:
-	//	PlayClose(EMenuType::StartGame);
-	//	break;
-	//case EMenuItem::ChooseRecordGoBack:
-	//	PlayClose(EMenuType::StartGame);
-	//	break;
-	//case EMenuItem::EnterGame:
-	//	//检测是否可以进入游戏
-	//	if (NewGameWidget->AllowEnterGame())
-	//	{
-	//		DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
-	//	}
-	//	else
-	//	{
-	//		//解锁按钮
-	//		ControlLocked = false;
-	//	}
-	//	break;
-	//case EMenuItem::EnterRecord:
-	//	//告诉选择存档更新存档名
-	//	ChooseRecordWidget->UpdateRecordName();
-	//	DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
-	//	break;
-	//}
+		break;
+	case EMenuItem::NewGame:
+		PlayClose(EMenuType::NewGame);
+		break;
+	case EMenuItem::LoadRecord:
+		PlayClose(EMenuType::ChooseRecord);
+		break;
+	case EMenuItem::StartGameGoBack:
+		PlayClose(EMenuType::MainMenu);
+		break;
+	case EMenuItem::GameOptionGoBack:
+		PlayClose(EMenuType::MainMenu);
+		break;
+	case EMenuItem::NewGameGoBack:
+		PlayClose(EMenuType::StartGame);
+		break;
+	case EMenuItem::ChooseRecordGoBack:
+		PlayClose(EMenuType::StartGame);
+		break;
+	case EMenuItem::EnterGame:
+		//检测是否可以进入游戏
+		//if (NewGameWidget->AllowEnterGame())
+		//{
+		//	DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
+		//}
+		//else
+		//{
+		//	//解锁按钮
+		//	ControlLocked = false;
+		//}
+		break;
+	case EMenuItem::EnterRecord:
+		//告诉选择存档更新存档名
+		//ChooseRecordWidget->UpdateRecordName();
+		//DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
+		break;
+	}
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-//
-//void SDemoMenuWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
-//{
-//	switch (AnimState)
-//	{
-//	case EMenuAnim::Stop:
-//		break;
-//	case EMenuAnim::Close:
-//		//如果正在播放
-//		if (MenuAnimation.IsPlaying()) {
-//			//实时修改Menu的大小
-//			ResetWidgetSize(MenuCurve.GetLerp() * 600.f, -1.f);
-//			//在关闭了40%的时候设置不显示组件
-//			if (MenuCurve.GetLerp() < 0.6f && IsMenuShow) ChooseWidget(EMenuType::None);
-//		}
-//		else {
-//			//关闭动画完了,设置状态为打开
-//			AnimState = EMenuAnim::Open;
-//			//开始播放打开动画
-//			MenuAnimation.Play(this->AsShared());
-//		}
-//		break;
-//	case EMenuAnim::Open:
-//		//如果正在播放
-//		if (MenuAnimation.IsPlaying())
-//		{
-//			//实时修改Menu大小
-//			ResetWidgetSize(MenuCurve.GetLerp() * 600.f, CurrentHeight);
-//			//打开60%之后显示组件
-//			if (MenuCurve.GetLerp() > 0.6f && !IsMenuShow) ChooseWidget(CurrentMenu);
-//		}
-//		//如果已经播放完毕
-//		if (MenuAnimation.IsAtEnd())
-//		{
-//			//修改状态为Stop
-//			AnimState = EMenuAnim::Stop;
-//			//解锁按钮
-//			ControlLocked = false;
-//		}
-//		break;
-//	}
-//}
+
+void SDemoMenuWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+{
+	switch (AnimState)
+	{
+	case EMenuAnim::Stop:
+		break;
+	case EMenuAnim::Close:
+		//如果正在播放
+		if (MenuAnimation.IsPlaying())		// IsPlaying 检查动画序列是否正在播放，在播放返回true
+		{
+			//实时修改Menu的大小
+			ResetWidgetSize(MenuCurve.GetLerp() * 600.f, -1.f);
+			//在关闭了40%的时候设置不显示组件
+			if (MenuCurve.GetLerp() < 0.6f && IsMenuShow) ChooseWidget(EMenuType::None);		// GetLerp() 获取曲线在0到1之间的线性内插值。
+		}
+		else 
+		{
+			// 关闭动画完了,设置状态为打开
+			AnimState = EMenuAnim::Open;
+			// 开始播放打开动画
+			MenuAnimation.Play(this->AsShared());
+		}
+		break;
+	case EMenuAnim::Open:
+		//如果正在播放
+		if (MenuAnimation.IsPlaying())
+		{
+			//实时修改Menu大小
+			ResetWidgetSize(MenuCurve.GetLerp() * 600.f, CurrentHeight);
+			//打开60%之后显示组件
+			if (MenuCurve.GetLerp() > 0.6f && !IsMenuShow) ChooseWidget(CurrentMenu);
+		}
+		//如果已经播放完毕
+		if (MenuAnimation.IsAtEnd())		// IsAtEnd 用来判断是否播放完毕
+		{
+			//修改状态为Stop
+			AnimState = EMenuAnim::Stop;
+			//解锁按钮
+			ControlLocked = false;
+		}
+		break;
+	}
+}
 
 
 // 修改语言
@@ -267,7 +267,7 @@ void SDemoMenuWidget::ChangeVolume(const float MusicVolume, const float SoundVol
 	DemoDataHandle::Get()->ResetMenuVolume(MusicVolume, SoundVolume);
 }
 
-
+// 初始化所有的控件
 void SDemoMenuWidget::InitializedMenuList()
 {
 	// 实例化主界面
@@ -320,10 +320,11 @@ void SDemoMenuWidget::InitializedMenuList()
 	ChooseWidget(EMenuType::MainMenu);
 }
 
+// 加载选择显示的界面
 void SDemoMenuWidget::ChooseWidget(EMenuType::Type WidgetType)
 {
-	////定义是否已经显示菜单
-	//IsMenuShow = WidgetType != EMenuType::None;
+	//定义是否已经显示菜单
+	IsMenuShow = WidgetType != EMenuType::None;
 
 	// 移出所有组件
 	ContentBox->ClearChildren();
@@ -352,40 +353,65 @@ void SDemoMenuWidget::ResetWidgetSize(float NewWidget, float NewHeight)
 	RootSizeBox->SetHeightOverride(NewHeight);
 }
 
-//void SDemoMenuWidget::InitializedAnimation()
-//{
-//	//开始延时
-//	const float StartDelay = 0.3f;
-//	//持续时间
-//	const float AnimDuration = 0.6f;
-//	MenuAnimation = FCurveSequence();
-//	MenuCurve = MenuAnimation.AddCurve(StartDelay, AnimDuration, ECurveEaseFunction::QuadInOut);
-//	//初始设置Menu大小
-//	ResetWidgetSize(600.f, 510.f);
-//	//初始显示主界面
-//	ChooseWidget(EMenuType::MainMenu);
-//	//允许点击按钮
-//	ControlLocked = false;
-//	//设置动画状态为停止
-//	AnimState = EMenuAnim::Stop;
-//	//设置动画播放器跳到结尾,也就是1
-//	MenuAnimation.JumpToEnd();
-//}
+// 初始化动画组件
+void SDemoMenuWidget::InitializedAnimation()
+{
+	//开始延时
+	const float StartDelay = 0.3f;
 
-//void SDemoMenuWidget::PlayClose(EMenuType::Type NewMenu)
-//{
-//	//设置新的界面
-//	CurrentMenu = NewMenu;
-//	//设置新高度
-//	CurrentHeight = (*MenuMap.Find(NewMenu))->MenuHeight;
-//	//设置播放状态是Close
-//	AnimState = EMenuAnim::Close;
-//	//播放反向动画
-//	MenuAnimation.PlayReverse(this->AsShared());
-//	//播放切换菜单音乐
-//	FSlateApplication::Get().PlaySound(MenuStyle->MenuItemChangeSound);
-//}
-//
+	//持续时间
+	const float AnimDuration = 0.6f;
+
+	/**
+	 * 	FCurveSequence() 一个曲线序列，可用于驱动小部件的 Animination。
+	 * 	当调用play时，计时器注册被处理。
+	 * 	序列中的每条曲线都有一个时间偏移和持续时间，这使得 FCurveSequence 可以方便地制作交错的动画。
+	 */
+	MenuAnimation = FCurveSequence();
+
+	/**
+	 * .AddCurve：在给定的时间和偏移量添加一条新的曲线。
+	 * 参数1 何时开始此曲线。
+	 * 参数2 这条曲线持续了多长时间。
+	 * 参数3 用于此曲线的缓和函数。默认为线性。主要作用为平滑动画的过渡。
+	 */
+	MenuCurve = MenuAnimation.AddCurve(StartDelay, AnimDuration, ECurveEaseFunction::QuadInOut);
+
+	//初始设置Menu大小
+	ResetWidgetSize(600.f, 510.f);
+
+	//初始显示主界面
+	ChooseWidget(EMenuType::MainMenu);
+
+	//允许点击按钮
+	ControlLocked = false;
+
+	//设置动画状态为停止
+	AnimState = EMenuAnim::Stop;
+
+	//设置动画播放器跳到结尾,也就是1
+	MenuAnimation.JumpToEnd();
+}
+
+// 播放关闭动画
+void SDemoMenuWidget::PlayClose(EMenuType::Type NewMenu)
+{
+	//设置新的界面
+	CurrentMenu = NewMenu;
+
+	//设置新高度
+	CurrentHeight = (*MenuMap.Find(NewMenu))->MenuHeight;
+
+	//设置播放状态是Close，Tick 函数中在不停判断 EMenuAnim 的值
+	AnimState = EMenuAnim::Close;
+
+	//播放反向动画，菜单切换时先播放的关闭动画
+	MenuAnimation.PlayReverse(this->AsShared());
+
+	////播放切换菜单音乐
+	//FSlateApplication::Get().PlaySound(MenuStyle->MenuItemChangeSound);
+}
+
 //void SDemoMenuWidget::QuitGame()
 //{
 //	Cast<ADemoMenuController>(UGameplayStatics::GetPlayerController(GWorld, 0))->ConsoleCommand("quit");

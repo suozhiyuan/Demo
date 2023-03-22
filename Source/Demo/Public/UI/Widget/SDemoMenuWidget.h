@@ -25,8 +25,8 @@ public:
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 
-	////重写tick函数
-	//virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
+	//重写tick函数
+	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
 
 private:
@@ -43,18 +43,21 @@ private:
 	//初始化所有的控件
 	void InitializedMenuList();
 
-	//选择显示的界面
+	//加载选择显示的界面
 	void ChooseWidget(EMenuType::Type WidgetType);
 
 	//修改菜单的大小
 	void ResetWidgetSize(float NewWidget, float NewHeight);
 
-//	//初始化动画组件
-//	void InitializedAnimation();
-//	//播放关闭动画
-//	void PlayClose(EMenuType::Type NewMenu);
+	//初始化动画组件
+	void InitializedAnimation();
+
+	//播放关闭动画
+	void PlayClose(EMenuType::Type NewMenu);
+
 //	//退出游戏
 //	void QuitGame();
+
 //	//进入游戏
 //	void EnterGame();
 
@@ -84,19 +87,24 @@ private:
 	//选择存档控件指针
 	TSharedPtr<SDemoChooseRecordWidget> ChooseRecordWidget;
 
-//	//动画播放器
-//	FCurveSequence MenuAnimation;
-//	//曲线控制器
-//	FCurveHandle MenuCurve;
-//	//用来保存新的高度
-//	float CurrentHeight;
-//	//是否已经显示Menu组件
-//	bool IsMenuShow;
-//	//是否锁住按钮
-//	bool ControlLocked;
-//	//保存当前的动画状态
-//	EMenuAnim::Type AnimState;
-//	//保存当前的菜单
-//	EMenuType::Type CurrentMenu;
+	// 菜单动画播放器
+	FCurveSequence MenuAnimation;
 
+	//菜单动画曲线控制器
+	FCurveHandle MenuCurve;
+
+	//用来保存新的高度
+	float CurrentHeight;
+
+	//是否已经显示Menu组件
+	bool IsMenuShow;
+
+	//是否锁住按钮
+	bool ControlLocked;
+
+	//保存当前的动画状态
+	EMenuAnim::Type AnimState;
+
+	//保存当前的菜单
+	EMenuType::Type CurrentMenu;
 };
