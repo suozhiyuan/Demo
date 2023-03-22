@@ -66,8 +66,8 @@ private:
 	//初始化存档数据
 	void InitRecordData();
 
-	////游戏数据初始化
-	//void InitializeGameData();
+	//游戏数据初始化
+	void InitializeGameData();
 
 	//初始化Menu声音数据
 	void InitializedMenuAudio();

@@ -189,20 +189,20 @@ void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 		PlayClose(EMenuType::StartGame);
 		break;
 	case EMenuItem::EnterGame:
-		//检测是否可以进入游戏
-		//if (NewGameWidget->AllowEnterGame())
-		//{
-		DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
-		//}
-		//else
-		//{
-		//	//解锁按钮
-		//	ControlLocked = false;
-		//}
+		// 检测是否可以进入游戏
+		if (NewGameWidget->AllowEnterGame())		// 对存档名判断，是否可以进入游戏
+		{
+			DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
+		}
+		else
+		{
+			//解锁按钮
+			ControlLocked = false;
+		}
 		break;
 	case EMenuItem::EnterRecord:
-		//告诉选择存档更新存档名
-		//ChooseRecordWidget->UpdateRecordName();
+		// 告诉选择存档更新存档名
+		ChooseRecordWidget->UpdateRecordName();
 		DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);
 		break;
 	}
@@ -422,5 +422,5 @@ void SDemoMenuWidget::QuitGame()
 void SDemoMenuWidget::EnterGame()
 {
 	DemoHelper::Debug("EnterGame");
-	//UGameplayStatics::OpenLevel(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), FName("GameMap"));
+	UGameplayStatics::OpenLevel(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), FName("GameMap_New"));		// 跳转场景
 }

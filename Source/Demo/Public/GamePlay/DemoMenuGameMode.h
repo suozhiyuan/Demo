@@ -17,5 +17,6 @@ public:
 	
 	ADemoMenuGameMode();
 
-
+protected:
+	virtual void BeginPlay() override;
 };
