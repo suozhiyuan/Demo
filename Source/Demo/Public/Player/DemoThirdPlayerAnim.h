@@ -7,11 +7,30 @@
 #include "DemoThirdPlayerAnim.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class DEMO_API UDemoThirdPlayerAnim : public UDemoPlayerAnim
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	UDemoThirdPlayerAnim();
+
+
+protected:
+
+	//重写更新属性方法
+	virtual void UpdateParameter() override;
+
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
+		bool IsInAir;													// 是否在空中
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
+		float Direction;													// 方向
+
 };

@@ -126,8 +126,8 @@ void ADemoGameMode::Tick(float DeltaSeconds)
 void ADemoGameMode::BeginPlay()
 {
 	// 测试代码，DataHandle 和 GameInstance 同样都有跨场景保存数据的功能
-	DemoHelper::Debug(FString("DataHandle : ") + DemoDataHandle::Get()->RecordName, 30.f);
-	DemoHelper::Debug(FString("GameInstance : ") + Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName, 30.f);
+	//DemoHelper::Debug(FString("DataHandle : ") + DemoDataHandle::Get()->RecordName, 30.f);
+	//DemoHelper::Debug(FString("GameInstance : ") + Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName, 30.f);
 
 	////初始化游戏数据
 	//DemoDataHandle::Get()->InitializeGameData();
