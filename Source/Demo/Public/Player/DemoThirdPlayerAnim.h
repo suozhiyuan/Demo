@@ -28,7 +28,7 @@ protected:
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
-		bool IsInAir;													// 是否在空中
+		bool IsInAir;														// 是否在空中
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
 		float Direction;													// 方向

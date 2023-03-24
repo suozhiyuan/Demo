@@ -13,5 +13,8 @@ UCLASS()
 class DEMO_API UDemoFirstPlayerAnim : public UDemoPlayerAnim
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	UDemoFirstPlayerAnim();
 };

@@ -4,6 +4,7 @@
 #include "Player/DemoPlayerCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Data/DemoType.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -98,14 +99,14 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	//设置初始速度为150.f
 	GetCharacterMovement()->MaxWalkSpeed = 150.f;
 
-	////初始为第三人称
-	//GameView = EGameViewMode::Third;
+	//初始为第三人称
+	GameView = EGameViewMode::Third;
 
-	////上半身动作初始为无动作
-	//UpperType = EUpperBody::None;
+	//上半身动作初始为无动作
+	UpperType = EUpperBody::None;
 
-	////一开始允许切换视角
-	//IsAllowSwitch = true;
+	//一开始允许切换视角
+	IsAllowSwitch = true;
 
 	////一开始输入不锁住
 	//IsInputLocked = false;
@@ -156,31 +157,31 @@ void ADemoPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &ADemoPlayerCharacter::OnStopRun);
 }
 
-//
-//void ADemoPlayerCharacter::ChangeView(EGameViewMode::Type NewGameView)
-//{
-//	GameView = NewGameView;
-//	switch (GameView)
-//	{
-//	case EGameViewMode::First:
-//		FirstCamera->SetActive(true);
-//		ThirdCamera->SetActive(false);
-//		MeshFirst->SetOwnerNoSee(false);
-//		GetMesh()->SetOwnerNoSee(true);
-//		//修改handobject绑定的位置
-//		HandObject->AttachToComponent(MeshFirst, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
-//		break;
-//	case EGameViewMode::Third:
-//		FirstCamera->SetActive(false);
-//		ThirdCamera->SetActive(true);
-//		MeshFirst->SetOwnerNoSee(true);
-//		GetMesh()->SetOwnerNoSee(false);
-//		//修改handobject绑定的位置
-//		HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
-//		break;
-//	}
-//}
-//
+
+void ADemoPlayerCharacter::ChangeView(EGameViewMode::Type NewGameView)
+{
+	GameView = NewGameView;
+	switch (GameView)
+	{
+	case EGameViewMode::First:
+		FirstCamera->SetActive(true);
+		ThirdCamera->SetActive(false);
+		MeshFirst->SetOwnerNoSee(false);			// 第一人称 Mesh 的显示
+		GetMesh()->SetOwnerNoSee(true);				// 第三人称 Mesh 
+		////修改handobject绑定的位置
+		//HandObject->AttachToComponent(MeshFirst, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
+		break;
+	case EGameViewMode::Third:
+		FirstCamera->SetActive(false);
+		ThirdCamera->SetActive(true);
+		MeshFirst->SetOwnerNoSee(true);
+		GetMesh()->SetOwnerNoSee(false);
+		////修改handobject绑定的位置
+		//HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
+		break;
+	}
+}
+
 //void ADemoPlayerCharacter::ChangeHandObject(TSubclassOf<AActor> HandObjectClass)
 //{
 //	//设置物品到HandObject

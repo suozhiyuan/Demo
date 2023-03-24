@@ -22,8 +22,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	////修改视角
-	//void ChangeView(EGameViewMode::Type NewGameView);
+	//修改视角
+	void ChangeView(EGameViewMode::Type NewGameView);
 
 	////修改当前的手持物品
 	//void ChangeHandObject(TSubclassOf<AActor> HandObjectClass);
@@ -73,14 +73,14 @@ public:
 	////玩家控制器指针
 	//class ADemoPlayerController* SPController;
 
-	////当前的视角模型
-	//EGameViewMode::Type GameView;
+	//当前的视角模式
+	EGameViewMode::Type GameView;
 
-	////上半身动画状态
-	//EUpperBody::Type UpperType;
+	//上半身动画状态
+	EUpperBody::Type UpperType;
 
-	////是否允许切换视角
-	//bool IsAllowSwitch;
+	//是否允许切换视角
+	bool IsAllowSwitch;
 
 	////是否锁住输入
 	//bool IsInputLocked;

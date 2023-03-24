@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Data/DemoType.h"
 #include "DemoPlayerAnim.generated.h"
 
+
+class UAnimMontage;
 /**
  *
  */
@@ -18,6 +21,7 @@ public:
 
 	UDemoPlayerAnim();
 
+	// 对应蓝图中的 Event Blueprint Update Animation
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 //	//开启和关闭手上物品的交互检测
@@ -46,32 +50,32 @@ protected:
 	//获取角色指针
 	void InitSPCharacter();
 
-	//更新属性
+	//更新属性更新蓝图数据
 	virtual void UpdateParameter();
 
-//	//更新动作
-//	virtual void UpdateMontage();
-//
-//	//修改是否允许切换视角
-//	void AllowViewChange(bool IsAllow);
-//
-//
+	//更新动作
+	virtual void UpdateMontage();
+
+	//修改是否允许切换视角
+	void AllowViewChange(bool IsAllow);
+
+
 protected:
 
 
 	//角色指针
 	class ADemoPlayerCharacter* SPCharacter;
-//
-//	//上半身的Montage
-//	UAnimMontage* PlayerHitMontage;
-//	UAnimMontage* PlayerFightMontage;
-//	UAnimMontage* PlayerPunchMontage;
-//	UAnimMontage* PlayerEatMontage;
-//	UAnimMontage* PlayerPickUpMontage;
-//
-//	//保存当前播放的Montage
-//	UAnimMontage* CurrentMontage;
-//
-//	//指定自己的运行人称
-//	EGameViewMode::Type GameView;
+
+	//上半身的Montage
+	UAnimMontage* PlayerHitMontage;			// 打击
+	UAnimMontage* PlayerFightMontage;		// 挥剑
+	UAnimMontage* PlayerPunchMontage;		// 拳击
+	UAnimMontage* PlayerEatMontage;			// 吃东西
+	UAnimMontage* PlayerPickUpMontage;		// 拾取
+
+	//保存当前播放的Montage
+	UAnimMontage* CurrentMontage;
+
+	//指定自己的运行人称
+	EGameViewMode::Type GameView;
 };
