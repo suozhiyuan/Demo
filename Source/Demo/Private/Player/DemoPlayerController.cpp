@@ -4,6 +4,7 @@
 #include "Player/DemoPlayerController.h"
 #include "Data/DemoType.h"
 #include "Player/DemoPlayerCharacter.h"
+#include "Player/DemoPlayerState.h"
 
 
 ADemoPlayerController::ADemoPlayerController()
@@ -17,7 +18,7 @@ void ADemoPlayerController::BeginPlay()
 	Super::BeginPlay();
 	//获取角色与状态
 	if (!SPCharacter) SPCharacter = Cast<ADemoPlayerCharacter>(GetCharacter());
-	//if (!SPState) SPState = Cast<ADemoPlayerState>(PlayerState);
+	if (!SPState) SPState = Cast<ADemoPlayerState>(PlayerState);
 
 	//设置鼠标不显示
 	bShowMouseCursor = false;
@@ -31,9 +32,9 @@ void ADemoPlayerController::BeginPlay()
 	LeftUpperType = EUpperBody::Punch;
 	RightUpperType = EUpperBody::PickUp;
 
-	////初始化是否按住鼠标键
-	//IsLeftButtonDown = false;
-	//IsRightButtonDown = false;
+	//初始化是否按住鼠标键
+	IsLeftButtonDown = false;
+	IsRightButtonDown = false;
 
 	////设置默认UI状态为游戏界面
 	//CurrentUIType = EGameUIType::Game;
@@ -66,9 +67,9 @@ void ADemoPlayerController::SetupInputComponent()
 	InputComponent->BindAction("RightEvent", IE_Pressed, this, &ADemoPlayerController::RightEventStart);
 	InputComponent->BindAction("RightEvent", IE_Released, this, &ADemoPlayerController::RightEventStop);
 
-	////绑定鼠标滑轮事件
-	//InputComponent->BindAction("ScrollUp", IE_Pressed, this, &ADemoPlayerController::ScrollUpEvent);
-	//InputComponent->BindAction("ScrollDown", IE_Pressed, this, &ADemoPlayerController::ScrollDownEvent);
+	//绑定鼠标滑轮事件
+	InputComponent->BindAction("ScrollUp", IE_Pressed, this, &ADemoPlayerController::ScrollUpEvent);
+	InputComponent->BindAction("ScrollDown", IE_Pressed, this, &ADemoPlayerController::ScrollDownEvent);
 
 	////绑定ESC键事件并且设置当暂停游戏的时候依然可以运行
 	//InputComponent->BindAction("EscEvent", IE_Pressed, this, &ADemoPlayerController::EscEvent).bExecuteWhenPaused = true;
@@ -295,7 +296,7 @@ void ADemoPlayerController::LeftEventStart()
 	////如果操作被锁住,直接返回
 	//if (SPCharacter->IsInputLocked) return;
 
-	//IsLeftButtonDown = true;
+	IsLeftButtonDown = true;
 	SPCharacter->UpperType = LeftUpperType;
 }
 
@@ -304,7 +305,7 @@ void ADemoPlayerController::LeftEventStop()
 	////如果操作被锁住,直接返回
 	//if (SPCharacter->IsInputLocked) return;
 
-	//IsLeftButtonDown = false;
+	IsLeftButtonDown = false;
 	SPCharacter->UpperType = EUpperBody::None;
 }
 
@@ -313,7 +314,7 @@ void ADemoPlayerController::RightEventStart()
 	////如果操作被锁住,直接返回
 	//if (SPCharacter->IsInputLocked) return;
 
-	//IsRightButtonDown = true;
+	IsRightButtonDown = true;
 	SPCharacter->UpperType = RightUpperType;
 }
 
@@ -322,45 +323,47 @@ void ADemoPlayerController::RightEventStop()
 	////如果操作被锁住,直接返回
 	//if (SPCharacter->IsInputLocked) return;
 
-	//IsRightButtonDown = false;
+	IsRightButtonDown = false;
 	SPCharacter->UpperType = EUpperBody::None;
 }
 
-//void ADemoPlayerController::ScrollUpEvent()
-//{
-//	//如果操作被锁住,直接返回
-//	if (SPCharacter->IsInputLocked) return;
-//
-//	//如果不允许切换,直接返回
-//	if (!SPCharacter->IsAllowSwitch) return;
-//
-//	//如果鼠标有在按键不准跳转
-//	if (IsLeftButtonDown || IsRightButtonDown) return;
-//
-//	//告诉状态类切换快捷栏容器
-//	SPState->ChooseShortcut(true);
-//	//更改Character的手持物品
-//	ChangeHandObject();
-//}
-//
-//void ADemoPlayerController::ScrollDownEvent()
-//{
-//	//如果操作被锁住,直接返回
-//	if (SPCharacter->IsInputLocked) return;
-//
-//	//如果不允许切换,直接返回
-//	if (!SPCharacter->IsAllowSwitch) return;
-//
-//	//如果鼠标有在按键不准跳转
-//	if (IsLeftButtonDown || IsRightButtonDown) return;
-//
-//	//告诉状态类切换快捷栏容器
-//	SPState->ChooseShortcut(false);
-//	//更改Character的手持物品
-//	ChangeHandObject();
-//}
-//
-//
+void ADemoPlayerController::ScrollUpEvent()
+{
+	////如果操作被锁住,直接返回
+	//if (SPCharacter->IsInputLocked) return;
+
+	//如果不允许切换,直接返回
+	if (!SPCharacter->IsAllowSwitch) return;
+
+	//如果鼠标有在按键不准跳转
+	if (IsLeftButtonDown || IsRightButtonDown) return;
+
+	//告诉状态类切换快捷栏容器
+	SPState->ChooseShortcut(true);
+
+	////更改Character的手持物品
+	//ChangeHandObject();
+}
+
+void ADemoPlayerController::ScrollDownEvent()
+{
+	////如果操作被锁住,直接返回
+	//if (SPCharacter->IsInputLocked) return;
+
+	//如果不允许切换,直接返回
+	if (!SPCharacter->IsAllowSwitch) return;
+
+	//如果鼠标有在按键不准跳转
+	if (IsLeftButtonDown || IsRightButtonDown) return;
+
+	//告诉状态类切换快捷栏容器
+	SPState->ChooseShortcut(false);
+
+	////更改Character的手持物品
+	//ChangeHandObject();
+}
+
+
 //void ADemoPlayerController::ChangePreUpperType(EUpperBody::Type RightType = EUpperBody::None)
 //{
 //	//根据当前手持物品的类型来修改预动作

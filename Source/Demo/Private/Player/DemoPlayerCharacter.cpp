@@ -85,12 +85,11 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	MeshFirst->SetOwnerNoSee(true);
 
 
-	////实例化手上物品
-	//HandObject = CreateDefaultSubobject<UChildActorComponent>(TEXT("HandObject"));
+	//实例化手上物品
+	HandObject = CreateDefaultSubobject<UChildActorComponent>(TEXT("HandObject"));
 
 	////加载死亡动画资源
 	//AnimDead = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Player/Animation/Player_Death.Player_Death'")));
-
 
 	//初始化参数
 	BaseTurnRate = 45.f;
@@ -123,8 +122,8 @@ void ADemoPlayerCharacter::BeginPlay()
 	////如果控制器指针为空,添加引用
 	//SPController = Cast<ADemoPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 
-	////把手持物品组件绑定到第三人称模型右手插槽上
-	//HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
+	//把手持物品组件绑定到第三人称模型右手插槽上
+	HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 
 	////添加Actor到HandObject
 	//HandObject->SetChildActorClass(ADemoHandObject::SpawnHandObject(0));
@@ -145,11 +144,11 @@ void ADemoPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	check(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis("MoveForward", this, &ADemoPlayerCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveForWard", this, &ADemoPlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ADemoPlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &ADemoPlayerCharacter::Turn);
-	PlayerInputComponent->BindAxis("LookUp", this, &ADemoPlayerCharacter::LookUpAtRate);
 	PlayerInputComponent->BindAxis("TurnRate", this, &ADemoPlayerCharacter::TurnAtRate);
+	PlayerInputComponent->BindAxis("LookUp", this, &ADemoPlayerCharacter::LookUpAtRate);
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ADemoPlayerCharacter::OnStartJump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ADemoPlayerCharacter::OnStopJump);

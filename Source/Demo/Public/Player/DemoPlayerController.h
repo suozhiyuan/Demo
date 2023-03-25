@@ -46,7 +46,7 @@ public:
 
 	//获取玩家角色
 	class ADemoPlayerCharacter* SPCharacter;
-	//class ADemoPlayerState* SPState;
+	class ADemoPlayerState* SPState;
 //
 //
 //	//实时修改准星的委托,注册的函数是PointerWidget的UpdatePointer
@@ -71,11 +71,11 @@ private:
 	void LeftEventStop();
 	void RightEventStart();
 	void RightEventStop();
-//
-//	//滑轮上下滚动事件
-//	void ScrollUpEvent();
-//	void ScrollDownEvent();
-//
+
+	//滑轮上下滚动事件
+	void ScrollUpEvent();
+	void ScrollDownEvent();
+
 //	//修改预动作
 //	void ChangePreUpperType(EUpperBody::Type RightType);
 //

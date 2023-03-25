@@ -112,9 +112,9 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Demo")
 		USkeletalMeshComponent* MeshFirst;
 
-	////手上物品
-	//UPROPERTY(VisibleDefaultsOnly, Category = "Demo")
-	//	class UChildActorComponent* HandObject;
+	//手上物品
+	UPROPERTY(VisibleDefaultsOnly, Category = "Demo")
+		class UChildActorComponent* HandObject;
 
 	// 旋转速度
 	float BaseLookUpRate;
