@@ -8,6 +8,7 @@
 #include "Player/DemoPlayerState.h"
 #include "UI/Widget/SDemoGameHUDWidget.h"
 #include "SlateBasics.h"
+#include "UI/Widget/SDemoShortcutWidget.h"
 
 ADemoGameHUD::ADemoGameHUD()
 {
@@ -22,12 +23,15 @@ void ADemoGameHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//GM = Cast<ADemoGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-	//if (!GM) return;
-	////先确保要调用的组件都已经实现
-	//GM->InitGamePlayModule();
-	////绑定注册快捷栏容器
-	//GameHUDWidget->ShortcutWidget->RegisterShortcutContainer.BindUObject(GM->SPState, &ADemoPlayerState::RegisterShortcutContainer);
+	GM = Cast<ADemoGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (!GM) return;
+
+	//先确保要调用的组件都已经实现
+	GM->InitGamePlayModule();
+
+	//绑定注册快捷栏容器
+	GameHUDWidget->ShortcutWidget->RegisterShortcutContainer.BindUObject(GM->SPState, &ADemoPlayerState::RegisterShortcutContainer);
+
 	////绑定注册射线信息文本事件
 	//GameHUDWidget->RayInfoWidget->RegisterRayInfoEvent.BindUObject(GM->SPState, &ADemoPlayerState::RegisterRayInfoEvent);
 	////绑定修改准星委托

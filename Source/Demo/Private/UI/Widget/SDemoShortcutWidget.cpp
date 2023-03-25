@@ -49,7 +49,7 @@ void SDemoShortcutWidget::Construct(const FArguments& InArgs)
 
 void SDemoShortcutWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
-	if (!IsInitializeContainer) 
+	if (!IsInitializeContainer)			// 因为 SlateWidget 是没有BeginPlay函数的，所以要在 Tick 的第一帧去运行，以保证去运行委托
 	{
 		InitializeContainer();
 		IsInitializeContainer = true;
@@ -62,7 +62,7 @@ END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void SDemoShortcutWidget::InitializeContainer()
 {
-	TArray<TSharedPtr<ShortcutContainer>> ContainerList;
+	TArray<TSharedPtr<ShortcutContainer>> ContainerList;		// 快捷栏中的容器 组成的数组
 
 	for (int i = 0; i < 9; ++i) 
 	{
@@ -92,16 +92,16 @@ void SDemoShortcutWidget::InitializeContainer()
 		];
 
 		//实例化一个容器结构体
-		//TSharedPtr<ShortcutContainer> Container = MakeShareable(new ShortcutContainer(ContainerBorder, ObjectImage, ObjectNumText, &GameStyle->NormalContainerBrush, &GameStyle->ChoosedContainerBrush, &DemoDataHandle::Get()->ObjectBrushList));
+		TSharedPtr<ShortcutContainer> Container = MakeShareable(new ShortcutContainer(ContainerBorder, ObjectImage, ObjectNumText, &GameStyle->NormalContainerBrush, &GameStyle->ChoosedContainerBrush, &DemoDataHandle::Get()->ObjectBrushList));
 
 		//如果是第一个容器,设置他为选中状态
-		//if (i == 0) Container->SetChoosed(true);
+		if (i == 0) Container->SetChoosed(true);
 
-		//ContainerList.Add(Container);
+		ContainerList.Add(Container);
 
 	}
 
-	////将实例化的结构体注册进PlayerState的容器数组
-	//RegisterShortcutContainer.ExecuteIfBound(&ContainerList, ShortcutInfoTextBlock);
+	//将实例化的结构体注册进 PlayerState 的容器数组
+	RegisterShortcutContainer.ExecuteIfBound(&ContainerList, ShortcutInfoTextBlock);
 
 }

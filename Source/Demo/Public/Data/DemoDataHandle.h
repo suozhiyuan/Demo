@@ -51,8 +51,9 @@ public:
 	//物品属性图
 	TMap<int, TSharedPtr<ObjectAttribute>> ObjectAttrMap;
 
-//	//物品贴图资源数组
-//	TArray<const FSlateBrush*> ObjectBrushList;
+	//物品贴图资源数组
+	TArray<const FSlateBrush*> ObjectBrushList;
+
 //	//资源属性图
 //	TMap<int, TSharedPtr<ResourceAttribute>> ResourceAttrMap;
 //	//合成表图
@@ -100,8 +101,9 @@ private:
 	//获取MenuStyle,里面存放有声音文件
 	const struct FDemoMenuStyle* MenuStyle;
 
-	////获取GameStyle
-	//const struct FDemoGameStyle* GameStyle;
+	//获取GameStyle
+	const struct FDemoGameStyle* GameStyle;
+
 	////音乐组件
 	//class USoundMix* DemoSoundMix;
 	//class USoundClass* DemoMusicClass;

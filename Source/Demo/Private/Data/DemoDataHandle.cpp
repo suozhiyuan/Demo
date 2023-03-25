@@ -212,18 +212,18 @@ void DemoDataHandle::InitObjectAttr()
 	//	DemoHelper::Debug((It.Value())->ToString(), 120.f);
 	//}
 
-	////获取GameStyle
-	//GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
+	//获取GameStyle
+	GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
 
-	////填充笔刷数组
-	//ObjectBrushList.Add(&GameStyle->EmptyBrush);
-	//ObjectBrushList.Add(&GameStyle->ObjectBrush_1);
-	//ObjectBrushList.Add(&GameStyle->ObjectBrush_2);
-	//ObjectBrushList.Add(&GameStyle->ObjectBrush_3);
-	//ObjectBrushList.Add(&GameStyle->ObjectBrush_4);
-	//ObjectBrushList.Add(&GameStyle->ObjectBrush_5);
-	//ObjectBrushList.Add(&GameStyle->ObjectBrush_6);
-	//ObjectBrushList.Add(&GameStyle->ObjectBrush_7);
+	//填充笔刷数组
+	ObjectBrushList.Add(&GameStyle->EmptyBrush);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_1);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_2);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_3);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_4);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_5);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_6);
+	ObjectBrushList.Add(&GameStyle->ObjectBrush_7);
 
 	////动态生成Object的图片Brush,这段代码会引起奔溃
 	//for (int i = 1; i < ObjectAttrMap.Num(); ++i) {

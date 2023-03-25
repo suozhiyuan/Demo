@@ -49,14 +49,14 @@ void ADemoGameMode::Tick(float DeltaSeconds)
 	//InitializePackage();
 }
 
-//void ADemoGameMode::InitGamePlayModule()
-//{
-//	//添加引用
-//	SPController = Cast<ADemoPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-//	SPCharacter = Cast<ADemoPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-//	SPState = Cast<ADemoPlayerState>(SPController->PlayerState);
-//}
-//
+void ADemoGameMode::InitGamePlayModule()
+{
+	//添加引用
+	SPController = Cast<ADemoPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	SPCharacter = Cast<ADemoPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	SPState = Cast<ADemoPlayerState>(SPController->PlayerState);
+}
+
 //void ADemoGameMode::SaveGame()
 //{
 //	//如果存档名是Default,不进行保存
@@ -133,7 +133,7 @@ void ADemoGameMode::BeginPlay()
 	//初始化游戏数据
 	DemoDataHandle::Get()->InitializeGameData();
 
-	//if (!SPController) InitGamePlayModule();
+	if (!SPController) InitGamePlayModule();
 
 	////播放背景音乐
 	//USoundWave* BGMusic = LoadObject<USoundWave>(NULL, TEXT("SoundWave'/Game/Res/Sound/GameSound/GameBG.GameBG'"));

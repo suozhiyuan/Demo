@@ -33,7 +33,7 @@ public:
 	void InitGamePlayModule();
 
 	//±£¥Ê”Œœ∑
-	void SaveGame();
+	//void SaveGame();
 
 
 public:

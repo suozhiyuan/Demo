@@ -6,6 +6,8 @@
 #include "GameFramework/HUD.h"
 #include "DemoGameHUD.generated.h"
 
+
+class ADemoGameMode;
 /**
  *
  */
@@ -17,11 +19,10 @@ class DEMO_API ADemoGameHUD : public AHUD
 public:
 
 	ADemoGameHUD();
-//
-//public:
 
-	////保存GameMode指针
-	//class ADemoGameMode* GM;
+public:
+	//保存GameMode指针
+	ADemoGameMode* GM;
 
 
 protected:

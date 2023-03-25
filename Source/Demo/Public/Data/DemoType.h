@@ -129,7 +129,6 @@ struct ObjectAttribute
 //快捷栏容器结构体
 struct ShortcutContainer
 {
-	
 	int ObjectIndex;								// 物品ID
 	int ObjectNum;									// 物品数量
 	TSharedPtr<SBorder> ContainerBorder;			// 快捷栏的一个格子

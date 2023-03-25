@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Data/DemoType.h"
 #include "Widgets/SCompoundWidget.h"
 
-
-////注册快捷栏到PlayerState类的委托
-//DECLARE_DELEGATE_TwoParams(FRegisterShortCutContainer, TArray<TSharedPtr<ShortcutContainer>>*, TSharedPtr<STextBlock>)
+//注册快捷栏到PlayerState类的委托
+DECLARE_DELEGATE_TwoParams(FRegisterShortCutContainer, TArray<TSharedPtr<ShortcutContainer>>*, TSharedPtr<STextBlock>)
 
 /**
 *
@@ -24,9 +24,9 @@ public:
 
 	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
-//public:
-//
-//	FRegisterShortCutContainer RegisterShortcutContainer;
+public:
+	// 委托变量
+	FRegisterShortCutContainer RegisterShortcutContainer;
 
 private:
 

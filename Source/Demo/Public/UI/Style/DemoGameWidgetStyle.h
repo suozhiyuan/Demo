@@ -46,21 +46,21 @@ struct DEMO_API FDemoGameStyle : public FSlateWidgetStyle
 	//UPROPERTY(EditAnywhere, Category = Package)
 	//	FSlateBrush CompoundArrowBrush;
 
-	////物品的Brush
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush ObjectBrush_1;
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush ObjectBrush_2;
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush ObjectBrush_3;
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush ObjectBrush_4;
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush ObjectBrush_5;
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush ObjectBrush_6;
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush ObjectBrush_7;
+	//物品的Brush
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush ObjectBrush_1;
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush ObjectBrush_2;
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush ObjectBrush_3;
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush ObjectBrush_4;
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush ObjectBrush_5;
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush ObjectBrush_6;
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush ObjectBrush_7;
 
 
 	////射线检测信息面板背景
