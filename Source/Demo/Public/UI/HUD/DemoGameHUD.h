@@ -7,11 +7,30 @@
 #include "DemoGameHUD.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class DEMO_API ADemoGameHUD : public AHUD
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	ADemoGameHUD();
+//
+//public:
+
+	////±£¥ÊGameMode÷∏’Î
+	//class ADemoGameMode* GM;
+
+
+protected:
+
+	virtual void BeginPlay() override;
+
+
+private:
+
+	TSharedPtr<class SDemoGameHUDWidget> GameHUDWidget;
+
 };

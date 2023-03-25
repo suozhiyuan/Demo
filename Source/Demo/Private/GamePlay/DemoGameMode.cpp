@@ -11,6 +11,7 @@
 #include "Player/DemoPlayerController.h"
 #include "Player/DemoPlayerState.h"
 #include "UI/HUD/DemoGameHUD.h"
+#include "Data/DemoDataHandle.h"
 
 
 
@@ -129,8 +130,8 @@ void ADemoGameMode::BeginPlay()
 	//DemoHelper::Debug(FString("DataHandle : ") + DemoDataHandle::Get()->RecordName, 30.f);
 	//DemoHelper::Debug(FString("GameInstance : ") + Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName, 30.f);
 
-	////初始化游戏数据
-	//DemoDataHandle::Get()->InitializeGameData();
+	//初始化游戏数据
+	DemoDataHandle::Get()->InitializeGameData();
 
 	//if (!SPController) InitGamePlayModule();
 

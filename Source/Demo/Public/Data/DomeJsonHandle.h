@@ -21,8 +21,8 @@ public:
 	//修改存档
 	void UpdateRecordData(FString Culture, float MusicVolume, float SoundVolume, TArray<FString>* RecordDataList);
 
-	////解析物品属性
-	//void ObjectAttrJsonRead(TMap<int, TSharedPtr<ObjectAttribute>>& ObjectAttrMap);
+	//解析物品属性
+	void ObjectAttrJsonRead(TMap<int, TSharedPtr<ObjectAttribute>>& ObjectAttrMap);
 
 	////解析资源属性函数
 	//void ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute>>& ResourceAttrMap);
@@ -42,8 +42,8 @@ private:
 	//保存字符串到文件
 	bool WriteFileWithJsonData(const FString& JsonStr, const FString& RelaPath, const FString& FileName);
 
-	////定义一个从string转换到ObjectType的方法
-	//EObjectType::Type StringToObjectType(const FString ArgStr);
+	//定义一个从string转换到ObjectType的方法
+	EObjectType::Type StringToObjectType(const FString ArgStr);
 
 	////定义一个从string转换到ResourceType的方法
 	//EResourceType::Type StringToResourceType(const FString ArgStr);
@@ -53,8 +53,8 @@ private:
 	//存档文件名
 	FString RecordDataFileName;
 
-	////物品属性文件名
-	//FString ObjectAttrFileName;
+	//物品属性文件名
+	FString ObjectAttrFileName;
 
 	////资源属性文件名
 	//FString ResourceAttrFileName;

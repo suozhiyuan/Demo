@@ -9,8 +9,8 @@
 DemoJsonHandle::DemoJsonHandle()
 {
 
-	RecordDataFileName = FString("RecordData.json");		//存档文件名
-	//ObjectAttrFileName = FString("ObjectAttribute.json");
+	RecordDataFileName = FString("RecordData.json");				//存档文件名
+	ObjectAttrFileName = FString("ObjectAttribute.json");
 	//ResourceAttrFileName = FString("ResourceAttribute.json");
 	//CompoundTableFileName = FString("CompoundTable.json");
 
@@ -104,39 +104,41 @@ void DemoJsonHandle::UpdateRecordData(FString Culture, float MusicVolume, float 
 	WriteFileWithJsonData(JsonStr, RelativePath, RecordDataFileName);
 }
 
-//void DemoJsonHandle::ObjectAttrJsonRead(TMap<int, TSharedPtr<ObjectAttribute>>& ObjectAttrMap)
-//{
-//	FString JsonValue;
-//	LoadStringFromFile(ObjectAttrFileName, RelativePath, JsonValue);
-//
-//	TArray<TSharedPtr<FJsonValue>> JsonParsed;
-//	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);
-//
-//	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))
-//	{
-//		for (int i = 0; i < JsonParsed.Num(); ++i) {
-//			TArray<TSharedPtr<FJsonValue>> ObjectAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i));
-//			FText EN = FText::FromString(ObjectAttr[0]->AsObject()->GetStringField("EN"));
-//			FText ZH = FText::FromString(ObjectAttr[1]->AsObject()->GetStringField("ZH"));
-//			FString ObjectTypeStr = ObjectAttr[2]->AsObject()->GetStringField("ObjectType");
-//			int PlantAttack = ObjectAttr[3]->AsObject()->GetIntegerField("PlantAttack");
-//			int MetalAttcck = ObjectAttr[4]->AsObject()->GetIntegerField("MetalAttcck");
-//			int AnimalAttack = ObjectAttr[5]->AsObject()->GetIntegerField("AnimalAttack");
-//			int AffectRange = ObjectAttr[6]->AsObject()->GetIntegerField("AffectRange");
-//			FString TexPath = ObjectAttr[7]->AsObject()->GetStringField("TexPath");
-//
-//			EObjectType::Type ObjectType = StringToObjectType(ObjectTypeStr);
-//			TSharedPtr<ObjectAttribute> ObjectAttrPtr = MakeShareable(new ObjectAttribute(EN, ZH, ObjectType, PlantAttack, MetalAttcck, AnimalAttack, AffectRange, TexPath));
-//
-//			ObjectAttrMap.Add(i, ObjectAttrPtr);
-//		}
-//	}
-//	else {
-//		DemoHelper::Debug(FString("Deserialize Failed"));
-//	}
-//
-//}
-//
+void DemoJsonHandle::ObjectAttrJsonRead(TMap<int, TSharedPtr<ObjectAttribute>>& ObjectAttrMap)
+{
+	FString JsonValue;
+	LoadStringFromFile(ObjectAttrFileName, RelativePath, JsonValue);
+
+	TArray<TSharedPtr<FJsonValue>> JsonParsed;														// 保存解析出来的数据
+	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);		// 将数据存到 TJsonReader 指针
+
+	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))
+	{
+		for (int i = 0; i < JsonParsed.Num(); ++i)
+		{
+			TArray<TSharedPtr<FJsonValue>> ObjectAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i));
+			FText EN = FText::FromString(ObjectAttr[0]->AsObject()->GetStringField("EN"));
+			FText ZH = FText::FromString(ObjectAttr[1]->AsObject()->GetStringField("ZH"));
+			FString ObjectTypeStr = ObjectAttr[2]->AsObject()->GetStringField("ObjectType");
+			int PlantAttack = ObjectAttr[3]->AsObject()->GetIntegerField("PlantAttack");
+			int MetalAttcck = ObjectAttr[4]->AsObject()->GetIntegerField("MetalAttcck");
+			int AnimalAttack = ObjectAttr[5]->AsObject()->GetIntegerField("AnimalAttack");
+			int AffectRange = ObjectAttr[6]->AsObject()->GetIntegerField("AffectRange");
+			FString TexPath = ObjectAttr[7]->AsObject()->GetStringField("TexPath");
+
+			EObjectType::Type ObjectType = StringToObjectType(ObjectTypeStr);
+			TSharedPtr<ObjectAttribute> ObjectAttrPtr = MakeShareable(new ObjectAttribute(EN, ZH, ObjectType, PlantAttack, MetalAttcck, AnimalAttack, AffectRange, TexPath));
+
+			ObjectAttrMap.Add(i, ObjectAttrPtr);
+		}
+	}
+	else 
+	{
+		DemoHelper::Debug(FString("Deserialize Failed"));
+	}
+
+}
+
 //void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute>>& ResourceAttrMap)
 //{
 //	FString JsonValue;
@@ -288,15 +290,15 @@ bool DemoJsonHandle::WriteFileWithJsonData(const FString& JsonStr, const FString
 }
 
 
-//EObjectType::Type DemoJsonHandle::StringToObjectType(const FString ArgStr)
-//{
-//	if (ArgStr.Equals(FString("Normal"))) return EObjectType::Normal;
-//	if (ArgStr.Equals(FString("Food"))) return EObjectType::Food;
-//	if (ArgStr.Equals(FString("Tool"))) return EObjectType::Tool;
-//	if (ArgStr.Equals(FString("Weapon"))) return EObjectType::Weapon;
-//	return EObjectType::Normal;
-//}
-//
+EObjectType::Type DemoJsonHandle::StringToObjectType(const FString ArgStr)
+{
+	if (ArgStr.Equals(FString("Normal"))) return EObjectType::Normal;			// Equals 按字典顺序测试此字符串是否等同于给定的Other字符串
+	if (ArgStr.Equals(FString("Food"))) return EObjectType::Food;
+	if (ArgStr.Equals(FString("Tool"))) return EObjectType::Tool;
+	if (ArgStr.Equals(FString("Weapon"))) return EObjectType::Weapon;
+	return EObjectType::Normal;
+}
+
 //EResourceType::Type DemoJsonHandle::StringToResourceType(const FString ArgStr)
 //{
 //	if (ArgStr.Equals(FString("Plant"))) return EResourceType::Plant;

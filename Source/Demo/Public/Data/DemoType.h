@@ -87,24 +87,25 @@ namespace EObjectType
 {
 	enum Type
 	{
-		Normal = 0,//普通物品,木头,石头
-		Food,//食物,苹果,肉
-		Tool,//工具,锤子,斧子
-		Weapon//武器,剑
+		Normal = 0,			//普通物品,木头,石头
+		Food,				//食物,苹果,肉
+		Tool,				//工具,锤子,斧子
+		Weapon				//武器,剑
 	};
 }
 
 //物品属性结构体
 struct ObjectAttribute
 {
-	FText EN;//英文名
-	FText ZH;//中文名
-	EObjectType::Type ObjectType;//物品类型
-	int PlantAttack;//对植物的攻击力
-	int MetalAttcck;//对金属资源的攻击力
-	int AnimalAttack;//对动物的攻击力
-	int AffectRange;//攻击距离
-	FString TexPath;//图片路径
+	FText EN;						//英文名
+	FText ZH;						//中文名
+	EObjectType::Type ObjectType;	//物品类型
+	int PlantAttack;				//对植物的攻击力
+	int MetalAttcck;				//对金属资源的攻击力
+	int AnimalAttack;				//对动物的攻击力
+	int AffectRange;				//攻击距离
+	FString TexPath;				//图片路径
+
 	//构造函数
 	ObjectAttribute(const FText ENName, const FText ZHName, const EObjectType::Type OT, const int PA, const int MA, const int AA, const int AR, const FString TP) {
 		EN = ENName;
@@ -117,20 +118,26 @@ struct ObjectAttribute
 		TexPath = TP;
 	}
 
+	// Debug
+	//FString ToString()
+	//{
+	//	return EN.ToString() + FString("--") + ZH.ToString() + FString("--") + FString::FromInt((int)ObjectType) + FString("--") + FString::FromInt(PlantAttack) + FString("--") + FString::FromInt(MetalAttcck) + FString("--") + FString::FromInt(AnimalAttack) + FString("--") + FString::FromInt(AffectRange) + FString("--") + TexPath;
+	//}
+
 };
 
 //快捷栏容器结构体
 struct ShortcutContainer
 {
-	//物品ID
-	int ObjectIndex;
-	int ObjectNum;
-	TSharedPtr<SBorder> ContainerBorder;
-	TSharedPtr<SBorder> ObjectImage;
-	TSharedPtr<STextBlock> ObjectNumText;
-	const FSlateBrush* NormalContainerBrush;
-	const FSlateBrush* ChoosedContainerBrush;
-	TArray<const FSlateBrush*>* ObjectBrushList;
+	
+	int ObjectIndex;								// 物品ID
+	int ObjectNum;									// 物品数量
+	TSharedPtr<SBorder> ContainerBorder;			// 快捷栏的一个格子
+	TSharedPtr<SBorder> ObjectImage;				// 快捷栏物品图片
+	TSharedPtr<STextBlock> ObjectNumText;			// 快捷栏图标上的文字
+	const FSlateBrush* NormalContainerBrush;		// 快捷栏容器图标，正常状态
+	const FSlateBrush* ChoosedContainerBrush;		// 快捷栏容器图标，选中
+	TArray<const FSlateBrush*>* ObjectBrushList;	
 
 	ShortcutContainer(TSharedPtr<SBorder> CB, TSharedPtr<SBorder> OI, TSharedPtr<STextBlock> ONT, const FSlateBrush* NCB, const FSlateBrush* CCB, TArray<const FSlateBrush*>* OBL)
 	{

@@ -11,6 +11,7 @@
 #include "UI/Style/DemoStyle.h"
 #include "UI/Style/DemoMenuWidgetStyle.h"
 #include "Sound/SoundCue.h"
+#include "UI/Style/DemoGameWidgetStyle.h"
 
 TSharedPtr<DemoDataHandle> DemoDataHandle::DataInstance = NULL;
 
@@ -178,18 +179,21 @@ void DemoDataHandle::InitializedMenuAudio()
 	ResetMenuVolume(MusicVolume, SoundVolume);
 }
 
-//void DemoDataHandle::InitializeGameData()
-//{
-//	//初始化物品属性图
-//	InitObjectAttr();
-//	//初始化资源属性图
-//	InitResourceAttrMap();
-//	//初始化合成表图
-//	InitCompoundTableMap();
-//	//初始化游戏声音数据
-//	InitializeGameAudio();
-//}
-//
+void DemoDataHandle::InitializeGameData()
+{
+	//初始化物品属性图
+	InitObjectAttr();
+
+	////初始化资源属性图
+	//InitResourceAttrMap();
+
+	////初始化合成表图
+	//InitCompoundTableMap();
+
+	////初始化游戏声音数据
+	//InitializeGameAudio();
+}
+
 //void DemoDataHandle::AddNewRecord()
 //{
 //	//将现在的存档名添加到数组
@@ -197,34 +201,42 @@ void DemoDataHandle::InitializedMenuAudio()
 //	//更新json数据
 //	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 //}
-//
-//void DemoDataHandle::InitObjectAttr()
-//{
-//	DemoSingleton<DemoJsonHandle>::Get()->ObjectAttrJsonRead(ObjectAttrMap);
-//	//获取GameStyle
-//	GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
-//	//填充笔刷数组
-//	ObjectBrushList.Add(&GameStyle->EmptyBrush);
-//	ObjectBrushList.Add(&GameStyle->ObjectBrush_1);
-//	ObjectBrushList.Add(&GameStyle->ObjectBrush_2);
-//	ObjectBrushList.Add(&GameStyle->ObjectBrush_3);
-//	ObjectBrushList.Add(&GameStyle->ObjectBrush_4);
-//	ObjectBrushList.Add(&GameStyle->ObjectBrush_5);
-//	ObjectBrushList.Add(&GameStyle->ObjectBrush_6);
-//	ObjectBrushList.Add(&GameStyle->ObjectBrush_7);
-//
-//	////动态生成Object的图片Brush,这段代码会引起奔溃
-//	//for (int i = 1; i < ObjectAttrMap.Num(); ++i) {
-//	//	//测试函数,动态创建FSlateBrush,一定要创建指针,否则会在函数结束时销毁资源
-//	//	FSlateBrush* ObjectBrush = new FSlateBrush();
-//	//	ObjectBrush->ImageSize = FVector2D(80.f, 80.f);
-//	//	ObjectBrush->DrawAs = ESlateBrushDrawType::Image;
-//	//	UTexture2D* ObjectTex = LoadObject<UTexture2D>(NULL, *(*ObjectAttrMap.Find(i))->TexPath);
-//	//	ObjectBrush->SetResourceObject(ObjectTex);
-//	//	ObjectBrushList.Add(ObjectBrush);
-//	//}
-//}
-//
+
+void DemoDataHandle::InitObjectAttr()
+{
+	DemoSingleton<DemoJsonHandle>::Get()->ObjectAttrJsonRead(ObjectAttrMap);
+
+	// Debug
+	//for (TMap<int, TSharedPtr<ObjectAttribute>>::TIterator It(ObjectAttrMap); It; ++It)
+	//{
+	//	DemoHelper::Debug((It.Value())->ToString(), 120.f);
+	//}
+
+	////获取GameStyle
+	//GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
+
+	////填充笔刷数组
+	//ObjectBrushList.Add(&GameStyle->EmptyBrush);
+	//ObjectBrushList.Add(&GameStyle->ObjectBrush_1);
+	//ObjectBrushList.Add(&GameStyle->ObjectBrush_2);
+	//ObjectBrushList.Add(&GameStyle->ObjectBrush_3);
+	//ObjectBrushList.Add(&GameStyle->ObjectBrush_4);
+	//ObjectBrushList.Add(&GameStyle->ObjectBrush_5);
+	//ObjectBrushList.Add(&GameStyle->ObjectBrush_6);
+	//ObjectBrushList.Add(&GameStyle->ObjectBrush_7);
+
+	////动态生成Object的图片Brush,这段代码会引起奔溃
+	//for (int i = 1; i < ObjectAttrMap.Num(); ++i) {
+	//	//测试函数,动态创建FSlateBrush,一定要创建指针,否则会在函数结束时销毁资源
+	//	FSlateBrush* ObjectBrush = new FSlateBrush();
+	//	ObjectBrush->ImageSize = FVector2D(80.f, 80.f);
+	//	ObjectBrush->DrawAs = ESlateBrushDrawType::Image;
+	//	UTexture2D* ObjectTex = LoadObject<UTexture2D>(NULL, *(*ObjectAttrMap.Find(i))->TexPath);
+	//	ObjectBrush->SetResourceObject(ObjectTex);
+	//	ObjectBrushList.Add(ObjectBrush);
+	//}
+}
+
 //void DemoDataHandle::InitResourceAttrMap()
 //{
 //	DemoSingleton<DemoJsonHandle>::Get()->ResourceAttrJsonRead(ResourceAttrMap);
