@@ -3,37 +3,42 @@
 
 #include "Hand/DemoHandObject.h"
 
+#include "Components/BoxComponent.h"
+#include "Data/DemoDataHandle.h"
+#include "Data/DemoType.h"
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 ADemoHandObject::ADemoHandObject()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	////实例化根组件
-	//RootScene = CreateDefaultSubobject<USceneComponent>(TEXT("RootScene"));
-	//RootComponent = RootScene;
+	//实例化根组件
+	RootScene = CreateDefaultSubobject<USceneComponent>(TEXT("RootScene"));
+	RootComponent = RootScene;													// 设置为根组件
 
 	//创建静态模型组件
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
-	BaseMesh->SetupAttachment(RootComponent);
-	BaseMesh->SetCollisionProfileName(FName("NoCollision"));
+	BaseMesh->SetupAttachment(RootComponent);									// 添加到根组件
+	BaseMesh->SetCollisionProfileName(FName("NoCollision"));					// 设置碰撞
 
-	////实现碰撞组件
-	//AffectCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("AffectCollision"));
-	//AffectCollision->SetupAttachment(RootComponent);
-	//AffectCollision->SetCollisionProfileName(FName("ToolProfile"));
+	//实现碰撞组件
+	AffectCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("AffectCollision"));
+	AffectCollision->SetupAttachment(RootComponent);
+	AffectCollision->SetCollisionProfileName(FName("ToolProfile"));
 
-	////初始时关闭Overlay检测
-	//AffectCollision->bGenerateOverlapEvents = false;
+	//初始时关闭 Overlay 检测，只有在特定时间打开
+	AffectCollision->SetGenerateOverlapEvents(false);
 
-	////绑定检测方法到碰撞体
-	//FScriptDelegate OverlayBegin;
-	//OverlayBegin.BindUFunction(this, "OnOverlayBegin");
-	//AffectCollision->OnComponentBeginOverlap.Add(OverlayBegin);
+	//绑定检测方法到碰撞体
+	FScriptDelegate OverlayBegin;		// 脚本委托
+	OverlayBegin.BindUFunction(this, "OnOverlayBegin");
+	AffectCollision->OnComponentBeginOverlap.Add(OverlayBegin);
 
-	//FScriptDelegate OverlayEnd;
-	//OverlayEnd.BindUFunction(this, "OnOverlayEnd");
-	//AffectCollision->OnComponentEndOverlap.Add(OverlayEnd);
+	FScriptDelegate OverlayEnd;
+	OverlayEnd.BindUFunction(this, "OnOverlayEnd");
+	AffectCollision->OnComponentEndOverlap.Add(OverlayEnd);
 
 	////默认拳头音效
 	//static ConstructorHelpers::FObjectFinder<USoundWave> StaticSound(TEXT("SoundWave'/Game/Res/Sound/GameSound/Punch.Punch'"));
@@ -47,23 +52,23 @@ void ADemoHandObject::BeginPlay()
 
 }
 
-//void ADemoHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-//{
-//	if (Cast<ADemoEnemyCharacter>(OtherActor))
-//	{
-//		//获取物品属性
-//		TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ObjectIndex);
-//		//获取对动物的伤害值
-//		Cast<ADemoEnemyCharacter>(OtherActor)->AcceptDamage(ObjectAttr->AnimalAttack);
-//	}
-//	//如果音效存在,播放音效,默认音效为拳打
-//	if (OverlaySound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), OverlaySound, OtherActor->GetActorLocation());
-//}
-//
-//void ADemoHandObject::OnOverlayEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-//{
-//
-//}
+void ADemoHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	//if (Cast<ADemoEnemyCharacter>(OtherActor))
+	//{
+	//	//获取物品属性
+	//	TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ObjectIndex);
+	//	//获取对动物的伤害值
+	//	Cast<ADemoEnemyCharacter>(OtherActor)->AcceptDamage(ObjectAttr->AnimalAttack);
+	//}
+	////如果音效存在,播放音效,默认音效为拳打
+	//if (OverlaySound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), OverlaySound, OtherActor->GetActorLocation());
+}
+
+void ADemoHandObject::OnOverlayEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+
+}
 
 // Called every frame
 void ADemoHandObject::Tick(float DeltaTime)

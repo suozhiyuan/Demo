@@ -13,5 +13,14 @@ UCLASS()
 class DEMO_API ADemoHandApple : public ADemoHandObject
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	ADemoHandApple();
+
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 };

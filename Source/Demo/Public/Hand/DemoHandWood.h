@@ -13,5 +13,14 @@ UCLASS()
 class DEMO_API ADemoHandWood : public ADemoHandObject
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	ADemoHandWood();
+
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 };

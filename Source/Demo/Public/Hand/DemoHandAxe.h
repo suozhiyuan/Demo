@@ -13,5 +13,11 @@ UCLASS()
 class DEMO_API ADemoHandAxe : public ADemoHandObject
 {
 	GENERATED_BODY()
-	
+public:
+
+	ADemoHandAxe();
+
+protected:
+
+	virtual void BeginPlay() override;
 };

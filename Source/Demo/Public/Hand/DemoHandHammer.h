@@ -13,5 +13,19 @@ UCLASS()
 class DEMO_API ADemoHandHammer : public ADemoHandObject
 {
 	GENERATED_BODY()
-	
+public:
+
+	ADemoHandHammer();
+
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+
+protected:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
+		UStaticMeshComponent* ExtendMesh;
+
 };
