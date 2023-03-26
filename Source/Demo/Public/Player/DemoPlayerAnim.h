@@ -18,16 +18,15 @@ class DEMO_API UDemoPlayerAnim : public UAnimInstance
 	GENERATED_BODY()
 
 public:
-
 	UDemoPlayerAnim();
 
 	// 对应蓝图中的 Event Blueprint Update Animation
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
-//	//开启和关闭手上物品的交互检测
-//	UFUNCTION(BlueprintCallable, Category = "Demo")
-//		void ChangeDetection(bool IsOpen);
-//
+	//开启和关闭手上物品的交互检测
+	UFUNCTION(BlueprintCallable, Category = "Demo")
+		void ChangeDetection(bool IsOpen);
+
 //	//开启和关闭手上物品的显示与否,在捡东西的时候调用
 //	UFUNCTION(BlueprintCallable, Category = PlayAnim)
 //		void RenderHandObject(bool IsRender);

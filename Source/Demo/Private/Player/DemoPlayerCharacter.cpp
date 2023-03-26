@@ -186,15 +186,16 @@ void ADemoPlayerCharacter::ChangeHandObject(TSubclassOf<AActor> HandObjectClass)
 	HandObject->SetChildActorClass(HandObjectClass);
 }
 
-//void ADemoPlayerCharacter::ChangeHandObjectDetect(bool IsOpen)
-//{
-//	//获取手上物品
-//	ADemoHandObject* HandObjectClass = Cast<ADemoHandObject>(HandObject->GetChildActor());
-//	if (HandObjectClass) HandObjectClass->ChangeOverlayDetect(IsOpen);
-//	//修改攻击状态
-//	IsAttack = IsOpen;
-//}
-//
+void ADemoPlayerCharacter::ChangeHandObjectDetect(bool IsOpen)
+{
+	//获取手上物品
+	ADemoHandObject* HandObjectClass = Cast<ADemoHandObject>(HandObject->GetChildActor());
+	if (HandObjectClass) HandObjectClass->ChangeOverlayDetect(IsOpen);
+
+	////修改攻击状态
+	//IsAttack = IsOpen;
+}
+
 //void ADemoPlayerCharacter::RenderHandObject(bool IsRender)
 //{
 //	//如果手上物品木有

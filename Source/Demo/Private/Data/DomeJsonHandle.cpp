@@ -139,59 +139,60 @@ void DemoJsonHandle::ObjectAttrJsonRead(TMap<int, TSharedPtr<ObjectAttribute>>& 
 
 }
 
-//void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute>>& ResourceAttrMap)
-//{
-//	FString JsonValue;
-//	LoadStringFromFile(ResourceAttrFileName, RelativePath, JsonValue);
-//
-//	TArray<TSharedPtr<FJsonValue>> JsonParsed;
-//	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);
-//
-//	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))
-//	{
-//		for (int i = 0; i < JsonParsed.Num(); ++i) {
-//			//资源没有序号0,从1开始
-//			TArray<TSharedPtr<FJsonValue>> ResourceAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i + 1));
-//			FText EN = FText::FromString(ResourceAttr[0]->AsObject()->GetStringField("EN"));
-//			FText ZH = FText::FromString(ResourceAttr[1]->AsObject()->GetStringField("ZH"));
-//			EResourceType::Type ResourceType = StringToResourceType(ResourceAttr[2]->AsObject()->GetStringField("ResourceType"));
-//			int HP = ResourceAttr[3]->AsObject()->GetIntegerField("HP");
-//
-//			TArray<TArray<int>> FlobObjectInfoArray;
-//
-//			TArray<TSharedPtr<FJsonValue>> FlobObjectInfo = ResourceAttr[4]->AsObject()->GetArrayField(FString("FlobObjectInfo"));
-//
-//			for (int j = 0; j < FlobObjectInfo.Num(); ++j) {
-//
-//				FString FlobObjectInfoItem = FlobObjectInfo[j]->AsObject()->GetStringField(FString::FromInt(j));
-//				FString ObjectIndexStr;
-//				FString RangeStr;
-//				FString RangeMinStr;
-//				FString RangeMaxStr;
-//				FlobObjectInfoItem.Split(FString("_"), &ObjectIndexStr, &RangeStr);
-//				RangeStr.Split(FString(","), &RangeMinStr, &RangeMaxStr);
-//
-//				TArray<int> FlobObjectInfoList;
-//
-//				FlobObjectInfoList.Add(FCString::Atoi(*ObjectIndexStr));
-//				FlobObjectInfoList.Add(FCString::Atoi(*RangeMinStr));
-//				FlobObjectInfoList.Add(FCString::Atoi(*RangeMaxStr));
-//
-//				FlobObjectInfoArray.Add(FlobObjectInfoList);
-//			}
-//
-//			TSharedPtr<ResourceAttribute> ResourceAttrPtr = MakeShareable(new ResourceAttribute(EN, ZH, ResourceType, HP, &FlobObjectInfoArray));
-//
-//			ResourceAttrMap.Add(i + 1, ResourceAttrPtr);
-//		}
-//	}
-//	else
-//	{
-//		DemoHelper::Debug(FString("Deserialize Failed"), 10.f);
-//	}
-//
-//}
-//
+// 解析资源属性函数
+void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute>>& ResourceAttrMap)
+{
+	FString JsonValue;
+	LoadStringFromFile(ResourceAttrFileName, RelativePath, JsonValue);
+
+	TArray<TSharedPtr<FJsonValue>> JsonParsed;
+	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);
+
+	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))
+	{
+		for (int i = 1; i < JsonParsed.Num(); ++i)		//资源没有序号0,从1开始
+		{
+			TArray<TSharedPtr<FJsonValue>> ResourceAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i));
+			FText EN = FText::FromString(ResourceAttr[0]->AsObject()->GetStringField("EN"));
+			FText ZH = FText::FromString(ResourceAttr[1]->AsObject()->GetStringField("ZH"));
+			EResourceType::Type ResourceType = StringToResourceType(ResourceAttr[2]->AsObject()->GetStringField("ResourceType"));
+			int HP = ResourceAttr[3]->AsObject()->GetIntegerField("HP");
+
+			TArray<TArray<int>> FlobObjectInfoArray;
+
+			TArray<TSharedPtr<FJsonValue>> FlobObjectInfo = ResourceAttr[4]->AsObject()->GetArrayField(FString("FlobObjectInfo"));
+
+			for (int j = 0; j < FlobObjectInfo.Num(); ++j) {
+
+				FString FlobObjectInfoItem = FlobObjectInfo[j]->AsObject()->GetStringField(FString::FromInt(j));
+				FString ObjectIndexStr;
+				FString RangeStr;
+				FString RangeMinStr;
+				FString RangeMaxStr;
+				FlobObjectInfoItem.Split(FString("_"), &ObjectIndexStr, &RangeStr);		// 从“_”拆分字符串
+				RangeStr.Split(FString(","), &RangeMinStr, &RangeMaxStr);					// 从“,”拆分字符串
+
+				TArray<int> FlobObjectInfoList;
+
+				FlobObjectInfoList.Add(FCString::Atoi(*ObjectIndexStr));
+				FlobObjectInfoList.Add(FCString::Atoi(*RangeMinStr));
+				FlobObjectInfoList.Add(FCString::Atoi(*RangeMaxStr));
+
+				FlobObjectInfoArray.Add(FlobObjectInfoList);
+			}
+
+			TSharedPtr<ResourceAttribute> ResourceAttrPtr = MakeShareable(new ResourceAttribute(EN, ZH, ResourceType, HP, &FlobObjectInfoArray));
+
+			ResourceAttrMap.Add(i, ResourceAttrPtr);
+		}
+	}
+	else
+	{
+		DemoHelper::Debug(FString("Deserialize Failed"), 10.f);
+	}
+
+}
+
 //void DemoJsonHandle::CompoundTableJsonRead(TArray<TSharedPtr<CompoundTable>>& CompoundTableMap)
 //{
 //	FString JsonValue;
@@ -299,11 +300,11 @@ EObjectType::Type DemoJsonHandle::StringToObjectType(const FString ArgStr)
 	return EObjectType::Normal;
 }
 
-//EResourceType::Type DemoJsonHandle::StringToResourceType(const FString ArgStr)
-//{
-//	if (ArgStr.Equals(FString("Plant"))) return EResourceType::Plant;
-//	if (ArgStr.Equals(FString("Metal"))) return EResourceType::Metal;
-//	if (ArgStr.Equals(FString("Animal"))) return EResourceType::Animal;
-//	return EResourceType::Plant;
-//}
+EResourceType::Type DemoJsonHandle::StringToResourceType(const FString ArgStr)
+{
+	if (ArgStr.Equals(FString("Plant"))) return EResourceType::Plant;
+	if (ArgStr.Equals(FString("Metal"))) return EResourceType::Metal;
+	if (ArgStr.Equals(FString("Animal"))) return EResourceType::Animal;
+	return EResourceType::Plant;
+}
 

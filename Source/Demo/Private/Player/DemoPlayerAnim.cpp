@@ -28,25 +28,25 @@ void UDemoPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 
 }
 
-//void UDemoPlayerAnim::ChangeDetection(bool IsOpen)
-//{
-//	if (!SPCharacter) return;
-//	SPCharacter->ChangeHandObjectDetect(IsOpen);
-//}
-//
+void UDemoPlayerAnim::ChangeDetection(bool IsOpen)
+{
+	if (!SPCharacter) return;
+	SPCharacter->ChangeHandObjectDetect(IsOpen);
+}
+
 //void UDemoPlayerAnim::RenderHandObject(bool IsRender)
 //{
 //	if (!SPCharacter) return;
 //	SPCharacter->RenderHandObject(IsRender);
 //}
-//
+
 //void UDemoPlayerAnim::EatUpEvent()
 //{
 //	if (!SPCharacter) return;
 //	//告诉角色我吃完东西了
 //	SPCharacter->EatUpEvent();
 //}
-//
+
 void UDemoPlayerAnim::InitSPCharacter()
 {
 	if (!SPCharacter) SPCharacter = Cast<ADemoPlayerCharacter>(TryGetPawnOwner());

@@ -38,7 +38,7 @@ ADemoHandObject::ADemoHandObject()
 	AffectCollision->SetCollisionProfileName(FName("ToolProfile"));
 
 	//初始时关闭 Overlay 检测，只有在特定时间打开
-	AffectCollision->SetGenerateOverlapEvents(true);
+	AffectCollision->SetGenerateOverlapEvents(false);
 
 	//绑定检测方法到碰撞体
 	FScriptDelegate OverlayBegin;		// 脚本委托
@@ -113,7 +113,7 @@ TSubclassOf<AActor> ADemoHandObject::SpawnHandObject(int ObjectID)
 	return ADemoHandNone::StaticClass();
 }
 
-//void ADemoHandObject::ChangeOverlayDetect(bool IsOpen)
-//{
-//	AffectCollision->bGenerateOverlapEvents = IsOpen;
-//}
+void ADemoHandObject::ChangeOverlayDetect(bool IsOpen)
+{
+	AffectCollision->SetGenerateOverlapEvents(IsOpen);
+}

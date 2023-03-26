@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 
+struct ResourceAttribute;
 struct ObjectAttribute;
 class USoundCue;
 enum class ECultureTeam : uint8;
@@ -32,7 +33,7 @@ public:
 	void InitializeGameData();
 
 	//添加新存档名
-//	void AddNewRecord();
+	//void AddNewRecord();
 
 public:
 	//当前语言
@@ -54,8 +55,9 @@ public:
 	//物品贴图资源数组
 	TArray<const FSlateBrush*> ObjectBrushList;
 
-//	//资源属性图
-//	TMap<int, TSharedPtr<ResourceAttribute>> ResourceAttrMap;
+	//资源属性图
+	TMap<int, TSharedPtr<ResourceAttribute>> ResourceAttrMap;
+
 //	//合成表图
 //	TArray<TSharedPtr<CompoundTable>> CompoundTableMap;
 
@@ -81,8 +83,8 @@ private:
 	//初始化物品属性图
 	void InitObjectAttr();
 
-//	//初始化资源属性图
-//	void InitResourceAttrMap();
+	//初始化资源属性图
+	void InitResourceAttrMap();
 
 //	//初始化合成表图
 //	void InitCompoundTableMap();

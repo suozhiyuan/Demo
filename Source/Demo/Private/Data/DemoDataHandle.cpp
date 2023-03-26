@@ -183,8 +183,8 @@ void DemoDataHandle::InitializeGameData()
 	//初始化物品属性图
 	InitObjectAttr();
 
-	////初始化资源属性图
-	//InitResourceAttrMap();
+	//初始化资源属性图
+	InitResourceAttrMap();
 
 	////初始化合成表图
 	//InitCompoundTableMap();
@@ -236,11 +236,11 @@ void DemoDataHandle::InitObjectAttr()
 	//}
 }
 
-//void DemoDataHandle::InitResourceAttrMap()
-//{
-//	DemoSingleton<DemoJsonHandle>::Get()->ResourceAttrJsonRead(ResourceAttrMap);
-//}
-//
+void DemoDataHandle::InitResourceAttrMap()
+{
+	DemoSingleton<DemoJsonHandle>::Get()->ResourceAttrJsonRead(ResourceAttrMap);
+}
+
 //void DemoDataHandle::InitCompoundTableMap()
 //{
 //	DemoSingleton<DemoJsonHandle>::Get()->CompoundTableJsonRead(CompoundTableMap);
