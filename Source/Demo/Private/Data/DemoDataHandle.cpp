@@ -108,7 +108,6 @@ void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 //	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 //}
 
-
 // 根据enum类型获取字符串
 template<typename TEnum>
 FString DemoDataHandle::GetEnumValueAsString(const FString& Name, TEnum Value)

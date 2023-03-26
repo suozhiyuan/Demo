@@ -114,13 +114,13 @@ int ADemoPlayerState::GetCurrentHandObjectIndex() const
 	return ShortcutContainerList[CurrentShortcutIndex]->ObjectIndex;
 }
 
-//EObjectType::Type ADemoPlayerState::GetCurrentObjectType()
-//{
-//	TSharedPtr<ObjectAttribute> ObjectAttr;
-//	ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(GetCurrentHandObjectIndex());
-//	return ObjectAttr->ObjectType;
-//}
-//
+EObjectType::Type ADemoPlayerState::GetCurrentObjectType()
+{
+	TSharedPtr<ObjectAttribute> ObjectAttr;
+	ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(GetCurrentHandObjectIndex());
+	return ObjectAttr->ObjectType;
+}
+
 //void ADemoPlayerState::RegisterRayInfoEvent(TSharedPtr<STextBlock> RayInfoTextBlock)
 //{
 //	RayInfoTextAttr.BindUObject(this, &ADemoPlayerState::GetRayInfoText);

@@ -8,9 +8,6 @@
 #include "DemoPlayerController.generated.h"
 
 
-
-
-
 ////修改准星委托
 //DECLARE_DELEGATE_TwoParams(FUpdatePointer, bool, float)
 ////显示UI委托
@@ -36,9 +33,9 @@ public:
 	// 输入组件
 	virtual void SetupInputComponent() override;
 
-//	//对Character的手持物品进行更改,这个函数在playerstate内会调用
-//	void ChangeHandObject();
-//
+	//对 Character 的手持物品进行更改,这个函数在 playerstate 内会调用
+	void ChangeHandObject();
+
 //	//死亡
 //	void PlayerDead();
 //
@@ -76,9 +73,9 @@ private:
 	void ScrollUpEvent();
 	void ScrollDownEvent();
 
-//	//修改预动作
-//	void ChangePreUpperType(EUpperBody::Type RightType);
-//
+	//修改预动作
+	void ChangePreUpperType(EUpperBody::Type RightType);
+
 //	//射线检测结果
 //	FHitResult RayGetHitResult(FVector TraceStart, FVector TraceEnd);
 //	//射线绘制

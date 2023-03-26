@@ -3,9 +3,18 @@
 
 #include "Hand/DemoHandObject.h"
 
+#include "Common/DemoHelper.h"
 #include "Components/BoxComponent.h"
 #include "Data/DemoDataHandle.h"
 #include "Data/DemoType.h"
+#include "Hand/DemoHandApple.h"
+#include "Hand/DemoHandAxe.h"
+#include "Hand/DemoHandHammer.h"
+#include "Hand/DemoHandMeat.h"
+#include "Hand/DemoHandNone.h"
+#include "Hand/DemoHandStone.h"
+#include "Hand/DemoHandSword.h"
+#include "Hand/DemoHandWood.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -29,7 +38,7 @@ ADemoHandObject::ADemoHandObject()
 	AffectCollision->SetCollisionProfileName(FName("ToolProfile"));
 
 	//初始时关闭 Overlay 检测，只有在特定时间打开
-	AffectCollision->SetGenerateOverlapEvents(false);
+	AffectCollision->SetGenerateOverlapEvents(true);
 
 	//绑定检测方法到碰撞体
 	FScriptDelegate OverlayBegin;		// 脚本委托
@@ -54,6 +63,8 @@ void ADemoHandObject::BeginPlay()
 
 void ADemoHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	DemoHelper::Debug(FString("OnOverlayBegin"), 3.f);
+
 	//if (Cast<ADemoEnemyCharacter>(OtherActor))
 	//{
 	//	//获取物品属性
@@ -67,7 +78,7 @@ void ADemoHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, A
 
 void ADemoHandObject::OnOverlayEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-
+	DemoHelper::Debug(FString("OnOverlayEnd"), 3.f);
 }
 
 // Called every frame
@@ -77,31 +88,31 @@ void ADemoHandObject::Tick(float DeltaTime)
 
 }
 
-//TSubclassOf<AActor> ADemoHandObject::SpawnHandObject(int ObjectID)
-//{
-//	switch (ObjectID)
-//	{
-//	case 0:
-//		return ADemoHandNone::StaticClass();
-//	case 1:
-//		return ADemoHandWood::StaticClass();
-//	case 2:
-//		return ADemoHandStone::StaticClass();
-//	case 3:
-//		return ADemoHandApple::StaticClass();
-//	case 4:
-//		return ADemoHandMeat::StaticClass();
-//	case 5:
-//		return ADemoHandAxe::StaticClass();
-//	case 6:
-//		return ADemoHandHammer::StaticClass();
-//	case 7:
-//		return ADemoHandSword::StaticClass();
-//	}
-//
-//	return ADemoHandNone::StaticClass();
-//}
-//
+TSubclassOf<AActor> ADemoHandObject::SpawnHandObject(int ObjectID)
+{
+	switch (ObjectID)
+	{
+	case 0:
+		return ADemoHandNone::StaticClass();
+	case 1:
+		return ADemoHandWood::StaticClass();
+	case 2:
+		return ADemoHandStone::StaticClass();
+	case 3:
+		return ADemoHandApple::StaticClass();
+	case 4:
+		return ADemoHandMeat::StaticClass();
+	case 5:
+		return ADemoHandAxe::StaticClass();
+	case 6:
+		return ADemoHandHammer::StaticClass();
+	case 7:
+		return ADemoHandSword::StaticClass();
+	}
+
+	return ADemoHandNone::StaticClass();
+}
+
 //void ADemoHandObject::ChangeOverlayDetect(bool IsOpen)
 //{
 //	AffectCollision->bGenerateOverlapEvents = IsOpen;

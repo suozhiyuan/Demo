@@ -74,11 +74,11 @@ namespace EUpperBody
 	enum Type
 	{
 		None,
-		Punch,
-		Hit,
-		Fight,
-		PickUp,
-		Eat
+		Punch,		// È­»÷
+		Hit,		// ´¸×ÓÇÃ
+		Fight,		// »Ó½£
+		PickUp,		// Ê°È¡
+		Eat			// ³Ô
 	};
 }
 

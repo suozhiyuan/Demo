@@ -7,7 +7,7 @@
 #include "Data/DemoType.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "Hand/DemoHandObject.h"
 
 
 // Sets default values
@@ -125,9 +125,8 @@ void ADemoPlayerCharacter::BeginPlay()
 	//把手持物品组件绑定到第三人称模型右手插槽上
 	HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 
-	////添加Actor到HandObject
-	//HandObject->SetChildActorClass(ADemoHandObject::SpawnHandObject(0));
-
+	//添加Actor到HandObject，游戏一开始默认就是空物体
+	HandObject->SetChildActorClass(ADemoHandObject::SpawnHandObject(0));
 }
 
 // Called every frame
@@ -165,28 +164,28 @@ void ADemoPlayerCharacter::ChangeView(EGameViewMode::Type NewGameView)
 	case EGameViewMode::First:
 		FirstCamera->SetActive(true);
 		ThirdCamera->SetActive(false);
-		MeshFirst->SetOwnerNoSee(false);			// 第一人称 Mesh 的显示
-		GetMesh()->SetOwnerNoSee(true);				// 第三人称 Mesh 
-		////修改handobject绑定的位置
-		//HandObject->AttachToComponent(MeshFirst, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
+		MeshFirst->SetOwnerNoSee(false);					// 第一人称 Mesh 的显示
+		GetMesh()->SetOwnerNoSee(true);						// 第三人称 Mesh 
+		// 修改 handobject 绑定的位置到第一人称 Mesh
+		HandObject->AttachToComponent(MeshFirst, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 		break;
 	case EGameViewMode::Third:
 		FirstCamera->SetActive(false);
 		ThirdCamera->SetActive(true);
 		MeshFirst->SetOwnerNoSee(true);
 		GetMesh()->SetOwnerNoSee(false);
-		////修改handobject绑定的位置
-		//HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
+		// 修改 handobject 绑定的位置到第三人称 Mesh
+		HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
 		break;
 	}
 }
 
-//void ADemoPlayerCharacter::ChangeHandObject(TSubclassOf<AActor> HandObjectClass)
-//{
-//	//设置物品到HandObject
-//	HandObject->SetChildActorClass(HandObjectClass);
-//}
-//
+void ADemoPlayerCharacter::ChangeHandObject(TSubclassOf<AActor> HandObjectClass)
+{
+	//设置物品到 HandObject
+	HandObject->SetChildActorClass(HandObjectClass);
+}
+
 //void ADemoPlayerCharacter::ChangeHandObjectDetect(bool IsOpen)
 //{
 //	//获取手上物品

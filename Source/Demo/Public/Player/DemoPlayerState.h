@@ -37,9 +37,9 @@ public:
 	//获取选中容器内的物品的Index
 	int GetCurrentHandObjectIndex() const;
 
-//	//获取当前手持物品的物品类型
-//	EObjectType::Type GetCurrentObjectType();
-//
+	//获取当前手持物品的物品类型
+	EObjectType::Type GetCurrentObjectType();
+
 //	//提供给RayInfowidget的注册射线信息事件
 //	void RegisterRayInfoEvent(TSharedPtr<STextBlock> RayInfoTextBlock);
 //

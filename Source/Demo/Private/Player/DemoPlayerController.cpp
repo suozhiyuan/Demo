@@ -3,6 +3,7 @@
 
 #include "Player/DemoPlayerController.h"
 #include "Data/DemoType.h"
+#include "Hand/DemoHandObject.h"
 #include "Player/DemoPlayerCharacter.h"
 #include "Player/DemoPlayerState.h"
 
@@ -47,10 +48,15 @@ void ADemoPlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+	// 临时代码
+	ChangePreUpperType(EUpperBody::None);
+
 	////进行射线检测
 	//RunRayCast();
-	////处理动作状态
+
+	//处理动作状态
 	//StateMachine();
+
 	////处理小地图更新
 	//TickMiniMap();
 }
@@ -263,14 +269,14 @@ void ADemoPlayerController::SetupInputComponent()
 //	//锁住输入
 //	LockedInput(true);
 //}
-//
-//void ADemoPlayerController::ChangeHandObject()
-//{
-//	//生成手持物品
-//	SPCharacter->ChangeHandObject(ADemoHandObject::SpawnHandObject(SPState->GetCurrentHandObjectIndex()));
-//}
 
 
+
+void ADemoPlayerController::ChangeHandObject()
+{
+	//生成手持物品
+	SPCharacter->ChangeHandObject(ADemoHandObject::SpawnHandObject(SPState->GetCurrentHandObjectIndex()));
+}
 
 void ADemoPlayerController::ChangeView()
 {
@@ -341,8 +347,8 @@ void ADemoPlayerController::ScrollUpEvent()
 	//告诉状态类切换快捷栏容器
 	SPState->ChooseShortcut(true);
 
-	////更改Character的手持物品
-	//ChangeHandObject();
+	//更改Character的手持物品
+	ChangeHandObject();
 }
 
 void ADemoPlayerController::ScrollDownEvent()
@@ -359,36 +365,36 @@ void ADemoPlayerController::ScrollDownEvent()
 	//告诉状态类切换快捷栏容器
 	SPState->ChooseShortcut(false);
 
-	////更改Character的手持物品
-	//ChangeHandObject();
+	//更改Character的手持物品
+	ChangeHandObject();
 }
 
+// 修改预动作
+void ADemoPlayerController::ChangePreUpperType(EUpperBody::Type RightType = EUpperBody::None)
+{
+	//根据当前手持物品的类型来修改预动作
+	switch (SPState->GetCurrentObjectType())
+	{
+	case EObjectType::Normal:
+		LeftUpperType = EUpperBody::Punch;
+		RightUpperType = RightType;
+		break;
+	case EObjectType::Food:
+		LeftUpperType = EUpperBody::Punch;
+		//如果右键状态是拾取那就给拾取,拾取优先级高
+		RightUpperType = RightType == EUpperBody::None ? EUpperBody::Eat : RightType;
+		break;
+	case EObjectType::Tool:
+		LeftUpperType = EUpperBody::Hit;
+		RightUpperType = RightType;
+		break;
+	case EObjectType::Weapon:
+		LeftUpperType = EUpperBody::Fight;
+		RightUpperType = RightType;
+		break;
+	}
+}
 
-//void ADemoPlayerController::ChangePreUpperType(EUpperBody::Type RightType = EUpperBody::None)
-//{
-//	//根据当前手持物品的类型来修改预动作
-//	switch (SPState->GetCurrentObjectType())
-//	{
-//	case EObjectType::Normal:
-//		LeftUpperType = EUpperBody::Punch;
-//		RightUpperType = RightType;
-//		break;
-//	case EObjectType::Food:
-//		LeftUpperType = EUpperBody::Punch;
-//		//如果右键状态是拾取那就给拾取,拾取优先级高
-//		RightUpperType = RightType == EUpperBody::None ? EUpperBody::Eat : RightType;
-//		break;
-//	case EObjectType::Tool:
-//		LeftUpperType = EUpperBody::Hit;
-//		RightUpperType = RightType;
-//		break;
-//	case EObjectType::Weapon:
-//		LeftUpperType = EUpperBody::Fight;
-//		RightUpperType = RightType;
-//		break;
-//	}
-//}
-//
 //FHitResult ADemoPlayerController::RayGetHitResult(FVector TraceStart, FVector TraceEnd)
 //{
 //	FCollisionQueryParams TraceParams(true);
@@ -489,6 +495,7 @@ void ADemoPlayerController::ScrollDownEvent()
 //			UpdatePointer.ExecuteIfBound(true, Range);
 //		}
 //	}
+
 //	//如果检测到可拾取物品,并且两者的距离小于300
 //	if (Cast<ADemoPickupObject>(RayActor) && FVector::Distance(RayActor->GetActorLocation(), SPCharacter->GetActorLocation()) < 300.f)
 //	{
