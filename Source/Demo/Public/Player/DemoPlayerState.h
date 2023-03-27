@@ -40,9 +40,9 @@ public:
 	//获取当前手持物品的物品类型
 	EObjectType::Type GetCurrentObjectType();
 
-//	//提供给RayInfowidget的注册射线信息事件
-//	void RegisterRayInfoEvent(TSharedPtr<STextBlock> RayInfoTextBlock);
-//
+	//提供给RayInfowidget的注册射线信息事件
+	void RegisterRayInfoEvent(TSharedPtr<STextBlock> RayInfoTextBlock);
+
 //	//获取手上物品的攻击范围
 //	int GetAffectRange();
 //
@@ -72,9 +72,9 @@ public:
 	//当前被选中的快捷栏序号
 	int CurrentShortcutIndex;
 
-//	//射线检测信息Text,由PlayerController进行更新
-//	FText RayInfoText;
-//
+	//射线检测信息Text,由PlayerController进行更新
+	FText RayInfoText;
+
 //	//更新玩家状态UI,绑定的方法是PlayerStateWidget的UpdateStateWidget
 //	FUpdateStateWidget UpdateStateWidget;
 //
@@ -90,8 +90,8 @@ private:
 	//获取快捷栏物品信息
 	FText GetShortcutInfoText() const;
 
-//	//获取射线检测信息
-//	FText GetRayInfoText() const;
+	//获取射线检测信息
+	FText GetRayInfoText() const;
 
 private:
 
@@ -101,9 +101,9 @@ private:
 	//快捷栏信息参数. TAttribute 绑定的函数，函数返回来的值修改时，自己同时也会修改
 	TAttribute<FText> ShortcutInfoTextAttr;
 
-//	//射线信息参数
-//	TAttribute<FText> RayInfoTextAttr;
-//
+	//射线信息参数
+	TAttribute<FText> RayInfoTextAttr;
+
 //	//血值饥饿度
 //	float HP;
 //	float Hunger;

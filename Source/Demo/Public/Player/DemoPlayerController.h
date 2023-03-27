@@ -8,8 +8,8 @@
 #include "DemoPlayerController.generated.h"
 
 
-////修改准星委托
-//DECLARE_DELEGATE_TwoParams(FUpdatePointer, bool, float)
+//修改准星委托
+DECLARE_DELEGATE_TwoParams(FUpdatePointer, bool, float)
 ////显示UI委托
 //DECLARE_DELEGATE_TwoParams(FShowGameUI, EGameUIType::Type, EGameUIType::Type)
 ////修改小地图视野范围委托
@@ -38,22 +38,23 @@ public:
 
 //	//死亡
 //	void PlayerDead();
-//
+
 public:
 
 	//获取玩家角色
 	class ADemoPlayerCharacter* SPCharacter;
 	class ADemoPlayerState* SPState;
-//
-//
-//	//实时修改准星的委托,注册的函数是PointerWidget的UpdatePointer
-//	FUpdatePointer UpdatePointer;
+
+
+	//实时修改准星的委托,注册的函数是PointerWidget的UpdatePointer
+	FUpdatePointer UpdatePointer;
+
 //	//显示游戏UI界面委托,绑定的方法是GameHUDWidget的ShowGameUI
 //	FShowGameUI ShowGameUI;
+
 //	//修改小地图视野范围委托,注册函数是DemoSceneCapture2D的UpdateMiniMapWidth 
 //	FUpdateMiniMapWidth UpdateMiniMapWidth;
-//
-//
+
 protected:
 
 	virtual void BeginPlay() override;

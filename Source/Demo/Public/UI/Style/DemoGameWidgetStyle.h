@@ -63,13 +63,13 @@ struct DEMO_API FDemoGameStyle : public FSlateWidgetStyle
 		FSlateBrush ObjectBrush_7;
 
 
-	////射线检测信息面板背景
-	//UPROPERTY(EditAnywhere, Category = Info)
-	//	FSlateBrush RayInfoBrush;
+	//射线检测信息面板背景
+	UPROPERTY(EditAnywhere, Category = Info)
+		FSlateBrush RayInfoBrush;
 
-	////准星材质
-	//UPROPERTY(EditAnywhere, Category = Info)
-	//	FSlateBrush PointerBrush;
+	//准星材质, 在游戏中给他材质实例
+	UPROPERTY(EditAnywhere, Category = Info)
+		FSlateBrush PointerBrush;
 
 	////小地图背景图片
 	//UPROPERTY(EditAnywhere, Category = MiniMap)

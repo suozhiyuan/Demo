@@ -34,10 +34,12 @@ public:
 	//快捷栏指针
 	TSharedPtr<class SDemoShortcutWidget> ShortcutWidget;
 
-//	//射线信息框
-//	TSharedPtr<class SDemoRayInfoWidget> RayInfoWidget;
-//	//准星
-//	TSharedPtr<class SDemoPointerWidget> PointerWidget;
+	//射线信息框
+	TSharedPtr<class SDemoRayInfoWidget> RayInfoWidget;
+
+	//准星
+	TSharedPtr<class SDemoPointerWidget> PointerWidget;
+
 //	//玩家状态指针
 //	TSharedPtr<class SDemoPlayerStateWidget> PlayerStateWidget;
 //	//小地图引用

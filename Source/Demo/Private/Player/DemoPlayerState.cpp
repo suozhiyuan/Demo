@@ -121,13 +121,13 @@ EObjectType::Type ADemoPlayerState::GetCurrentObjectType()
 	return ObjectAttr->ObjectType;
 }
 
-//void ADemoPlayerState::RegisterRayInfoEvent(TSharedPtr<STextBlock> RayInfoTextBlock)
-//{
-//	RayInfoTextAttr.BindUObject(this, &ADemoPlayerState::GetRayInfoText);
-//	//绑定射线检测信息
-//	RayInfoTextBlock->SetText(RayInfoTextAttr);
-//}
-//
+void ADemoPlayerState::RegisterRayInfoEvent(TSharedPtr<STextBlock> RayInfoTextBlock)
+{
+	RayInfoTextAttr.BindUObject(this, &ADemoPlayerState::GetRayInfoText);
+	//绑定射线检测信息
+	RayInfoTextBlock->SetText(RayInfoTextAttr);
+}
+
 //int ADemoPlayerState::GetAffectRange()
 //{
 //	TSharedPtr<ObjectAttribute> ObjectAttr;
@@ -224,7 +224,7 @@ FText ADemoPlayerState::GetShortcutInfoText() const
 	return ObjectAttr->ZH;
 }
 
-//FText ADemoPlayerState::GetRayInfoText() const
-//{
-//	return RayInfoText;
-//}
+FText ADemoPlayerState::GetRayInfoText() const
+{
+	return RayInfoText;
+}

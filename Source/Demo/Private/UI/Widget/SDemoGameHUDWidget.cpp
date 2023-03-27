@@ -3,8 +3,10 @@
 
 #include "UI/Widget/SDemoGameHUDWidget.h"
 #include "SlateOptMacros.h"
+#include "UI/Widget/SDemoPointerWidget.h"
 #include "Widgets/Layout/SDPIScaler.h"
 #include "UI/Widget/SDemoShortcutWidget.h"
+#include "UI/Widget/SDemoRayInfoWidget.h"
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -22,55 +24,55 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 			SNew(SOverlay)
 
 			+ SOverlay::Slot()			//快捷栏
-				.HAlign(HAlign_Center)
-				.VAlign(VAlign_Bottom)
-				[
-					SAssignNew(ShortcutWidget, SDemoShortcutWidget)
-				]
+			.HAlign(HAlign_Center)
+			.VAlign(VAlign_Bottom)
+			[
+				SAssignNew(ShortcutWidget, SDemoShortcutWidget)
+			]
 
 
-	////射线信息
-	//+SOverlay::Slot()
-	//	.HAlign(HAlign_Center)
-	//	.VAlign(VAlign_Top)
-	//	[
-	//		SAssignNew(RayInfoWidget, SDemoRayInfoWidget)
-	//	]
+			//射线信息
+			+SOverlay::Slot()
+			.HAlign(HAlign_Center)
+			.VAlign(VAlign_Top)
+			[
+				SAssignNew(RayInfoWidget, SDemoRayInfoWidget)
+			]
 
 
-	////准星
-	//+SOverlay::Slot()
-	//	.HAlign(HAlign_Center)
-	//	.VAlign(VAlign_Center)
-	//	[
-	//		SAssignNew(PointerWidget, SDemoPointerWidget)
-	//	]
+			//准星
+			+SOverlay::Slot()
+			.HAlign(HAlign_Center)
+			.VAlign(VAlign_Center)
+			[
+				SAssignNew(PointerWidget, SDemoPointerWidget)
+			]
 
-	////玩家状态
-	//+ SOverlay::Slot()
-	//	.HAlign(HAlign_Left)
-	//	.VAlign(VAlign_Top)
-	//	[
-	//		SAssignNew(PlayerStateWidget, SDemoPlayerStateWidget)
-	//	]
+			////玩家状态
+			//+ SOverlay::Slot()
+			//	.HAlign(HAlign_Left)
+			//	.VAlign(VAlign_Top)
+			//	[
+			//		SAssignNew(PlayerStateWidget, SDemoPlayerStateWidget)
+			//	]
 
-	////小地图
-	//+ SOverlay::Slot()
-	//	.HAlign(HAlign_Right)
-	//	.VAlign(VAlign_Top)
-	//	[
-	//		SAssignNew(MiniMapWidget, SDemoMiniMapWidget)
-	//	]
+			////小地图
+			//+ SOverlay::Slot()
+			//	.HAlign(HAlign_Right)
+			//	.VAlign(VAlign_Top)
+			//	[
+			//		SAssignNew(MiniMapWidget, SDemoMiniMapWidget)
+			//	]
 
 
-	////聊天显示栏
-	//+SOverlay::Slot()
-	//	.HAlign(HAlign_Left)
-	//	.VAlign(VAlign_Bottom)
-	//	.Padding(FMargin(20.f, 0.f, 0.f, 15.f))
-	//	[
-	//		SAssignNew(ChatShowWidget, SDemoChatShowWidget)
-	//	]
+			////聊天显示栏
+			//+SOverlay::Slot()
+			//	.HAlign(HAlign_Left)
+			//	.VAlign(VAlign_Bottom)
+			//	.Padding(FMargin(20.f, 0.f, 0.f, 15.f))
+			//	[
+			//		SAssignNew(ChatShowWidget, SDemoChatShowWidget)
+			//	]
 
 
 

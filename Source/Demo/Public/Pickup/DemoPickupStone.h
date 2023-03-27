@@ -3,18 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Resource/DemoResourceObject.h"
-#include "DemoResourceRock.generated.h"
+#include "Pickup/DemoPickupObject.h"
+#include "DemoPickupStone.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DEMO_API ADemoResourceRock : public ADemoResourceObject
+class DEMO_API ADemoPickupStone : public ADemoPickupObject
 {
 	GENERATED_BODY()
 public:
 
-	ADemoResourceRock();
+	ADemoPickupStone();
 
 };
