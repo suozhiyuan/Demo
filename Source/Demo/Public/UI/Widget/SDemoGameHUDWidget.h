@@ -40,22 +40,24 @@ public:
 	//准星
 	TSharedPtr<class SDemoPointerWidget> PointerWidget;
 
-//	//玩家状态指针
-//	TSharedPtr<class SDemoPlayerStateWidget> PlayerStateWidget;
+	//玩家状态指针
+	TSharedPtr<class SDemoPlayerStateWidget> PlayerStateWidget;
+
 //	//小地图引用
 //	TSharedPtr<class SDemoMiniMapWidget> MiniMapWidget;
+
 //	//聊天显示栏引用
 //	TSharedPtr<class SDemoChatShowWidget> ChatShowWidget;
-//
-//
+
 //	//游戏菜单
 //	TSharedPtr<class SDemoGameMenuWidget> GameMenuWidget;
+
 //	//聊天室
 //	TSharedPtr<class SDemoChatRoomWidget> ChatRoomWidget;
+
 //	//背包
 //	TSharedPtr<class SDemoPackageWidget> PackageWidget;
-//
-//
+
 private:
 
 	//获取屏幕Size

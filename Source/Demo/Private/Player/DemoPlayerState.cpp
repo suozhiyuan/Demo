@@ -11,16 +11,18 @@
 
 ADemoPlayerState::ADemoPlayerState()
 {
-	//允许每帧运行
-	//PrimaryActorTick.bCanEverTick = true;
+	// 允许每帧运行
+	PrimaryActorTick.bCanEverTick = true;
 
 	//当前选中的快捷栏序号
 	CurrentShortcutIndex = 0;
 
-	////设置初始血值为500
-	//HP = 500.f;
-	////设置初始饥饿值为600
-	//Hunger = 600.f;
+	//设置初始血值为500
+	HP = 500.f;
+
+	//设置初始饥饿值为600
+	Hunger = 600.f;
+
 	////没有死亡
 	//IsDead = false;
 }
@@ -32,37 +34,44 @@ ADemoPlayerState::ADemoPlayerState()
 //	//如果控制器指针为空,添加引用
 //	SPController = Cast<ADemoPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 //}
-//
-//void ADemoPlayerState::Tick(float DeltaSeconds)
-//{
-//	Super::Tick(DeltaSeconds);
-//
-//	//如果饥饿度为0,持续减血
-//	if (Hunger <= 0) {
-//		HP -= DeltaSeconds * 2;
-//	}
-//	else {
-//		if (!IsDead) {
-//			//如果饥饿不为0,持续减饥饿度,每秒减2
-//			Hunger -= DeltaSeconds * 2;
-//			//持续加血,每秒加1
-//			HP += DeltaSeconds;
-//		}
-//	}
-//	//设定范围
-//	HP = FMath::Clamp<float>(HP, 0.f, 500.f);
-//	Hunger = FMath::Clamp<float>(Hunger, 0.f, 600.f);
-//	//执行修改玩家状态UI的委托
-//	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);
-//
-//	//如果血值等于0但是没死
-//	if (HP == 0.f && !IsDead) {
-//		//告诉控制器自己死了
-//		if (SPController) SPController->PlayerDead();
-//		IsDead = true;
-//	}
-//
-//}
+
+void ADemoPlayerState::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	//如果饥饿度为0,持续减血
+	if (Hunger <= 0) 
+	{
+		HP -= DeltaSeconds * 2;
+	}
+	else 
+	{
+		//if (!IsDead) 
+		//{
+			//如果饥饿不为0,持续减饥饿度,每秒减2
+			Hunger -= DeltaSeconds * 2;
+
+			//持续加血,每秒加1
+			HP += DeltaSeconds;
+		//}
+	}
+
+	//设定范围
+	HP = FMath::Clamp<float>(HP, 0.f, 500.f);
+	Hunger = FMath::Clamp<float>(Hunger, 0.f, 600.f);
+
+	//执行修改玩家状态UI的委托
+	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);			// ExecuteIfBound  执行委托，小于500再开始降低血量与饥饿度
+
+	////如果血值等于0但是没死
+	//if (HP == 0.f && !IsDead) 
+	//{
+	//	//告诉控制器自己死了
+	//	if (SPController) SPController->PlayerDead();
+	//	IsDead = true;
+	//}
+
+}
 
 // 提供给 ShortcutWidget 的添加快捷栏容器委托，在 GameHUD 中绑定了
 void ADemoPlayerState::RegisterShortcutContainer(TArray<TSharedPtr<ShortcutContainer>>* ContainerList, TSharedPtr<STextBlock> ShortcutInfoTextBlock)

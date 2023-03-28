@@ -3,6 +3,7 @@
 
 #include "UI/Widget/SDemoGameHUDWidget.h"
 #include "SlateOptMacros.h"
+#include "UI/Widget/SDemoPlayerStateWidget.h"
 #include "UI/Widget/SDemoPointerWidget.h"
 #include "Widgets/Layout/SDPIScaler.h"
 #include "UI/Widget/SDemoShortcutWidget.h"
@@ -48,13 +49,13 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 				SAssignNew(PointerWidget, SDemoPointerWidget)
 			]
 
-			////Íæ¼Ò×´Ì¬
-			//+ SOverlay::Slot()
-			//	.HAlign(HAlign_Left)
-			//	.VAlign(VAlign_Top)
-			//	[
-			//		SAssignNew(PlayerStateWidget, SDemoPlayerStateWidget)
-			//	]
+			//Íæ¼Ò×´Ì¬
+			+ SOverlay::Slot()
+			.HAlign(HAlign_Left)
+			.VAlign(VAlign_Top)
+			[
+				SAssignNew(PlayerStateWidget, SDemoPlayerStateWidget)
+			]
 
 			////Ð¡µØÍ¼
 			//+ SOverlay::Slot()

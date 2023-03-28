@@ -8,12 +8,8 @@
 #include "DemoPlayerState.generated.h"
 
 
-
-//class STextBlock;
-
-////更新玩家状态UI委托
-//DECLARE_DELEGATE_TwoParams(FUpdateStateWidget, float, float)
-
+//更新玩家状态UI委托
+DECLARE_DELEGATE_TwoParams(FUpdateStateWidget, float, float)
 
 /**
  *
@@ -26,7 +22,7 @@ class DEMO_API ADemoPlayerState : public APlayerState
 public:
 	ADemoPlayerState();
 
-//	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	//提供给 ShortcutWidget 的添加快捷栏容器委托
 	void RegisterShortcutContainer(TArray<TSharedPtr<ShortcutContainer>>* ContainerList, TSharedPtr<STextBlock> ShortcutInfoTextBlock);
@@ -75,9 +71,9 @@ public:
 	//射线检测信息Text,由PlayerController进行更新
 	FText RayInfoText;
 
-//	//更新玩家状态UI,绑定的方法是PlayerStateWidget的UpdateStateWidget
-//	FUpdateStateWidget UpdateStateWidget;
-//
+	//更新玩家状态UI,绑定的方法是PlayerStateWidget的UpdateStateWidget
+	FUpdateStateWidget UpdateStateWidget;
+
 //	//获取控制器指针
 //	class ADemoPlayerController* SPController;
 //
@@ -104,10 +100,10 @@ private:
 	//射线信息参数
 	TAttribute<FText> RayInfoTextAttr;
 
-//	//血值饥饿度
-//	float HP;
-//	float Hunger;
-//
+	//血值饥饿度
+	float HP;
+	float Hunger;
+
 //	//是否已经死亡
 //	bool IsDead;
 

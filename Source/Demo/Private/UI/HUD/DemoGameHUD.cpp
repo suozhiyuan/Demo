@@ -13,6 +13,7 @@
 #include "UI/Widget/SDemoShortcutWidget.h"
 #include "UI/Widget/SDemoRayInfoWidget.h"
 #include "Player/DemoPlayerController.h"
+#include "UI/Widget/SDemoPlayerStateWidget.h"
 
 ADemoGameHUD::ADemoGameHUD()
 {
@@ -42,8 +43,8 @@ void ADemoGameHUD::BeginPlay()
 	//绑定修改准星委托， BindRaw 是绑定C++的方法，BindUObject 是绑定继承Object的方法  
 	GM->SPController->UpdatePointer.BindRaw(GameHUDWidget->PointerWidget.Get(), &SDemoPointerWidget::UpdatePointer);
 
-	////绑定更新玩家状态的委托
-	//GM->SPState->UpdateStateWidget.BindRaw(GameHUDWidget->PlayerStateWidget.Get(), &SDemoPlayerStateWidget::UpdateStateWidget);
+	//绑定更新玩家状态的委托
+	GM->SPState->UpdateStateWidget.BindRaw(GameHUDWidget->PlayerStateWidget.Get(), &SDemoPlayerStateWidget::UpdateStateWidget);
 
 	////绑定显示UI委托
 	//GM->SPController->ShowGameUI.BindRaw(GameHUDWidget.Get(), &SDemoGameHUDWidget::ShowGameUI);
