@@ -41,7 +41,6 @@ void ADemoGameHUD::BeginPlay()
 
 	//绑定修改准星委托， BindRaw 是绑定C++的方法，BindUObject 是绑定继承Object的方法  
 	GM->SPController->UpdatePointer.BindRaw(GameHUDWidget->PointerWidget.Get(), &SDemoPointerWidget::UpdatePointer);
-	
 
 	////绑定更新玩家状态的委托
 	//GM->SPState->UpdateStateWidget.BindRaw(GameHUDWidget->PlayerStateWidget.Get(), &SDemoPlayerStateWidget::UpdateStateWidget);

@@ -2,10 +2,16 @@
 
 
 #include "Player/DemoPlayerController.h"
+
+#include "Camera/CameraComponent.h"
+#include "Components/LineBatchComponent.h"
 #include "Data/DemoType.h"
 #include "Hand/DemoHandObject.h"
+#include "Data/DemoDataHandle.h"
+#include "Pickup/DemoPickupObject.h"
 #include "Player/DemoPlayerCharacter.h"
 #include "Player/DemoPlayerState.h"
+#include "Resource/DemoResourceObject.h"
 
 
 ADemoPlayerController::ADemoPlayerController()
@@ -51,11 +57,16 @@ void ADemoPlayerController::Tick(float DeltaSeconds)
 	// 临时代码
 	ChangePreUpperType(EUpperBody::None);
 
-	////进行射线检测
-	//RunRayCast();
+	// 圆形进度条 测试代码
+	//static float TestPointer = 1.f;
+	//TestPointer = FMath::FInterpTo(TestPointer, 0, DeltaSeconds, 1.f);
+	//UpdatePointer.ExecuteIfBound(true, FMath::Clamp(TestPointer, 0.f, 1.f));
 
-	//处理动作状态
-	//StateMachine();
+	//进行射线检测
+	RunRayCast();
+
+	// 处理动作状态
+	StateMachine();
 
 	////处理小地图更新
 	//TickMiniMap();
@@ -395,120 +406,143 @@ void ADemoPlayerController::ChangePreUpperType(EUpperBody::Type RightType = EUpp
 	}
 }
 
-//FHitResult ADemoPlayerController::RayGetHitResult(FVector TraceStart, FVector TraceEnd)
-//{
-//	FCollisionQueryParams TraceParams(true);
-//	TraceParams.AddIgnoredActor(SPCharacter);
-//	TraceParams.bTraceAsyncScene = true;
-//	TraceParams.bReturnPhysicalMaterial = false;
-//	TraceParams.bTraceComplex = true;
-//
-//	FHitResult Hit(ForceInit);
-//	if (GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1, TraceParams)) {
-//		//DrawRayLine(TraceStart, TraceEnd, 5.f);
-//	}
-//	return Hit;
-//}
-//
-//void ADemoPlayerController::DrawRayLine(FVector StartPos, FVector EndPos, float Duration)
-//{
-//	ULineBatchComponent* const LineBatcher = GetWorld()->PersistentLineBatcher;
-//	if (LineBatcher != nullptr) {
-//		float LineDuration = (Duration > 0.f) ? Duration : LineBatcher->DefaultLifeTime;
-//		LineBatcher->DrawLine(StartPos, EndPos, FLinearColor::Red, 10, 0.f, LineDuration);
-//	}
-//}
-//
-//void ADemoPlayerController::RunRayCast()
-//{
-//	FVector StartPos(0.f);
-//	FVector EndPos(0.f);
-//
-//	switch (SPCharacter->GameView)
-//	{
-//	case EGameViewMode::First:
-//		StartPos = SPCharacter->FirstCamera->K2_GetComponentLocation();
-//		EndPos = StartPos + SPCharacter->FirstCamera->GetForwardVector() * 2000.f;
-//		break;
-//	case EGameViewMode::Third:
-//		StartPos = SPCharacter->ThirdCamera->K2_GetComponentLocation();
-//		StartPos = StartPos + SPCharacter->ThirdCamera->GetForwardVector() * 300.f;
-//		EndPos = StartPos + SPCharacter->ThirdCamera->GetForwardVector() * 2000.f;
-//		break;
-//	}
-//
-//	//是否检测到物品
-//	bool IsDetected = false;
-//	FHitResult Hit = RayGetHitResult(StartPos, EndPos);
-//	RayActor = Hit.GetActor();
-//
-//	if (Cast<ADemoPickupObject>(RayActor)) {
-//		IsDetected = true;
-//		SPState->RayInfoText = Cast<ADemoPickupObject>(RayActor)->GetInfoText();
-//	}
-//	if (Cast<ADemoResourceObject>(RayActor))
-//	{
-//		IsDetected = true;
-//		SPState->RayInfoText = Cast<ADemoResourceObject>(RayActor)->GetInfoText();
-//	}
-//	if (Cast<ADemoEnemyCharacter>(RayActor))
-//	{
-//		IsDetected = true;
-//		SPState->RayInfoText = Cast<ADemoEnemyCharacter>(RayActor)->GetInfoText();
-//	}
-//	//如果什么都没有检测到那就设置信息为无
-//	if (!IsDetected) {
-//		SPState->RayInfoText = FText();
-//	}
-//
-//}
-//
-//void ADemoPlayerController::StateMachine()
-//{
-//	//普通模式
-//	ChangePreUpperType(EUpperBody::None);
-//	if (!Cast<ADemoResourceObject>(RayActor) && !Cast<ADemoPickupObject>(RayActor) && !Cast<ADemoEnemyCharacter>(RayActor)) {
-//		//准星显示未锁定
-//		UpdatePointer.ExecuteIfBound(false, 1.f);
-//	}
-//	//如果检测到敌人
-//	if (Cast<ADemoEnemyCharacter>(RayActor))
-//	{
-//		//准星锁定模式
-//		UpdatePointer.ExecuteIfBound(false, 0.f);
-//	}
-//	//如果检测到资源
-//	if (Cast<ADemoResourceObject>(RayActor)) {
-//		//如果左键没有按下,在资源模式下右键没有特殊意义
-//		if (!IsLeftButtonDown) {
-//			//准星锁定模式
-//			UpdatePointer.ExecuteIfBound(false, 0.f);
-//		}
-//		//如果左键已经按下
-//		if (IsLeftButtonDown && FVector::Distance(RayActor->GetActorLocation(), SPCharacter->GetActorLocation()) < SPState->GetAffectRange())
-//		{
-//			//获取实际伤害
-//			int Damage = SPState->GetDamageValue(Cast<ADemoResourceObject>(RayActor)->GetResourceType());
-//			//让资源受到伤害并且获取剩余血量百分比
-//			float Range = Cast<ADemoResourceObject>(RayActor)->TakeObjectDamage(Damage)->GetHPRange();
-//			//更新准星
-//			UpdatePointer.ExecuteIfBound(true, Range);
-//		}
-//	}
+// 射线检测结果
+FHitResult ADemoPlayerController::RayGetHitResult(FVector TraceStart, FVector TraceEnd)
+{
+	FCollisionQueryParams TraceParams(true);
+	TraceParams.AddIgnoredActor(SPCharacter);
+	// TraceParams.bTraceAsyncScene = true;		// 异步场景已经弃用
+	TraceParams.bReturnPhysicalMaterial = false;
+	TraceParams.bTraceComplex = true;
 
-//	//如果检测到可拾取物品,并且两者的距离小于300
-//	if (Cast<ADemoPickupObject>(RayActor) && FVector::Distance(RayActor->GetActorLocation(), SPCharacter->GetActorLocation()) < 300.f)
-//	{
-//		//改变右键预状态为拾取
-//		ChangePreUpperType(EUpperBody::PickUp);
-//		//修改准星锁定模式
-//		UpdatePointer.ExecuteIfBound(false, 0);
-//		//如果右键按下
-//		if (IsRightButtonDown && SPCharacter->IsPackageFree(Cast<ADemoPickupObject>(RayActor)->ObjectIndex)) {
-//			//把物品捡起来
-//			SPCharacter->AddPackageObject(Cast<ADemoPickupObject>(RayActor)->TakePickup());
-//		}
-//	}
-//}
+	FHitResult Hit(ForceInit);
+
+	// 使用特定的通道跟踪光线，并返回第一个阻塞命中
+	if (GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECollisionChannel::ECC_GameTraceChannel1, TraceParams))
+	{
+		//DrawRayLine(TraceStart, TraceEnd, 5.f);
+	}
+
+	return Hit;
+}
+
+// 射线绘制
+void ADemoPlayerController::DrawRayLine(FVector StartPos, FVector EndPos, float Duration)
+{
+	ULineBatchComponent* const LineBatcher = GetWorld()->PersistentLineBatcher;
+	if (LineBatcher != nullptr) 
+	{
+		float LineDuration = (Duration > 0.f) ? Duration : LineBatcher->DefaultLifeTime;
+		LineBatcher->DrawLine(StartPos, EndPos, FLinearColor::Red, 10, 0.f, LineDuration);	// 开始位置  结束位置 颜色 深度 
+	}
+}
+
+// 进行射线检测
+void ADemoPlayerController::RunRayCast()
+{
+	FVector StartPos(0.f);
+	FVector EndPos(0.f);
+
+	switch (SPCharacter->GameView)
+	{
+	case EGameViewMode::First:		// 第一人称的起始位置
+		StartPos = SPCharacter->FirstCamera->K2_GetComponentLocation();
+		EndPos = StartPos + SPCharacter->FirstCamera->GetForwardVector() * 2000.f;
+		break;
+	case EGameViewMode::Third:		// 第三人称的起始位置
+		StartPos = SPCharacter->ThirdCamera->K2_GetComponentLocation();
+		StartPos = StartPos + SPCharacter->ThirdCamera->GetForwardVector() * 300.f;		// 开始位置 摄像机前方 300 的距离
+		EndPos = StartPos + SPCharacter->ThirdCamera->GetForwardVector() * 2000.f;		// 结束位置
+		break;
+	}
+
+	//是否检测到物品
+	bool IsDetected = false;
+	FHitResult Hit = RayGetHitResult(StartPos, EndPos);
+	RayActor = Hit.GetActor();		// 获得检测到的物品
+
+	if (Cast<ADemoPickupObject>(RayActor))		// 检测到的物品，是否是掉落物类
+	{
+		IsDetected = true;
+		SPState->RayInfoText = Cast<ADemoPickupObject>(RayActor)->GetInfoText();
+	}
+	if (Cast<ADemoResourceObject>(RayActor))
+	{
+		IsDetected = true;
+		SPState->RayInfoText = Cast<ADemoResourceObject>(RayActor)->GetInfoText();
+	}
+	//if (Cast<ADemoEnemyCharacter>(RayActor))
+	//{
+	//	IsDetected = true;
+	//	SPState->RayInfoText = Cast<ADemoEnemyCharacter>(RayActor)->GetInfoText();
+	//}
+
+	//如果什么都没有检测到那就设置信息为无
+	if (!IsDetected) 
+	{
+		SPState->RayInfoText = FText();
+	}
+}
+
+void ADemoPlayerController::StateMachine()
+{
+	//普通模式
+	ChangePreUpperType(EUpperBody::None);
+
+	// 如果是 资源或可拾取物品 则准星不锁定（白色）
+	//if (!Cast<ADemoResourceObject>(RayActor) && !Cast<ADemoPickupObject>(RayActor) && !Cast<ADemoEnemyCharacter>(RayActor)) 
+	if (!Cast<ADemoResourceObject>(RayActor) && !Cast<ADemoPickupObject>(RayActor)) 
+	{
+		//准星显示未锁定
+		UpdatePointer.ExecuteIfBound(false, 1.f);
+	}
+
+	////如果检测到敌人 则锁定模式（）
+	//if (Cast<ADemoEnemyCharacter>(RayActor))
+	//{
+	//	//准星锁定模式
+	//	UpdatePointer.ExecuteIfBound(false, 0.f);
+	//}
+
+	//如果检测到资源
+	if (Cast<ADemoResourceObject>(RayActor)) 
+	{
+		//如果左键没有按下,在资源模式下右键没有特殊意义
+		if (!IsLeftButtonDown) 
+		{
+			//准星锁定模式
+			UpdatePointer.ExecuteIfBound(false, 0.f);
+		}
+		//如果左键已经按下
+		if (IsLeftButtonDown && FVector::Distance(RayActor->GetActorLocation(), SPCharacter->GetActorLocation()) <= SPState->GetAffectRange())
+		{
+			// 根据资源类型，获取对其实际的伤害
+			int Damage = SPState->GetDamageValue(Cast<ADemoResourceObject>(RayActor)->GetResourceType());
+
+			//让资源受到伤害并且获取剩余血量百分比
+			float Range = Cast<ADemoResourceObject>(RayActor)->TakeObjectDamage(Damage)->GetHPRange();
+
+			//更新准星
+			UpdatePointer.ExecuteIfBound(true, Range);
+		}
+	}
+
+	//如果检测到可拾取物品,并且两者的距离小于300
+	if (Cast<ADemoPickupObject>(RayActor) && FVector::Distance(RayActor->GetActorLocation(), SPCharacter->GetActorLocation()) <= 300.f)
+	{
+		//改变右键预状态为拾取
+		ChangePreUpperType(EUpperBody::PickUp);
+
+		//修改准星锁定模式
+		UpdatePointer.ExecuteIfBound(false, 0);
+
+		////如果右键按下
+		//if (IsRightButtonDown && SPCharacter->IsPackageFree(Cast<ADemoPickupObject>(RayActor)->ObjectIndex)) 
+		//{
+		//	//把物品捡起来
+		//	SPCharacter->AddPackageObject(Cast<ADemoPickupObject>(RayActor)->TakePickup());
+		//}
+	}
+}
 
 

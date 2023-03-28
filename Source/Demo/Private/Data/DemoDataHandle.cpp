@@ -13,22 +13,12 @@
 #include "Sound/SoundCue.h"
 #include "UI/Style/DemoGameWidgetStyle.h"
 
+
 TSharedPtr<DemoDataHandle> DemoDataHandle::DataInstance = NULL;
-
-DemoDataHandle::DemoDataHandle()
-{
-	// 初始化存档数据
-	InitRecordData();
-
-	// 初始化音乐数据
-	InitializedMenuAudio();
-
-}
 
 void DemoDataHandle::Initialize()
 {
-	if (!DataInstance.IsValid()) 
-	{
+	if (!DataInstance.IsValid()) {
 		DataInstance = Create();
 	}
 }
@@ -39,7 +29,22 @@ TSharedPtr<DemoDataHandle> DemoDataHandle::Get()
 	return DataInstance;
 }
 
-// 修改中英文
+
+TSharedRef<DemoDataHandle> DemoDataHandle::Create()
+{
+	TSharedRef<DemoDataHandle> DataRef = MakeShareable(new DemoDataHandle());
+	return DataRef;
+}
+
+DemoDataHandle::DemoDataHandle()
+{
+	//初始化存档数据
+	InitRecordData();
+	//初始化音乐数据
+	InitializedMenuAudio();
+
+}
+
 void DemoDataHandle::ChangeLocalizationCulture(ECultureTeam Culture)
 {
 	switch (Culture)
@@ -53,18 +58,11 @@ void DemoDataHandle::ChangeLocalizationCulture(ECultureTeam Culture)
 	}
 	//赋值
 	CurrentCulture = Culture;
-
 	//更新存档数据
 	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 }
 
-TSharedRef<DemoDataHandle> DemoDataHandle::Create()
-{
-	TSharedRef<DemoDataHandle> DataRef = MakeShareable(new DemoDataHandle());	// MakeShareable 可以创建共享指针与共享引用
-	return DataRef;
-}
 
-// 修改菜单音量
 void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 {
 	if (MusicVol > 0)
@@ -74,7 +72,7 @@ void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 		for (TArray<USoundCue*>::TIterator It(MenuAudioResource.Find(FString("Music"))->CreateIterator()); It; ++It)
 		{
 			//设置音量
-			(*It)->VolumeMultiplier = MusicVolume;			// VolumeMultiplier 设置音量
+			(*It)->VolumeMultiplier = MusicVolume;
 		}
 	}
 	if (SoundVol > 0)
@@ -90,38 +88,36 @@ void DemoDataHandle::ResetMenuVolume(float MusicVol, float SoundVol)
 	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 }
 
-//void DemoDataHandle::ResetGameVolume(float MusicVol, float SoundVol)
-//{
-//	if (MusicVol > 0)
-//	{
-//		MusicVolume = MusicVol;
-//		//使用混音器来设置
-//		AudioDevice->SetSoundMixClassOverride(DemoSoundMix, DemoMusicClass, MusicVolume, 1.f, 0.2f, false);
-//	}
-//	if (SoundVol > 0)
-//	{
-//		SoundVolume = SoundVol;
-//		//使用混音器来设置
-//		AudioDevice->SetSoundMixClassOverride(DemoSoundMix, DemoSoundClass, SoundVolume, 1.f, 0.2f, false);
-//	}
-//	//更新存档数据
-//	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
-//}
 
-// 根据enum类型获取字符串
+
+void DemoDataHandle::ResetGameVolume(float MusicVol, float SoundVol)
+{
+	if (MusicVol > 0)
+	{
+		MusicVolume = MusicVol;
+		////使用混音器来设置
+		//AudioDevice->SetSoundMixClassOverride(DemoSoundMix, DemoMusicClass, MusicVolume, 1.f, 0.2f, false);
+	}
+	if (SoundVol > 0)
+	{
+		SoundVolume = SoundVol;
+		////使用混音器来设置
+		//AudioDevice->SetSoundMixClassOverride(DemoSoundMix, DemoSoundClass, SoundVolume, 1.f, 0.2f, false);
+	}
+	//更新存档数据
+	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
+}
+
 template<typename TEnum>
 FString DemoDataHandle::GetEnumValueAsString(const FString& Name, TEnum Value)
 {
-	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, *Name, true);		// 可通过 FindObject 从 ANY_PACKAGE 里查找 Name
-	if (!EnumPtr) 
-	{
+	const UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, *Name, true);
+	if (!EnumPtr) {
 		return FString("InValid");
 	}
-	//return EnumPtr->GetEnumName((int32)Value);			// GetEnumName 已弃用
-	return EnumPtr->GetNameStringByIndex((int32)Value);
+	return EnumPtr->GetEnumName((int32)Value);
 }
 
-// 根据字符串获取Enum值
 template<typename TEnum>
 TEnum DemoDataHandle::GetEnumValueFromString(const FString& Name, FString Value)
 {
@@ -129,32 +125,22 @@ TEnum DemoDataHandle::GetEnumValueFromString(const FString& Name, FString Value)
 	if (!EnumPtr) {
 		return TEnum(0);
 	}
-	return (TEnum)EnumPtr->GetIndexByName(FName(*FString(Value)));		//GetIndexByName 获取enum中名称的索引，返回INDEX_NONE，如果没有找到名称，则可选地返回错误。
+	return (TEnum)EnumPtr->GetIndexByName(FName(*FString(Value)));
 }
 
 void DemoDataHandle::InitRecordData()
 {
 	RecordName = FString("");
-
 	//获取语言
 	FString Culture;
-
 	//读取存档数据
 	DemoSingleton<DemoJsonHandle>::Get()->RecordDataJsonRead(Culture, MusicVolume, SoundVolume, RecordDataList);
 
 	//初始化语言
 	ChangeLocalizationCulture(GetEnumValueFromString<ECultureTeam>(FString("ECultureTeam"), Culture));
 
-	// 输出一下
-	DemoHelper::Debug(Culture + FString("--") + FString::SanitizeFloat(MusicVolume) + FString("--") + FString::SanitizeFloat(SoundVolume), 20.f);
 
-	// 循环读取 RecordDataList
-	for (TArray<FString>::TIterator It(RecordDataList); It; It++)
-	{
-		DemoHelper::Debug(*It, 20.f);
-	}
 }
-
 
 void DemoDataHandle::InitializedMenuAudio()
 {
@@ -193,27 +179,19 @@ void DemoDataHandle::InitializeGameData()
 	//InitializeGameAudio();
 }
 
-//void DemoDataHandle::AddNewRecord()
-//{
-//	//将现在的存档名添加到数组
-//	RecordDataList.Add(RecordName);
-//	//更新json数据
-//	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
-//}
+void DemoDataHandle::AddNewRecord()
+{
+	//将现在的存档名添加到数组
+	RecordDataList.Add(RecordName);
+	//更新json数据
+	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
+}
 
 void DemoDataHandle::InitObjectAttr()
 {
 	DemoSingleton<DemoJsonHandle>::Get()->ObjectAttrJsonRead(ObjectAttrMap);
-
-	// Debug
-	//for (TMap<int, TSharedPtr<ObjectAttribute>>::TIterator It(ObjectAttrMap); It; ++It)
-	//{
-	//	DemoHelper::Debug((It.Value())->ToString(), 120.f);
-	//}
-
 	//获取GameStyle
 	GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
-
 	//填充笔刷数组
 	ObjectBrushList.Add(&GameStyle->EmptyBrush);
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_1);
@@ -224,6 +202,7 @@ void DemoDataHandle::InitObjectAttr()
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_6);
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_7);
 
+	DemoHelper::Debug(FString("1111111111"),0.f);
 	////动态生成Object的图片Brush,这段代码会引起奔溃
 	//for (int i = 1; i < ObjectAttrMap.Num(); ++i) {
 	//	//测试函数,动态创建FSlateBrush,一定要创建指针,否则会在函数结束时销毁资源
@@ -239,13 +218,14 @@ void DemoDataHandle::InitObjectAttr()
 void DemoDataHandle::InitResourceAttrMap()
 {
 	DemoSingleton<DemoJsonHandle>::Get()->ResourceAttrJsonRead(ResourceAttrMap);
+	DemoHelper::Debug(FString("22222222222"),0.f);
 }
 
 //void DemoDataHandle::InitCompoundTableMap()
 //{
 //	DemoSingleton<DemoJsonHandle>::Get()->CompoundTableJsonRead(CompoundTableMap);
 //}
-//
+
 //void DemoDataHandle::InitializeGameAudio()
 //{
 //	//获取混音器和音类
@@ -262,4 +242,4 @@ void DemoDataHandle::InitResourceAttrMap()
 //	//根据音量设置一次声音
 //	ResetGameVolume(MusicVolume, SoundVolume);
 //}
-
+//

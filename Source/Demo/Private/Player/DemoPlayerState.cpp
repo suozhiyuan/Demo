@@ -128,34 +128,35 @@ void ADemoPlayerState::RegisterRayInfoEvent(TSharedPtr<STextBlock> RayInfoTextBl
 	RayInfoTextBlock->SetText(RayInfoTextAttr);
 }
 
-//int ADemoPlayerState::GetAffectRange()
-//{
-//	TSharedPtr<ObjectAttribute> ObjectAttr;
-//	ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(GetCurrentHandObjectIndex());
-//	//获取当前手上物品的作用范围
-//	return ObjectAttr->AffectRange;
-//}
-//
-////根据正在撸的资源的类型以及手持物品的类型来返回伤害
-//int ADemoPlayerState::GetDamageValue(EResourceType::Type ResourceType)
-//{
-//	TSharedPtr<ObjectAttribute> ObjectAttr;
-//	ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(GetCurrentHandObjectIndex());
-//	switch (ResourceType)
-//	{
-//	case EResourceType::Plant:
-//		return ObjectAttr->PlantAttack;
-//		break;
-//	case EResourceType::Metal:
-//		return ObjectAttr->MetalAttcck;
-//		break;
-//	case EResourceType::Animal:
-//		return ObjectAttr->AnimalAttack;
-//		break;
-//	}
-//	return ObjectAttr->PlantAttack;
-//}
-//
+int ADemoPlayerState::GetAffectRange()
+{
+	TSharedPtr<ObjectAttribute> ObjectAttr;
+	ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(GetCurrentHandObjectIndex());
+
+	//获取当前手上物品的作用范围
+	return ObjectAttr->AffectRange;
+}
+
+//根据正在撸的资源的类型以及手持物品的类型来返回伤害
+int ADemoPlayerState::GetDamageValue(EResourceType::Type ResourceType)
+{
+	TSharedPtr<ObjectAttribute> ObjectAttr;
+	ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(GetCurrentHandObjectIndex());
+	switch (ResourceType)
+	{
+	case EResourceType::Plant:
+		return ObjectAttr->PlantAttack;
+		break;
+	case EResourceType::Metal:
+		return ObjectAttr->MetalAttcck;
+		break;
+	case EResourceType::Animal:
+		return ObjectAttr->AnimalAttack;
+		break;
+	}
+	return ObjectAttr->PlantAttack;
+}
+
 //void ADemoPlayerState::ChangeHandObject(int ShortcutID, int ObjectID, int ObjectNum)
 //{
 //	//更改快捷栏信息

@@ -11,7 +11,7 @@ DemoJsonHandle::DemoJsonHandle()
 
 	RecordDataFileName = FString("RecordData.json");				//存档文件名
 	ObjectAttrFileName = FString("ObjectAttribute.json");
-	//ResourceAttrFileName = FString("ResourceAttribute.json");
+	ResourceAttrFileName = FString("ResourceAttribute.json");
 	//CompoundTableFileName = FString("CompoundTable.json");
 
 	RelativePath = FString("Res/ConfigData/");			//相对路径
@@ -140,6 +140,7 @@ void DemoJsonHandle::ObjectAttrJsonRead(TMap<int, TSharedPtr<ObjectAttribute>>& 
 }
 
 // 解析资源属性函数
+
 void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute>>& ResourceAttrMap)
 {
 	FString JsonValue;
@@ -150,9 +151,9 @@ void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute
 
 	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))
 	{
-		for (int i = 1; i < JsonParsed.Num(); ++i)		//资源没有序号0,从1开始
-		{
-			TArray<TSharedPtr<FJsonValue>> ResourceAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i));
+		for (int i = 0; i < JsonParsed.Num(); ++i) {
+			//资源没有序号0,从1开始
+			TArray<TSharedPtr<FJsonValue>> ResourceAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i + 1));
 			FText EN = FText::FromString(ResourceAttr[0]->AsObject()->GetStringField("EN"));
 			FText ZH = FText::FromString(ResourceAttr[1]->AsObject()->GetStringField("ZH"));
 			EResourceType::Type ResourceType = StringToResourceType(ResourceAttr[2]->AsObject()->GetStringField("ResourceType"));
@@ -169,8 +170,8 @@ void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute
 				FString RangeStr;
 				FString RangeMinStr;
 				FString RangeMaxStr;
-				FlobObjectInfoItem.Split(FString("_"), &ObjectIndexStr, &RangeStr);		// 从“_”拆分字符串
-				RangeStr.Split(FString(","), &RangeMinStr, &RangeMaxStr);					// 从“,”拆分字符串
+				FlobObjectInfoItem.Split(FString("_"), &ObjectIndexStr, &RangeStr);
+				RangeStr.Split(FString(","), &RangeMinStr, &RangeMaxStr);
 
 				TArray<int> FlobObjectInfoList;
 
@@ -183,7 +184,7 @@ void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute
 
 			TSharedPtr<ResourceAttribute> ResourceAttrPtr = MakeShareable(new ResourceAttribute(EN, ZH, ResourceType, HP, &FlobObjectInfoArray));
 
-			ResourceAttrMap.Add(i, ResourceAttrPtr);
+			ResourceAttrMap.Add(i + 1, ResourceAttrPtr);
 		}
 	}
 	else

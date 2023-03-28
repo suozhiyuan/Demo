@@ -18,13 +18,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	////获取物品信息
-	//FText GetInfoText() const;
+	//获取物品信息
+	FText GetInfoText() const;
 
-	////被拾取,返回物品ID
-	//int TakePickup();
+	//被拾取,返回物品ID
+	int TakePickup();
 
 public:
+	// 物品ID
 	int ObjectIndex;
 
 	////是否下一帧销毁

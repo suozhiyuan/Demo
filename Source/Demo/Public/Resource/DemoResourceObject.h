@@ -19,23 +19,25 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	////获取物品信息
-	//FText GetInfoText() const;
+	//获取物品信息
+	FText GetInfoText() const;
 
-	////获取资源类型
-	//EResourceType::Type GetResourceType();
+	//获取资源类型
+	EResourceType::Type GetResourceType();
 
-	////获取血量百分比
-	//float GetHPRange();
+	//获取血量百分比
+	float GetHPRange();
 
-	////获取伤害
-	//ADemoResourceObject* TakeObjectDamage(int Damage);
+	// 将伤害带入，血量计算
+	ADemoResourceObject* TakeObjectDamage(int Damage);
 
 public:
 	//资源ID
 	int ResourceIndex;
 
-//是否在下一帧销毁
+	//是否在下一帧销毁
+	bool IsDestroyNextTick;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -54,10 +56,10 @@ protected:
 	//保存资源地址,用于随机刷资源
 	TArray<FString> ResourcePath;
 
-//	//血量
-//	int HP;
-//
-//	//基础血量
-//	int BaseHP;
+	//血量
+	int HP;
+
+	//基础血量
+	int BaseHP;
 
 };

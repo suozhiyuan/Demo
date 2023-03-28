@@ -2,6 +2,10 @@
 
 
 #include "Resource/DemoResourceObject.h"
+#include "Components/StaticMeshComponent.h"
+#include "Data/DemoDataHandle.h"
+#include "Engine/GameEngine.h"
+
 
 // Sets default values
 ADemoResourceObject::ADemoResourceObject()
@@ -16,22 +20,26 @@ ADemoResourceObject::ADemoResourceObject()
 	//实例化模型组件
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
 	BaseMesh->SetupAttachment(RootComponent);
-	BaseMesh->SetCollisionProfileName(FName("ResourceProfile"));		// 设置碰撞
+	BaseMesh->SetCollisionProfileName(FName("ResourceProfile"));			// 设置碰撞
 
 	//开启交互检测
 	BaseMesh->SetGenerateOverlapEvents(true);
 
-	////设置在下一帧不销毁
+	//设置在下一帧不销毁
 	//IsDestroyNextTick = false;
 }
 
-// Called when the game starts or when spawned
+ // Called when the game starts or when spawned
 void ADemoResourceObject::BeginPlay()
 {
 	Super::BeginPlay();
-	//TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
-	//HP = BaseHP = ResourceAttr->HP;
 
+	//初始化游戏数据，原本在GameMode的BeginPlay中调用，但资源模型在游戏中加载时 GameMode 的 BeginPlay 还没有调用，就暂时先移到这里了
+	DemoDataHandle::Get()->InitializeGameData();
+
+	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+	BaseHP = ResourceAttr->HP;
+	HP = ResourceAttr->HP;
 }
 
 //void ADemoResourceObject::CreateFlobObject()
@@ -60,50 +68,56 @@ void ADemoResourceObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	////如果检测到下一帧要销毁
+	//如果检测到下一帧要销毁
 	//if (IsDestroyNextTick) GetWorld()->DestroyActor(this);
 
 }
 
+// 获取物品信息
+FText ADemoResourceObject::GetInfoText() const
+{
+	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+	switch (DemoDataHandle::Get()->CurrentCulture)
+	{
+	case ECultureTeam::EN:
+		return ResourceAttr->EN;
+		break;
+	case ECultureTeam::ZH:
+		return ResourceAttr->ZH;
+		break;
+	}
+	return ResourceAttr->ZH;
+}
 
-//FText ADemoResourceObject::GetInfoText() const
-//{
-//	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
-//	switch (DemoDataHandle::Get()->CurrentCulture)
-//	{
-//	case ECultureTeam::EN:
-//		return ResourceAttr->EN;
-//		break;
-//	case ECultureTeam::ZH:
-//		return ResourceAttr->ZH;
-//		break;
-//	}
-//	return ResourceAttr->ZH;
-//}
-//
-//EResourceType::Type ADemoResourceObject::GetResourceType()
-//{
-//	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
-//	return ResourceAttr->ResourceType;
-//}
-//
-//float ADemoResourceObject::GetHPRange()
-//{
-//	return FMath::Clamp<float>((float)HP / (float)BaseHP, 0.f, 1.f);
-//}
-//
-//ADemoResourceObject* ADemoResourceObject::TakeObjectDamage(int Damage)
-//{
-//	HP = FMath::Clamp<int>(HP - Damage, 0, BaseHP);
-//
-//	if (HP <= 0) {
-//		//检测失效
-//		BaseMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
-//		//创建掉落物
-//		CreateFlobObject();
-//		//销毁物体
-//		GetWorld()->DestroyActor(this);
-//	}
-//	return this;
-//}
-//
+
+// 获取资源类型
+EResourceType::Type ADemoResourceObject::GetResourceType()
+{
+	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+	return ResourceAttr->ResourceType;
+}
+
+// 获取血量百分比
+float ADemoResourceObject::GetHPRange()
+{
+	return FMath::Clamp<float>((float)HP / (float)BaseHP, 0.f, 1.f);
+}
+
+// 将伤害带入，血量计算
+ADemoResourceObject* ADemoResourceObject::TakeObjectDamage(int Damage)
+{
+	HP = FMath::Clamp<int>(HP - Damage, 0, BaseHP);
+
+	if (HP <= 0) 
+	{
+		//检测失效
+		BaseMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
+
+		////创建掉落物
+		//CreateFlobObject();
+
+		//销毁物体
+		GetWorld()->DestroyActor(this);
+	}
+	return this;
+}

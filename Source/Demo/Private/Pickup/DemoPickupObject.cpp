@@ -3,6 +3,9 @@
 
 #include "Pickup/DemoPickupObject.h"
 
+#include "Data/DemoDataHandle.h"
+#include "Data/DemoType.h"
+
 // Sets default values
 ADemoPickupObject::ADemoPickupObject()
 {
@@ -40,24 +43,24 @@ void ADemoPickupObject::Tick(float DeltaTime)
 	//if (IsDestroyNextTick) GetWorld()->DestroyActor(this);
 
 }
-//
-//FText ADemoPickupObject::GetInfoText() const
-//{
-//	TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ObjectIndex);
-//	switch (DemoDataHandle::Get()->CurrentCulture)
-//	{
-//	case ECultureTeam::EN:
-//		return ObjectAttr->EN;
-//	case ECultureTeam::ZH:
-//		return ObjectAttr->ZH;
-//	}
-//	return ObjectAttr->ZH;
-//}
-//
-//int ADemoPickupObject::TakePickup()
-//{
-//	BaseMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
-//	if (GetWorld()) GetWorld()->DestroyActor(this);
-//	return ObjectIndex;
-//}
+
+FText ADemoPickupObject::GetInfoText() const
+{
+	TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ObjectIndex);
+	switch (DemoDataHandle::Get()->CurrentCulture)
+	{
+	case ECultureTeam::EN:
+		return ObjectAttr->EN;
+	case ECultureTeam::ZH:
+		return ObjectAttr->ZH;
+	}
+	return ObjectAttr->ZH;
+}
+
+int ADemoPickupObject::TakePickup()
+{
+	BaseMesh->SetCollisionResponseToAllChannels(ECR_Ignore);		// 因为是在下一帧销毁，所以需要先忽略下
+	if (GetWorld()) GetWorld()->DestroyActor(this);
+	return ObjectIndex;
+}
 

@@ -38,13 +38,13 @@ struct DEMO_API FDemoGameStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = Package)
 		FSlateBrush EmptyBrush;
 
-	////背包的背景框
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush PackageBGBrush;
+	//背包的背景框
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush PackageBGBrush;
 
-	////合成表箭头
-	//UPROPERTY(EditAnywhere, Category = Package)
-	//	FSlateBrush CompoundArrowBrush;
+	//合成表箭头
+	UPROPERTY(EditAnywhere, Category = Package)
+		FSlateBrush CompoundArrowBrush;
 
 	//物品的Brush
 	UPROPERTY(EditAnywhere, Category = Package)
@@ -71,38 +71,38 @@ struct DEMO_API FDemoGameStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = Info)
 		FSlateBrush PointerBrush;
 
-	////小地图背景图片
-	//UPROPERTY(EditAnywhere, Category = MiniMap)
-	//	FSlateBrush MiniMapBGBrush;
+	//小地图背景图片
+	UPROPERTY(EditAnywhere, Category = MiniMap)
+		FSlateBrush MiniMapBGBrush;
 
-	////主角图标
-	//UPROPERTY(EditAnywhere, Category = MiniMap)
-	//	FSlateBrush PawnPointBrush;
+	//主角图标
+	UPROPERTY(EditAnywhere, Category = MiniMap)
+		FSlateBrush PawnPointBrush;
 
 
-	////玩家属性背景图
-	//UPROPERTY(EditAnywhere, Category = PlayerState)
-	//	FSlateBrush PlayerStateBGBrush;
+	//玩家属性背景图
+	UPROPERTY(EditAnywhere, Category = PlayerState)
+		FSlateBrush PlayerStateBGBrush;
 
-	////玩家头像背景图片
-	//UPROPERTY(EditAnywhere, Category = PlayerState)
-	//	FSlateBrush PlayerHeadBGBrush;
+	//玩家头像背景图片
+	UPROPERTY(EditAnywhere, Category = PlayerState)
+		FSlateBrush PlayerHeadBGBrush;
 
-	////血条Brush
-	//UPROPERTY(EditAnywhere, Category = PlayerState)
-	//	FSlateBrush HPBrush;
+	//血条Brush
+	UPROPERTY(EditAnywhere, Category = PlayerState)
+		FSlateBrush HPBrush;
 
-	////饥饿Brush
-	//UPROPERTY(EditAnywhere, Category = PlayerState)
-	//	FSlateBrush HungerBrush;
+	//饥饿Brush
+	UPROPERTY(EditAnywhere, Category = PlayerState)
+		FSlateBrush HungerBrush;
 
-	////玩家头像
-	//UPROPERTY(EditAnywhere, Category = PlayerState)
-	//	FSlateBrush PlayerHeadBrush;
+	//玩家头像
+	UPROPERTY(EditAnywhere, Category = PlayerState)
+		FSlateBrush PlayerHeadBrush;
 
-	////聊天室背景图片
-	//UPROPERTY(EditAnywhere, Category = ChatRoom)
-	//	FSlateBrush ChatRoomBGBrush;
+	//聊天室背景图片
+	UPROPERTY(EditAnywhere, Category = ChatRoom)
+		FSlateBrush ChatRoomBGBrush;
 
 	/*
 	* 60号字体

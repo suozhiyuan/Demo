@@ -47,6 +47,10 @@ void ADemoGameMode::Tick(float DeltaSeconds)
 
 	////初始化背包
 	//InitializePackage();
+
+
+	DemoHelper::Debug(FString("444444444444"), 0.f);
+	
 }
 
 void ADemoGameMode::InitGamePlayModule()
@@ -130,8 +134,8 @@ void ADemoGameMode::BeginPlay()
 	//DemoHelper::Debug(FString("DataHandle : ") + DemoDataHandle::Get()->RecordName, 30.f);
 	//DemoHelper::Debug(FString("GameInstance : ") + Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName, 30.f);
 
-	//初始化游戏数据
-	DemoDataHandle::Get()->InitializeGameData();
+	////初始化游戏数据
+	//DemoDataHandle::Get()->InitializeGameData();
 
 	if (!SPController) InitGamePlayModule();
 
