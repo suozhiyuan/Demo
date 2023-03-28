@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include "Data/DemoDataHandle.h"
 #include "Data/DemoType.h"
+#include "Player/DemoPlayerCharacter.h"
 
 // Sets default values
 ADemoFlobObject::ADemoFlobObject()
@@ -55,22 +56,22 @@ void ADemoFlobObject::BeginPlay()
 {
 	Super::BeginPlay();
 
-	////检测世界是否存在
-	//if (!GetWorld()) return;
+	//检测世界是否存在
+	if (!GetWorld()) return;
 
-	////注册检测事件
-	//FTimerDelegate DetectPlayerDele;
-	//DetectPlayerDele.BindUObject(this, &ADemoFlobObject::DetectPlayer);
-	////每秒运行一次,循环运行,延迟3秒运行
-	//GetWorld()->GetTimerManager().SetTimer(DetectTimer, DetectPlayerDele, 1.f, true, 3.f);
+	//注册检测事件
+	FTimerDelegate DetectPlayerDele;		// 计时器委托
+	DetectPlayerDele.BindUObject(this, &ADemoFlobObject::DetectPlayer);
+	//每秒运行一次,循环运行,延迟3秒运行
+	GetWorld()->GetTimerManager().SetTimer(DetectTimer, DetectPlayerDele, 1.f, true, 3.f);
 
-	////注册销毁事件
-	//FTimerDelegate DestroyDele;
-	//DestroyDele.BindUObject(this, &ADemoFlobObject::DestroyEvent);
-	//GetWorld()->GetTimerManager().SetTimer(DestroyTimer, DestroyDele, 30.f, false);
+	//注册销毁事件
+	FTimerDelegate DestroyDele;
+	DestroyDele.BindUObject(this, &ADemoFlobObject::DestroyEvent);
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimer, DestroyDele, 30.f, false);
 
-	////初始玩家指针为空
-	//SPCharacter = NULL;
+	//初始玩家指针为空
+	SPCharacter = NULL;
 }
 
 // Called every frame
@@ -78,35 +79,44 @@ void ADemoFlobObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	////一直旋转
-	//BaseMesh->AddLocalRotation(FRotator(DeltaTime * 60.f, 0.f, 0.f));
+	//一直旋转  * AddLocalRotation 为组件在其本地参考系中的旋转添加一个增量
+	BaseMesh->AddLocalRotation(FRotator(DeltaTime * 60.f, 0.f, 0.f));
 
-	////如果检测到玩家
-	//if (SPCharacter) {
-	//	//靠近玩家
-	//	SetActorLocation(FMath::VInterpTo(GetActorLocation(), SPCharacter->GetActorLocation() + FVector(0.f, 0.f, 40.f), DeltaTime, 5.f));
-	//	//如果距离接近0
-	//	if (FVector::Distance(GetActorLocation(), SPCharacter->GetActorLocation() + FVector(0.f, 0.f, 40.f)) < 10.f)
-	//	{
-	//		//判断玩家背包是否有空间
-	//		if (SPCharacter->IsPackageFree(ObjectIndex)) {
-	//			//添加对应的物品到背包
-	//			SPCharacter->AddPackageObject(ObjectIndex);
-	//			//销毁自己
-	//			DestroyEvent();
-	//		}
-	//		else {
-	//			//如果玩家背包不为空,重置参数
-	//			SPCharacter = NULL;
-	//			//唤醒检测
-	//			GetWorld()->GetTimerManager().UnPauseTimer(DetectTimer);
-	//			//唤醒销毁线程
-	//			GetWorld()->GetTimerManager().UnPauseTimer(DestroyTimer);
-	//			//开启物理模拟
-	//			BoxCollision->SetSimulatePhysics(true);
-	//		}
-	//	}
-	//}
+	//如果检测到玩家
+	if (SPCharacter) 
+	{
+		//靠近玩家			VInterpTo 插值矢量从当前到目标。根据到目标的距离缩放，所以它有一个快的开始速度慢慢缓解
+		SetActorLocation(FMath::VInterpTo(GetActorLocation(), SPCharacter->GetActorLocation() + FVector(0.f, 0.f, 40.f), DeltaTime, 5.f));
+
+		//如果距离接近0
+		if (FVector::Distance(GetActorLocation(), SPCharacter->GetActorLocation() + FVector(0.f, 0.f, 40.f)) < 10.f)
+		{
+			//判断玩家背包是否有空间
+			//if (SPCharacter->IsPackageFree(ObjectIndex))
+			if(true)
+			{
+				//添加对应的物品到背包
+				//SPCharacter->AddPackageObject(ObjectIndex);
+
+				//销毁自己
+				DestroyEvent();
+			}
+			else 
+			{
+				//如果玩家背包不为空,重置参数
+				SPCharacter = NULL;
+
+				//唤醒检测
+				GetWorld()->GetTimerManager().UnPauseTimer(DetectTimer);
+
+				//唤醒销毁线程
+				GetWorld()->GetTimerManager().UnPauseTimer(DestroyTimer);
+
+				//开启物理模拟
+				BoxCollision->SetSimulatePhysics(true);
+			}
+		}
+	}
 }
 
 void ADemoFlobObject::CreateFlobObject(int ObjectID)
@@ -159,48 +169,56 @@ void ADemoFlobObject::RenderTexture()
 	BaseMesh->SetMaterial(0, ObjectIconMatDynamic);
 }
 
-//void ADemoFlobObject::DetectPlayer()
-//{
-//	//检测世界是否存在
-//	if (!GetWorld()) return;
-//
-//	//保存检测结果
-//	TArray<FOverlapResult> Overlaps;
-//	FCollisionObjectQueryParams ObjectParams;
-//	FCollisionQueryParams Params;
-//	Params.AddIgnoredActor(this);
-//	Params.bTraceAsyncScene = true;
-//
-//	//进行动态检测,检测范围是200,检测成功的话返回true
-//	if (GetWorld()->OverlapMultiByObjectType(Overlaps, GetActorLocation(), FQuat::Identity, ObjectParams, FCollisionShape::MakeSphere(200.f), Params))
-//	{
-//		for (TArray<FOverlapResult>::TIterator It(Overlaps); It; ++It) {
-//			//如果检测到了玩家
-//			if (Cast<ADemoPlayerCharacter>(It->GetActor())) {
-//				//赋值
-//				SPCharacter = Cast<ADemoPlayerCharacter>(It->GetActor());
-//				//如果背包有空间,后面再添加函数
-//				if (SPCharacter->IsPackageFree(ObjectIndex))
-//				{
-//					//停止检测
-//					GetWorld()->GetTimerManager().PauseTimer(DetectTimer);
-//					//停止销毁定时器
-//					GetWorld()->GetTimerManager().PauseTimer(DestroyTimer);
-//					//关闭物理模拟
-//					BoxCollision->SetSimulatePhysics(false);
-//				}
-//				return;
-//			}
-//		}
-//	}
-//}
-//
-//void ADemoFlobObject::DestroyEvent()
-//{
-//	if (!GetWorld()) return;
-//	//注销定时器
-//	GetWorld()->GetTimerManager().ClearTimer(DetectTimer);
-//	GetWorld()->GetTimerManager().ClearTimer(DestroyTimer);
-//	//销毁自己
-//	GetWorld()->DestroyActor(this);
-//}
+void ADemoFlobObject::DetectPlayer()
+{
+	////检测世界是否存在
+	//if (!GetWorld()) return;
+
+	//保存检测结果
+	TArray<FOverlapResult> Overlaps;				// FOverlapResult 结构，其中包含有关重叠测试一次命中的信息
+	FCollisionObjectQueryParams ObjectParams;		// 碰撞检测查询的结构体参数
+	FCollisionQueryParams Params;					// 碰撞函数的结构体参数
+	Params.AddIgnoredActor(this);					// 检测时要忽略的Actor
+	//Params.bTraceAsyncScene = true;				// 跟踪异步场景的检测，现在的版本没有异步场景了
+
+	//进行动态检测,检测形状是球体，检测范围是200,检测成功的话返回true
+	if (GetWorld()->OverlapMultiByObjectType(Overlaps, GetActorLocation(), FQuat::Identity, ObjectParams, FCollisionShape::MakeSphere(200.f), Params))
+	{
+		for (TArray<FOverlapResult>::TIterator It(Overlaps); It; ++It) 
+		{
+			//如果检测到了玩家
+			if (Cast<ADemoPlayerCharacter>(It->GetActor())) 
+			{
+				//赋值
+				SPCharacter = Cast<ADemoPlayerCharacter>(It->GetActor());
+
+				//如果背包有空间
+				//if (SPCharacter->IsPackageFree(ObjectIndex))
+				if(true)
+				{
+					//停止检测
+					GetWorld()->GetTimerManager().PauseTimer(DetectTimer);
+
+					//停止销毁定时器
+					GetWorld()->GetTimerManager().PauseTimer(DestroyTimer);
+
+					//关闭物理模拟
+					BoxCollision->SetSimulatePhysics(false);
+				}
+				return;
+			}
+		}
+	}
+}
+
+void ADemoFlobObject::DestroyEvent()
+{
+	if (!GetWorld()) return;
+
+	//注销定时器
+	GetWorld()->GetTimerManager().ClearTimer(DetectTimer);
+	GetWorld()->GetTimerManager().ClearTimer(DestroyTimer);
+
+	//销毁自己
+	GetWorld()->DestroyActor(this);
+}

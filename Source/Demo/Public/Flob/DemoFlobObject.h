@@ -34,11 +34,11 @@ private:
 	//渲染贴图
 	void RenderTexture();
 
-//	//动态检测事件
-//	void DetectPlayer();
-//
-//	//销毁事件
-//	void DestroyEvent();
+	//动态检测事件
+	void DetectPlayer();
+
+	//销毁事件
+	void DestroyEvent();
 
 private:
 
@@ -55,13 +55,13 @@ private:
 	// 动态材质实例
 	class UMaterialInstanceDynamic* ObjectIconMatDynamic;
 
-//	//玩家指针
-//	class ADemoPlayerCharacter* SPCharacter;
-//
-//	//动态检测Timer
-//	FTimerHandle DetectTimer;
-//
-//	//销毁Timer
-//	FTimerHandle DestroyTimer;
+	//玩家指针
+	class ADemoPlayerCharacter* SPCharacter;
+
+	//动态检测玩家的时间
+	FTimerHandle DetectTimer;
+
+	//掉落资源销毁时间Timer
+	FTimerHandle DestroyTimer;
 
 };
