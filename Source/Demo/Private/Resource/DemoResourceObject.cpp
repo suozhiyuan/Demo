@@ -4,7 +4,7 @@
 #include "Resource/DemoResourceObject.h"
 #include "Components/StaticMeshComponent.h"
 #include "Data/DemoDataHandle.h"
-#include "Engine/GameEngine.h"
+#include "Flob/DemoFlobObject.h"
 
 
 // Sets default values
@@ -34,7 +34,7 @@ void ADemoResourceObject::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//初始化游戏数据，原本在GameMode的BeginPlay中调用，但资源模型在游戏中加载时 GameMode 的 BeginPlay 还没有调用，就暂时先移到这里了
+	//初始化游戏数据，原本在 GameMode 的 BeginPlay 中调用，但资源模型在游戏中加载时 GameMode 的 BeginPlay 还没有调用，就暂时先移到这里了
 	DemoDataHandle::Get()->InitializeGameData();
 
 	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
@@ -42,26 +42,31 @@ void ADemoResourceObject::BeginPlay()
 	HP = ResourceAttr->HP;
 }
 
-//void ADemoResourceObject::CreateFlobObject()
-//{
-//	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
-//	//遍历生成掉落物
-//	for (TArray<TArray<int>>::TIterator It(ResourceAttr->FlobObjectInfo); It; ++It) {
-//		//随机生成的数量
-//		FRandomStream Stream;
-//		Stream.GenerateNewSeed();
-//		//生成数量
-//		int Num = Stream.RandRange((*It)[1], (*It)[2]);
-//
-//		if (GetWorld()) {
-//			for (int i = 0; i < Num; ++i) {
-//				//生成掉落物
-//				ADemoFlobObject* FlobObject = GetWorld()->SpawnActor<ADemoFlobObject>(GetActorLocation() + FVector(0.f, 0.f, 20.f), FRotator::ZeroRotator);
-//				FlobObject->CreateFlobObject((*It)[0]);
-//			}
-//		}
-//	}
-//}
+void ADemoResourceObject::CreateFlobObject()
+{
+	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+
+	//遍历生成掉落物
+	for (TArray<TArray<int>>::TIterator It(ResourceAttr->FlobObjectInfo); It; ++It) 
+	{
+		//随机生成的数量
+		FRandomStream Stream;
+		Stream.GenerateNewSeed();
+
+		//生成数量
+		int Num = Stream.RandRange((*It)[1], (*It)[2]);		// 随机区间
+
+		if (GetWorld()) 
+		{
+			for (int i = 0; i < Num; ++i) 
+			{
+				//生成掉落物
+				ADemoFlobObject* FlobObject = GetWorld()->SpawnActor<ADemoFlobObject>(GetActorLocation() + FVector(0.f, 0.f, 20.f), FRotator::ZeroRotator);
+				FlobObject->CreateFlobObject((*It)[0]);
+			}
+		}
+	}
+}
 
 // Called every frame
 void ADemoResourceObject::Tick(float DeltaTime)
@@ -113,8 +118,8 @@ ADemoResourceObject* ADemoResourceObject::TakeObjectDamage(int Damage)
 		//检测失效
 		BaseMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
 
-		////创建掉落物
-		//CreateFlobObject();
+		//创建掉落物
+		CreateFlobObject();
 
 		//销毁物体
 		GetWorld()->DestroyActor(this);

@@ -34,11 +34,11 @@ void UDemoPlayerAnim::ChangeDetection(bool IsOpen)
 	SPCharacter->ChangeHandObjectDetect(IsOpen);
 }
 
-//void UDemoPlayerAnim::RenderHandObject(bool IsRender)
-//{
-//	if (!SPCharacter) return;
-//	SPCharacter->RenderHandObject(IsRender);
-//}
+void UDemoPlayerAnim::RenderHandObject(bool IsRender)
+{
+	if (!SPCharacter) return;
+	SPCharacter->RenderHandObject(IsRender);
+}
 
 //void UDemoPlayerAnim::EatUpEvent()
 //{

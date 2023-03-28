@@ -196,14 +196,16 @@ void ADemoPlayerCharacter::ChangeHandObjectDetect(bool IsOpen)
 	//IsAttack = IsOpen;
 }
 
-//void ADemoPlayerCharacter::RenderHandObject(bool IsRender)
-//{
-//	//如果手上物品木有
-//	if (!HandObject->GetChildActor()) return;
-//	//如果有物品
-//	HandObject->GetChildActor()->SetActorHiddenInGame(!IsRender);
-//}
-//
+//是否渲染手上物品,由Anim进行调用
+void ADemoPlayerCharacter::RenderHandObject(bool IsRender)
+{
+	//如果手上物品木有
+	if (!HandObject->GetChildActor()) return;
+
+	//如果有物品
+	HandObject->GetChildActor()->SetActorHiddenInGame(!IsRender);		// SetActorHiddenInGame   隐藏
+}
+
 //void ADemoPlayerCharacter::PlayerThrowObject(int ObjectID, int Num)
 //{
 //	if (GetWorld()) {

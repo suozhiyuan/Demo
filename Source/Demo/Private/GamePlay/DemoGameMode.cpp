@@ -46,11 +46,7 @@ void ADemoGameMode::Tick(float DeltaSeconds)
 	//LoadRecordPackage();
 
 	////³õÊ¼»¯±³°ü
-	//InitializePackage();
-
-
-	DemoHelper::Debug(FString("444444444444"), 0.f);
-	
+	//InitializePackage();	
 }
 
 void ADemoGameMode::InitGamePlayModule()

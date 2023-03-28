@@ -31,8 +31,8 @@ public:
 	//修改手持物品的碰撞检测是否开启
 	void ChangeHandObjectDetect(bool IsOpen);
 
-	////是否渲染手上物品,由Anim进行调用
-	//void RenderHandObject(bool IsRender);
+	//是否渲染手上物品,由Anim进行调用
+	void RenderHandObject(bool IsRender);
 
 	////丢弃物品
 	//void PlayerThrowObject(int ObjectID, int Num);

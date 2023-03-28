@@ -42,8 +42,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-//	//生成掉落物
-//	void CreateFlobObject();
+	//生成掉落物
+	void CreateFlobObject();
 
 protected:
 
