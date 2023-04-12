@@ -55,7 +55,6 @@ public:
 	////获取摄像机位置
 	//FVector GetCameraPos();
 
-
 	////播放死亡动画,返回播放时长
 	//float PlayDeadAnim();
 
@@ -82,8 +81,8 @@ public:
 	//是否允许切换视角
 	bool IsAllowSwitch;
 
-	////是否锁住输入
-	//bool IsInputLocked;
+	//是否锁住输入
+	bool IsInputLocked;
 
 	////是否在攻击
 	//bool IsAttack;
@@ -122,7 +121,4 @@ private:
 
 	////死亡动画资源
 	//class UAnimationAsset* AnimDead;
-
-
-
 };

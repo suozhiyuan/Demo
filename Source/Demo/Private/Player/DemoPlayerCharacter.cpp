@@ -107,8 +107,8 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	//一开始允许切换视角
 	IsAllowSwitch = true;
 
-	////一开始输入不锁住
-	//IsInputLocked = false;
+	//一开始输入不锁住输入
+	IsInputLocked = false;
 
 	////初始化没有攻击
 	//IsAttack = false;
@@ -272,7 +272,7 @@ void ADemoPlayerCharacter::RenderHandObject(bool IsRender)
 void ADemoPlayerCharacter::MoveForward(float Value)
 {
 	//如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	if (IsInputLocked) return;
 
 	if (Value != 0.f && Controller) 
 	{
@@ -284,8 +284,8 @@ void ADemoPlayerCharacter::MoveForward(float Value)
 
 void ADemoPlayerCharacter::MoveRight(float Value)
 {
-	////如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
 
 	if (Value != 0) 
 	{
@@ -297,40 +297,40 @@ void ADemoPlayerCharacter::MoveRight(float Value)
 
 void ADemoPlayerCharacter::LookUpAtRate(float Value)
 {
-	////如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
 
 	AddControllerPitchInput(Value * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
 void ADemoPlayerCharacter::Turn(float Value)
 {
-	////如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
 
 	AddControllerYawInput(Value);
 }
 
 void ADemoPlayerCharacter::TurnAtRate(float Value)
 {
-	////如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
 
 	AddControllerYawInput(Value * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 void ADemoPlayerCharacter::OnStartJump()
 {
-	////如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
 
 	bPressedJump = true;
 }
 
 void ADemoPlayerCharacter::OnStopJump()
 {
-	////如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
 
 	bPressedJump = false;
 	StopJumping();
@@ -338,16 +338,16 @@ void ADemoPlayerCharacter::OnStopJump()
 
 void ADemoPlayerCharacter::OnStartRun()
 {
-	////如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
 
 	GetCharacterMovement()->MaxWalkSpeed = 375.f;
 }
 
 void ADemoPlayerCharacter::OnStopRun()
 {
-	////如果操作被锁住,直接返回
-	//if (IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (IsInputLocked) return;
 
 	GetCharacterMovement()->MaxWalkSpeed = 150.f;
 }

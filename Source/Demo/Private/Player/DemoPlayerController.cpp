@@ -116,8 +116,8 @@ void ADemoPlayerController::EscEvent()
 		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Pause);
 		//更新当前UI
 		CurrentUIType = EGameUIType::Pause;
-		////锁定输入
-		//LockedInput(true);
+		//锁定输入
+		LockedInput(true);
 		break;
 	case EGameUIType::Pause:
 	case EGameUIType::Package:
@@ -130,48 +130,52 @@ void ADemoPlayerController::EscEvent()
 		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
 		//更新当前UI
 		CurrentUIType = EGameUIType::Game;
-		////解开输入
-		//LockedInput(false);
+		//解开输入
+		LockedInput(false);
 		break;
 	}
 }
 
 void ADemoPlayerController::PackageEvent()
 {
-//	switch (CurrentUIType)
-//	{
-//	case EGameUIType::Game:
-//		SwitchInputMode(false);
-//		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Package);
-//		CurrentUIType = EGameUIType::Package;
-//		LockedInput(true);
-//		break;
-//	case EGameUIType::Package:
-//		SwitchInputMode(true);
-//		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
-//		CurrentUIType = EGameUIType::Game;
-//		LockedInput(false);
-//		break;
-//	}
+	switch (CurrentUIType)
+	{
+	case EGameUIType::Game:
+		SwitchInputMode(false);
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Package);
+		CurrentUIType = EGameUIType::Package;
+		//锁定输入
+		LockedInput(true);
+		break;
+	case EGameUIType::Package:
+		SwitchInputMode(true);
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
+		CurrentUIType = EGameUIType::Game;
+		//解开输入
+		LockedInput(false);
+		break;
+	}
 }
 
 void ADemoPlayerController::ChatRoomEvent()
 {
-//	switch (CurrentUIType)
-//	{
-//	case EGameUIType::Game:
-//		SwitchInputMode(false);
-//		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::ChatRoom);
-//		CurrentUIType = EGameUIType::ChatRoom;
-//		LockedInput(true);
-//		break;
-//	case EGameUIType::ChatRoom:
-//		SwitchInputMode(true);
-//		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
-//		CurrentUIType = EGameUIType::Game;
-//		LockedInput(false);
-//		break;
-//	}
+	switch (CurrentUIType)
+	{
+	case EGameUIType::Game:
+		SwitchInputMode(false);
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::ChatRoom);
+		CurrentUIType = EGameUIType::ChatRoom;
+		//锁定输入
+		LockedInput(true);
+		break;
+	case EGameUIType::ChatRoom:
+		SwitchInputMode(true);
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
+		CurrentUIType = EGameUIType::Game;
+		//解开输入
+		LockedInput(false);
+		break;
+	}
 }
 
 
@@ -198,11 +202,11 @@ void ADemoPlayerController::SwitchInputMode(bool IsGameOnly)
 	}
 }
 
-//void ADemoPlayerController::LockedInput(bool IsLocked)
-//{
-//	SPCharacter->IsInputLocked = IsLocked;
-//}
-//
+void ADemoPlayerController::LockedInput(bool IsLocked)
+{
+	SPCharacter->IsInputLocked = IsLocked;
+}
+
 //void ADemoPlayerController::AddMapSizeStart()
 //{
 //	//如果操作被锁住,直接返回
@@ -291,8 +295,8 @@ void ADemoPlayerController::ChangeHandObject()
 
 void ADemoPlayerController::ChangeView()
 {
-	////如果操作被锁住,直接返回
-	//if (SPCharacter->IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
 
 	//如果不允许切换视角,直接返回
 	if (!SPCharacter->IsAllowSwitch) return;
@@ -310,8 +314,8 @@ void ADemoPlayerController::ChangeView()
 
 void ADemoPlayerController::LeftEventStart()
 {
-	////如果操作被锁住,直接返回
-	//if (SPCharacter->IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
 
 	IsLeftButtonDown = true;
 	SPCharacter->UpperType = LeftUpperType;
@@ -319,8 +323,8 @@ void ADemoPlayerController::LeftEventStart()
 
 void ADemoPlayerController::LeftEventStop()
 {
-	////如果操作被锁住,直接返回
-	//if (SPCharacter->IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
 
 	IsLeftButtonDown = false;
 	SPCharacter->UpperType = EUpperBody::None;
@@ -328,8 +332,8 @@ void ADemoPlayerController::LeftEventStop()
 
 void ADemoPlayerController::RightEventStart()
 {
-	////如果操作被锁住,直接返回
-	//if (SPCharacter->IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
 
 	IsRightButtonDown = true;
 	SPCharacter->UpperType = RightUpperType;
@@ -337,8 +341,8 @@ void ADemoPlayerController::RightEventStart()
 
 void ADemoPlayerController::RightEventStop()
 {
-	////如果操作被锁住,直接返回
-	//if (SPCharacter->IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
 
 	IsRightButtonDown = false;
 	SPCharacter->UpperType = EUpperBody::None;
@@ -346,8 +350,8 @@ void ADemoPlayerController::RightEventStop()
 
 void ADemoPlayerController::ScrollUpEvent()
 {
-	////如果操作被锁住,直接返回
-	//if (SPCharacter->IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
 
 	//如果不允许切换,直接返回
 	if (!SPCharacter->IsAllowSwitch) return;
@@ -364,8 +368,8 @@ void ADemoPlayerController::ScrollUpEvent()
 
 void ADemoPlayerController::ScrollDownEvent()
 {
-	////如果操作被锁住,直接返回
-	//if (SPCharacter->IsInputLocked) return;
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
 
 	//如果不允许切换,直接返回
 	if (!SPCharacter->IsAllowSwitch) return;

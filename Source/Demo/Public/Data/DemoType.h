@@ -248,7 +248,7 @@ struct ResourceAttribute
 	//}
 };
 
-//Game界面分类
+// Game界面分类
 namespace EGameUIType
 {
 	enum Type
