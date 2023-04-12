@@ -84,7 +84,6 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	GetMesh()->SetOwnerNoSee(false);
 	MeshFirst->SetOwnerNoSee(true);
 
-
 	//实例化手上物品
 	HandObject = CreateDefaultSubobject<UChildActorComponent>(TEXT("HandObject"));
 
@@ -154,7 +153,6 @@ void ADemoPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ADemoPlayerCharacter::OnStartRun);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &ADemoPlayerCharacter::OnStopRun);
 }
-
 
 void ADemoPlayerCharacter::ChangeView(EGameViewMode::Type NewGameView)
 {
