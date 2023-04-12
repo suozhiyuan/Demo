@@ -156,33 +156,37 @@ float SDemoGameHUDWidget::GetUIScaler() const
 
 void SDemoGameHUDWidget::ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type NextUI)
 {
-//	//如果前一模式是Game,说明要显示黑板
-//	if (PreUI == EGameUIType::Game)
-//	{
-//		BlackShade->SetVisibility(EVisibility::Visible);
-//	}
-//	else
-//	{
-//		//隐藏当前正在显示的UI
-//		UIMap.Find(PreUI)->Get()->SetVisibility(EVisibility::Hidden);
-//	}
-//	//如果下一模式是Game,隐藏黑板
-//	if (NextUI == EGameUIType::Game)
-//	{
-//		BlackShade->SetVisibility(EVisibility::Hidden);
-//	}
-//	else
-//	{
-//		//显示现在状态对应的UI
-//		UIMap.Find(NextUI)->Get()->SetVisibility(EVisibility::Visible);
-//		//显示现在状态对应的UI
-//		if (NextUI == EGameUIType::ChatRoom) ChatRoomWidget->ScrollToEnd();
-//		//如果是失败,只显示一个按钮
-//		if (NextUI == EGameUIType::Lose) GameMenuWidget->GameLose();
-//		//如果是菜单,设置菜单初始化
-//		if (NextUI == EGameUIType::Pause) GameMenuWidget->ResetMenu();
-//	}
-//
+	//如果前一模式是Game,说明要显示黑色遮罩
+	if (PreUI == EGameUIType::Game)
+	{
+		BlackShade->SetVisibility(EVisibility::Visible);		// EVisibility::Visible 可见
+	}
+	else
+	{
+		//如果前一模式不是Game，则隐藏当前正在显示的UI
+		UIMap.Find(PreUI)->Get()->SetVisibility(EVisibility::Hidden);		// EVisibility::Hidden 不可见
+	}
+
+	//如果下一模式是Game, 隐藏黑色遮罩
+	if (NextUI == EGameUIType::Game)
+	{
+		BlackShade->SetVisibility(EVisibility::Hidden);
+	}
+	else
+	{
+		//显示现在状态对应的UI
+		UIMap.Find(NextUI)->Get()->SetVisibility(EVisibility::Visible);
+
+		//显示现在状态对应的UI
+		if (NextUI == EGameUIType::ChatRoom) ChatRoomWidget->ScrollToEnd();
+
+		//如果是失败,只显示一个按钮
+		if (NextUI == EGameUIType::Lose) GameMenuWidget->GameLose();
+
+		//如果是菜单,设置菜单初始化
+		if (NextUI == EGameUIType::Pause) GameMenuWidget->ResetMenu();
+	}
+
 }
 
 FVector2D SDemoGameHUDWidget::GetViewportSize() const
