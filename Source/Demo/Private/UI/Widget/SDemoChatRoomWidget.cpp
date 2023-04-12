@@ -4,8 +4,6 @@
 #include "UI/Widget/SDemoChatRoomWidget.h"
 #include "SlateOptMacros.h"
 
-
-//
 //struct ChatMessItem
 //{
 //	//水平组件

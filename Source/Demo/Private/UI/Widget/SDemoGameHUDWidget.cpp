@@ -177,16 +177,15 @@ void SDemoGameHUDWidget::ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type N
 		//显示现在状态对应的UI
 		UIMap.Find(NextUI)->Get()->SetVisibility(EVisibility::Visible);
 
-		//显示现在状态对应的UI
-		if (NextUI == EGameUIType::ChatRoom) ChatRoomWidget->ScrollToEnd();
+		////显示现在状态对应的UI
+		//if (NextUI == EGameUIType::ChatRoom) ChatRoomWidget->ScrollToEnd();
 
-		//如果是失败,只显示一个按钮
-		if (NextUI == EGameUIType::Lose) GameMenuWidget->GameLose();
+		////如果是失败,只显示一个按钮
+		//if (NextUI == EGameUIType::Lose) GameMenuWidget->GameLose();
 
-		//如果是菜单,设置菜单初始化
-		if (NextUI == EGameUIType::Pause) GameMenuWidget->ResetMenu();
+		////如果是菜单,设置菜单初始化
+		//if (NextUI == EGameUIType::Pause) GameMenuWidget->ResetMenu();
 	}
-
 }
 
 FVector2D SDemoGameHUDWidget::GetViewportSize() const
