@@ -26,29 +26,29 @@ public:
 //
 //	//重写鼠标点击事件
 //	virtual FReply OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
-//
-//
-//	//注册背包管理器事件,由playercharacter的InitPackageManager委托进行调用
-//	void InitPackageManager();
-//
-//private:
-//
-//	//获取MenuStyle
-//	const struct FDemoGameStyle* GameStyle;
-//
-//
-//	//快捷栏表格
-//	TSharedPtr<class SUniformGridPanel> ShortcutGrid;
-//
-//	//背包表格
-//	TSharedPtr<SUniformGridPanel> PackageGrid;
-//
-//	//合成表表格
-//	TSharedPtr<SUniformGridPanel> CompoundGrid;
-//
-//	//输出容器
-//	TSharedPtr<class SBorder> OutputBorder;
-//
+
+
+	//注册背包管理器事件,由playercharacter的InitPackageManager委托进行调用
+	void InitPackageManager();
+
+private:
+
+	//获取MenuStyle
+	const struct FDemoGameStyle* GameStyle;
+
+
+	//快捷栏表格
+	TSharedPtr<class SUniformGridPanel> ShortcutGrid;
+
+	//背包表格
+	TSharedPtr<SUniformGridPanel> PackageGrid;
+
+	//合成表表格
+	TSharedPtr<SUniformGridPanel> CompoundGrid;
+
+	//输出容器
+	TSharedPtr<class SBorder> OutputBorder;
+
 //	//鼠标位置标定
 //	FVector2D MousePosition;
 //

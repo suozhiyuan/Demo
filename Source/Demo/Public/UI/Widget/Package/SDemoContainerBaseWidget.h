@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Data/DemoType.h"
 #include "Widgets/SCompoundWidget.h"
 
 ////合成输入委托
@@ -22,14 +23,17 @@ class DEMO_API SDemoContainerBaseWidget : public SCompoundWidget
 public:
 	SLATE_BEGIN_ARGS(SDemoContainerBaseWidget)
 	{}
+
+	SLATE_ATTRIBUTE(int, WorkIndex)		// slate 数组
+
 	SLATE_END_ARGS()
 
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
-//
-//	//获取实例
-//	static TSharedPtr<SDemoContainerBaseWidget> CreateContainer(EContainerType::Type NeedType, int WorkID);
-//
+
+	//获取实例
+	static TSharedPtr<SDemoContainerBaseWidget> CreateContainer(EContainerType::Type NeedType, int WorkID);
+
 //	//更新鼠标移动到上面的状态
 //	void UpdateHovered(bool IsHovered);
 //
@@ -73,19 +77,19 @@ public:
 //	bool MultiplyAble(int ObjectID);
 //
 //
-//protected:
-//
-//	//容器各个组件
-//	TSharedPtr<class SBorder> ContainerBorder;
-//	TSharedPtr<SBorder> ObjectImage;
-//	TSharedPtr<class STextBlock> ObjectNumText;
-//
-//	//获取MenuStyle
-//	const struct FDemoGameStyle* GameStyle;
-//
-//	//工作序号,用于标定在背包中的位置作用
-//	TAttribute<int> WorkIndex;
-//
+protected:
+
+	//容器各个组件
+	TSharedPtr<class SBorder> ContainerBorder;
+	TSharedPtr<SBorder> ObjectImage;
+	TSharedPtr<class STextBlock> ObjectNumText;
+
+	//获取MenuStyle
+	const struct FDemoGameStyle* GameStyle;
+
+	//工作序号,用于标定在背包中的位置作用
+	TAttribute<int> WorkIndex;
+
 //	//是否在Hover状态
 //	bool IsHover;
 //

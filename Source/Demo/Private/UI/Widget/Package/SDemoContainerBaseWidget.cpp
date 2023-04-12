@@ -3,34 +3,43 @@
 
 #include "UI/Widget/Package/SDemoContainerBaseWidget.h"
 #include "SlateOptMacros.h"
+#include "UI/Style/DemoGameWidgetStyle.h"
+#include "UI/Style/DemoStyle.h"
+#include "UI/Widget/Package/SDemoContainerInputWidget.h"
+#include "UI/Widget/Package/SDemoContainerNormalWidget.h"
+#include "UI/Widget/Package/SDemoContainerOutputWidget.h"
+#include "UI/Widget/Package/SDemoContainerShortcutWidget.h"
+
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
+
 void SDemoContainerBaseWidget::Construct(const FArguments& InArgs)
 {
-	////获取GameStyle
-	//GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
-	////获取工作号
-	//WorkIndex = InArgs._WorkIndex;
+	//获取GameStyle
+	GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
+
+	//获取工作号
+	WorkIndex = InArgs._WorkIndex;
 
 
-	//ChildSlot
-	//	[
-	//		SAssignNew(ContainerBorder, SBorder)
-	//		.BorderImage(&GameStyle->NormalContainerBrush)
-	//	.Padding(FMargin(8.f))
-	//	[
-	//		SAssignNew(ObjectImage, SBorder)
-	//		.BorderImage(&GameStyle->EmptyBrush)
-	//	.HAlign(HAlign_Right)
-	//	.VAlign(VAlign_Bottom)
-	//	.Padding(FMargin(0.f, 0.f, 4.f, 0.f))
-	//	[
-	//		SAssignNew(ObjectNumText, STextBlock)
-	//		.Font(GameStyle->Font_Outline_16)
-	//	.ColorAndOpacity(GameStyle->FontColor_Black)
-	//	]
-	//	]
-	//	];
+	ChildSlot
+		[
+			SAssignNew(ContainerBorder, SBorder)
+			.BorderImage(&GameStyle->NormalContainerBrush)
+			.Padding(FMargin(8.f))
+			[
+				SAssignNew(ObjectImage, SBorder)
+				.BorderImage(&GameStyle->EmptyBrush)
+				.HAlign(HAlign_Right)
+				.VAlign(VAlign_Bottom)
+				.Padding(FMargin(0.f, 0.f, 4.f, 0.f))
+				[
+					SAssignNew(ObjectNumText, STextBlock)
+					.Font(GameStyle->Font_Outline_16)
+					.ColorAndOpacity(GameStyle->FontColor_Black)
+				]
+			]
+		];
 
 
 	//IsHover = false;
@@ -38,30 +47,30 @@ void SDemoContainerBaseWidget::Construct(const FArguments& InArgs)
 	////初始化时物品数量和序号都为0
 	//ObjectIndex = ObjectNum = 0;
 }
+
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-//
-//TSharedPtr<SDemoContainerBaseWidget> SDemoContainerBaseWidget::CreateContainer(EContainerType::Type NeedType, int WorkID)
-//{
-//	TSharedPtr<SDemoContainerBaseWidget> ResultContainer;
-//	switch (NeedType)
-//	{
-//	case EContainerType::Output:
-//		SAssignNew(ResultContainer, SDemoContainerOutputWidget).WorkIndex(WorkID);
-//		break;
-//	case EContainerType::Input:
-//		SAssignNew(ResultContainer, SDemoContainerInputWidget).WorkIndex(WorkID);
-//		break;
-//	case EContainerType::Normal:
-//		SAssignNew(ResultContainer, SDemoContainerNormalWidget).WorkIndex(WorkID);
-//		break;
-//	case EContainerType::Shortcut:
-//		SAssignNew(ResultContainer, SDemoContainerShortcutWidget).WorkIndex(WorkID);
-//		break;
-//	}
-//	return ResultContainer;
-//}
-//
+TSharedPtr<SDemoContainerBaseWidget> SDemoContainerBaseWidget::CreateContainer(EContainerType::Type NeedType, int WorkID)
+{
+	TSharedPtr<SDemoContainerBaseWidget> ResultContainer;
+	switch (NeedType)
+	{
+	case EContainerType::Output:
+		SAssignNew(ResultContainer, SDemoContainerOutputWidget).WorkIndex(WorkID);		// 通过调用子类的 WorkIndex，将子类的 WorkIndex 传递给父类，给父类的 WorkIndex 赋值
+		break;
+	case EContainerType::Input:
+		SAssignNew(ResultContainer, SDemoContainerInputWidget).WorkIndex(WorkID);		
+		break;
+	case EContainerType::Normal:
+		SAssignNew(ResultContainer, SDemoContainerNormalWidget).WorkIndex(WorkID);
+		break;
+	case EContainerType::Shortcut:
+		SAssignNew(ResultContainer, SDemoContainerShortcutWidget).WorkIndex(WorkID);
+		break;
+	}
+	return ResultContainer;
+}
+
 //void SDemoContainerBaseWidget::UpdateHovered(bool IsHovered)
 //{
 //	//如果鼠标移动到上面了

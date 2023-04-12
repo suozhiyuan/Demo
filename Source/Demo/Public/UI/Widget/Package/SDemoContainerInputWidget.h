@@ -13,6 +13,7 @@ class DEMO_API SDemoContainerInputWidget : public SDemoContainerBaseWidget
 public:
 	SLATE_BEGIN_ARGS(SDemoContainerInputWidget)
 	{}
+	SLATE_ATTRIBUTE(int, WorkIndex)
 	SLATE_END_ARGS()
 
 	/** Constructs this widget with InArgs */

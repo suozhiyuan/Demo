@@ -3,102 +3,99 @@
 
 #include "UI/Widget/Package/SDemoPackageWidget.h"
 #include "SlateOptMacros.h"
+#include "Player/DemoPackageManager.h"
+#include "UI/Style/DemoGameWidgetStyle.h"
+#include "UI/Style/DemoStyle.h"
+#include "UI/Widget/Package/SDemoContainerBaseWidget.h"
+#include "Widgets/Images/SImage.h"
+#include "Widgets/Layout/SUniformGridPanel.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
+
 void SDemoPackageWidget::Construct(const FArguments& InArgs)
 {
 
-	////获取GameStyle
-	//GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
+	//获取GameStyle
+	GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
+
 	////获取DPIScaler
 	//UIScaler = InArgs._UIScaler;
 
-	//ChildSlot
-	//	[
+	ChildSlot
+		[
+			SNew(SOverlay)
 
-	//		SNew(SOverlay)
+			//背包
+			+SOverlay::Slot()
+			.HAlign(HAlign_Right)
+			.VAlign(VAlign_Center)
+			.Padding(FMargin(0.f, 0.f, 50.f, 0.f))
+			[
+				SNew(SBox)
+				.WidthOverride(800.f)
+				.HeightOverride(800.f)
+				[
+					SNew(SOverlay)
 
+					//背景图
+					+SOverlay::Slot()
+					.HAlign(HAlign_Fill)
+					.VAlign(VAlign_Fill)
+					[
+						SNew(SImage)
+						.Image(&GameStyle->PackageBGBrush)
+					]
 
-	//		//背包
-	//	+SOverlay::Slot()
-	//	.HAlign(HAlign_Right)
-	//	.VAlign(VAlign_Center)
-	//	.Padding(FMargin(0.f, 0.f, 50.f, 0.f))
-	//	[
-	//		SNew(SBox)
-	//		.WidthOverride(800.f)
-	//	.HeightOverride(800.f)
-	//	[
+					//底部快捷栏
+					+ SOverlay::Slot()
+					.HAlign(HAlign_Fill)
+					.VAlign(VAlign_Fill)
+					.Padding(FMargin(40.f, 680.f, 40.f, 40.f))
+					[
+						SAssignNew(ShortcutGrid, SUniformGridPanel)
+					]
 
-	//		SNew(SOverlay)
-
-
-	//		//背景图
-	//	+SOverlay::Slot()
-	//	.HAlign(HAlign_Fill)
-	//	.VAlign(VAlign_Fill)
-	//	[
-	//		SNew(SImage)
-	//		.Image(&GameStyle->PackageBGBrush)
-	//	]
-
-	////底部快捷栏
-	//+ SOverlay::Slot()
-	//	.HAlign(HAlign_Fill)
-	//	.VAlign(VAlign_Fill)
-	//	.Padding(FMargin(40.f, 680.f, 40.f, 40.f))
-	//	[
-	//		SAssignNew(ShortcutGrid, SUniformGridPanel)
-	//	]
-
-	////背包主体
-	//+ SOverlay::Slot()
-	//	.HAlign(HAlign_Fill)
-	//	.VAlign(VAlign_Fill)
-	//	.Padding(FMargin(40.f, 320.f, 40.f, 160.f))
-	//	[
-	//		SAssignNew(PackageGrid, SUniformGridPanel)
-	//	]
+					//背包主体
+					+ SOverlay::Slot()
+					.HAlign(HAlign_Fill)
+					.VAlign(VAlign_Fill)
+					.Padding(FMargin(40.f, 320.f, 40.f, 160.f))
+					[
+						SAssignNew(PackageGrid, SUniformGridPanel)
+					]
 
 
-	////合成表输入框
-	//+SOverlay::Slot()
-	//	.HAlign(HAlign_Fill)
-	//	.VAlign(VAlign_Fill)
-	//	.Padding(FMargin(80.f, 40.f, 480.f, 520.f))
-	//	[
-	//		SAssignNew(CompoundGrid, SUniformGridPanel)
-	//	]
+					//合成表输入框
+					+SOverlay::Slot()
+					.HAlign(HAlign_Fill)
+					.VAlign(VAlign_Fill)
+					.Padding(FMargin(80.f, 40.f, 480.f, 520.f))
+					[
+						SAssignNew(CompoundGrid, SUniformGridPanel)
+					]
 
-	////合成表输出框
-	//+ SOverlay::Slot()
-	//	.HAlign(HAlign_Fill)
-	//	.VAlign(VAlign_Fill)
-	//	.Padding(FMargin(560.f, 120.f, 160.f, 600.f))
-	//	[
-	//		SAssignNew(OutputBorder, SBorder)
-	//	]
-
-
-	////合成小箭头
-	//+SOverlay::Slot()
-	//	.HAlign(HAlign_Fill)
-	//	.VAlign(VAlign_Fill)
-	//	.Padding(FMargin(400.f, 120.f, 320.f, 600.f))
-	//	[
-	//		SNew(SImage)
-	//		.Image(&GameStyle->CompoundArrowBrush)
-	//	]
+					//合成表输出框
+					+ SOverlay::Slot()
+					.HAlign(HAlign_Fill)
+					.VAlign(VAlign_Fill)
+					.Padding(FMargin(560.f, 120.f, 160.f, 600.f))
+					[
+						SAssignNew(OutputBorder, SBorder)
+					]
 
 
-
-	//	]
-
-
-	//	]
-
-
-	//	];
+					//合成小箭头
+					+SOverlay::Slot()
+					.HAlign(HAlign_Fill)
+					.VAlign(VAlign_Fill)
+					.Padding(FMargin(400.f, 120.f, 320.f, 600.f))
+					[
+						SNew(SImage)
+						.Image(&GameStyle->CompoundArrowBrush)
+					]
+				]
+			]
+		];
 
 	//MousePosition = FVector2D(0.f, 0.f);
 
@@ -128,46 +125,51 @@ void SDemoPackageWidget::Construct(const FArguments& InArgs)
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 
-//void SDemoPackageWidget::InitPackageManager()
-//{
-//	//初始化快捷栏
-//	for (int i = 0; i < 9; ++i) {
-//		//创建容器实例
-//		TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Shortcut, i);
-//		//将容器添加到UI
-//		ShortcutGrid->AddSlot(i, 0)[NewContainer->AsShared()];
-//		//注册容器到背包管理器
-//		DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Shortcut);
-//	}
-//
-//
-//	//初始化背包主体
-//	for (int i = 0; i < 36; ++i) {
-//		TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Normal, i);
-//		PackageGrid->AddSlot(i % 9, i / 9)[NewContainer->AsShared()];
-//		DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Normal);
-//	}
-//
-//
-//	//初始化合成台
-//	for (int i = 0; i < 9; ++i) {
-//		TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Input, i);
-//		CompoundGrid->AddSlot(i % 3, i / 3)[NewContainer->AsShared()];
-//		DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Input);
-//	}
-//
-//	//初始化输出容器
-//	TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Output, 1);
-//	OutputBorder->SetContent(NewContainer->AsShared());
-//	DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Output);
-//
-//
+void SDemoPackageWidget::InitPackageManager()
+{
+
+	//初始化快捷栏
+	for (int i = 0; i < 9; ++i)
+	{
+		//创建容器实例
+		TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Shortcut, i);
+		//将容器添加到UI
+		ShortcutGrid->AddSlot(i, 0)[NewContainer->AsShared()];
+
+		//注册容器到背包管理器
+		//DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Shortcut);
+	}
+
+	//初始化背包主体
+	for (int i = 0; i < 36; ++i) 
+	{
+		TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Normal, i);
+		PackageGrid->AddSlot(i % 9, i / 9)[NewContainer->AsShared()];
+
+		//DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Normal);
+	}
+
+	//初始化合成台
+	for (int i = 0; i < 9; ++i) 
+	{
+		TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Input, i);
+		CompoundGrid->AddSlot(i % 3, i / 3)[NewContainer->AsShared()];
+
+		//DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Input);
+	}
+
+	//初始化输出容器
+	TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Output, 1);
+	OutputBorder->SetContent(NewContainer->AsShared());
+
+	//DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Output);
+
+
 //	//设置已经初始化背包管理器
 //	IsInitPackageMana = true;
-//
-//}
-//
-//
+}
+
+
 //int32 SDemoPackageWidget::OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
 //{
 //	//先调用一下父类函数

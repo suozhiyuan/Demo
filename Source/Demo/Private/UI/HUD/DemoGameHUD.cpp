@@ -14,6 +14,7 @@
 #include "UI/Widget/SDemoRayInfoWidget.h"
 #include "Player/DemoPlayerController.h"
 #include "UI/Widget/SDemoPlayerStateWidget.h"
+#include "UI/Widget/Package/SDemoPackageWidget.h"
 
 ADemoGameHUD::ADemoGameHUD()
 {
@@ -49,8 +50,8 @@ void ADemoGameHUD::BeginPlay()
 	// 绑定显示UI委托
 	GM->SPController->ShowGameUI.BindRaw(GameHUDWidget.Get(), &SDemoGameHUDWidget::ShowGameUI);
 
-	//// 初始化背包管理器到背包组件
-	//GM->InitPackageManager.BindRaw(GameHUDWidget->PackageWidget.Get(), &SDemoPackageWidget::InitPackageManager);
+	// 初始化背包管理器到背包组件
+	GM->InitPackageManager.BindRaw(GameHUDWidget->PackageWidget.Get(), &SDemoPackageWidget::InitPackageManager);
 
 	//// 绑定注册小地图贴图委托
 	//GM->RegisterMiniMap.BindRaw(GameHUDWidget->MiniMapWidget.Get(), &SDemoMiniMapWidget::RegisterMiniMap);

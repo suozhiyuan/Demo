@@ -7,8 +7,9 @@
 #include "DemoGameMode.generated.h"
 
 
-////初始化背包管理类委托
-//DECLARE_DELEGATE(FInitPackageManager)
+//初始化背包管理类委托
+DECLARE_DELEGATE(FInitPackageManager)
+
 ////注册MiniMap的贴图和材质
 //DECLARE_DELEGATE_OneParam(FRegisterMiniMap, class UTextureRenderTarget2D*)
 ////更新MiniMap的数据
@@ -44,8 +45,8 @@ public:
 
 	class ADemoPlayerState* SPState;
 
-	////初始化背包管理委托,绑定的方法是PackageWidget的InitPackageManager方法
-	//FInitPackageManager InitPackageManager;
+	//初始化背包管理委托,绑定的方法是PackageWidget的InitPackageManager方法
+	FInitPackageManager InitPackageManager;
 
 	////定义委托,绑定的方法是MiniMapWidget的RegisterMiniMap
 	//FRegisterMiniMap RegisterMiniMap;

@@ -12,7 +12,7 @@
 #include "Player/DemoPlayerState.h"
 #include "UI/HUD/DemoGameHUD.h"
 #include "Data/DemoDataHandle.h"
-
+#include "Player/DemoPackageManager.h"
 
 
 ADemoGameMode::ADemoGameMode()
@@ -28,8 +28,9 @@ ADemoGameMode::ADemoGameMode()
 	DefaultPawnClass = ADemoPlayerCharacter::StaticClass();
 
 
-	////开始没有初始化背包
-	//IsInitPackage = false;
+	//开始没有初始化背包
+	IsInitPackage = false;
+
 	////小地图还没生成
 	//IsCreateMiniMap = false;
 	////开始设置不需要加载存档
@@ -45,8 +46,8 @@ void ADemoGameMode::Tick(float DeltaSeconds)
 	////给背包加载存档,放在初始化背包上面是为了在第二帧再执行
 	//LoadRecordPackage();
 
-	////初始化背包
-	//InitializePackage();	
+	//初始化背包
+	InitializePackage();	
 }
 
 void ADemoGameMode::InitGamePlayModule()
@@ -143,19 +144,21 @@ void ADemoGameMode::BeginPlay()
 	//LoadRecord();
 }
 
-//void ADemoGameMode::InitializePackage()
-//{
-//	if (IsInitPackage) return;
-//
-//	//叫PackageWidget初始化背包管理器
-//	InitPackageManager.ExecuteIfBound();
-//	//绑定丢弃物品委托
-//	DemoPackageManager::Get()->PlayerThrowObject.BindUObject(SPCharacter, &ADemoPlayerCharacter::PlayerThrowObject);
-//	//绑定修改快捷栏信息委托
-//	DemoPackageManager::Get()->ChangeHandObject.BindUObject(SPState, &ADemoPlayerState::ChangeHandObject);
-//	IsInitPackage = true;
-//}
-//
+void ADemoGameMode::InitializePackage()
+{
+	if (IsInitPackage) return;
+
+	//叫PackageWidget初始化背包管理器
+	InitPackageManager.ExecuteIfBound();
+
+	////绑定丢弃物品委托
+	//DemoPackageManager::Get()->PlayerThrowObject.BindUObject(SPCharacter, &ADemoPlayerCharacter::PlayerThrowObject);
+	////绑定修改快捷栏信息委托
+	//DemoPackageManager::Get()->ChangeHandObject.BindUObject(SPState, &ADemoPlayerState::ChangeHandObject);
+
+	IsInitPackage = true;
+}
+
 //void ADemoGameMode::InitializeMiniMapCamera()
 //{
 //	//如果摄像机还不存在并且世界已经存在
