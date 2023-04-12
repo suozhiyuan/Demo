@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Data/DemoType.h"
 #include "Widgets/SCompoundWidget.h"
 
 
@@ -27,8 +28,8 @@ public:
 	//绑定到UIScaler的方法
 	float GetUIScaler() const;
 
-	////显示游戏UI,被PlayerController的ShowGameUI委托绑定
-	//void ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type NextUI);
+	//显示游戏UI,被PlayerController的ShowGameUI委托绑定
+	void ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type NextUI);
 
 public:
 	//快捷栏指针
@@ -49,34 +50,34 @@ public:
 //	//聊天显示栏引用
 //	TSharedPtr<class SDemoChatShowWidget> ChatShowWidget;
 
-//	//游戏菜单
-//	TSharedPtr<class SDemoGameMenuWidget> GameMenuWidget;
+	//游戏菜单
+	TSharedPtr<class SDemoGameMenuWidget> GameMenuWidget;
 
-//	//聊天室
-//	TSharedPtr<class SDemoChatRoomWidget> ChatRoomWidget;
+	//聊天室
+	TSharedPtr<class SDemoChatRoomWidget> ChatRoomWidget;
 
-//	//背包
-//	TSharedPtr<class SDemoPackageWidget> PackageWidget;
+	//背包
+	TSharedPtr<class SDemoPackageWidget> PackageWidget;
 
 private:
 
 	//获取屏幕Size
 	FVector2D GetViewportSize() const;
 
-//	//将UI绑定到UIMap
-//	void InitUIMap();
-//
+	//将UI绑定到UIMap
+	void InitUIMap();
+
 private:
 
 	//DPI缩放
 	TAttribute<float> UIScaler;
 
-//	//黑色遮罩
-//	TSharedPtr<class SBorder> BlackShade;
-//
-//	//UIMap
-//	TMap<EGameUIType::Type, TSharedPtr<SCompoundWidget>> UIMap;
-//
+	//黑色遮罩
+	TSharedPtr<class SBorder> BlackShade;
+
+	//UIMap
+	TMap<EGameUIType::Type, TSharedPtr<SCompoundWidget>> UIMap;
+
 //	//消息计时器
 //	float MessageTimeCount;
 

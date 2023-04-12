@@ -10,8 +10,8 @@
 
 //修改准星委托
 DECLARE_DELEGATE_TwoParams(FUpdatePointer, bool, float)
-////显示UI委托
-//DECLARE_DELEGATE_TwoParams(FShowGameUI, EGameUIType::Type, EGameUIType::Type)
+//显示UI委托
+DECLARE_DELEGATE_TwoParams(FShowGameUI, EGameUIType::Type, EGameUIType::Type)
 ////修改小地图视野范围委托
 //DECLARE_DELEGATE_OneParam(FUpdateMiniMapWidth, int)
 
@@ -49,8 +49,8 @@ public:
 	//实时修改准星的委托,注册的函数是PointerWidget的UpdatePointer
 	FUpdatePointer UpdatePointer;
 
-//	//显示游戏UI界面委托,绑定的方法是GameHUDWidget的ShowGameUI
-//	FShowGameUI ShowGameUI;
+	//显示游戏UI界面委托,绑定的方法是GameHUDWidget的ShowGameUI
+	FShowGameUI ShowGameUI;
 
 //	//修改小地图视野范围委托,注册函数是DemoSceneCapture2D的UpdateMiniMapWidth 
 //	FUpdateMiniMapWidth UpdateMiniMapWidth;
@@ -89,16 +89,18 @@ private:
 	//行为状态机
 	void StateMachine();
 
-//	//ESC按下事件
-//	void EscEvent();
-//	//E键背包
-//	void PackageEvent();
-//	//T键聊天室
-//	void ChatRoomEvent();
-//
-//	//转换输入模式,true为游戏模式,false为混合模式
-//	void SwitchInputMode(bool IsGameOnly);
-//
+	//ESC按下事件
+	void EscEvent();
+
+	//E键背包
+	void PackageEvent();
+
+	//T键聊天室
+	void ChatRoomEvent();
+
+	//转换输入模式,true为游戏模式,false为混合模式
+	void SwitchInputMode(bool IsGameOnly);
+
 //	//设置锁住输入
 //	void LockedInput(bool IsLocked);
 //
@@ -130,9 +132,9 @@ private:
 	//检测到的资源
 	AActor* RayActor;
 
-//	//保存当前UI状态
-//	EGameUIType::Type CurrentUIType;
-//
+	//保存当前UI状态
+	EGameUIType::Type CurrentUIType;
+
 //	//小地图缩放状态
 //	EMiniMapSizeMode::Type MiniMapSizeMode;
 //

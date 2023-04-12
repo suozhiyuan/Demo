@@ -3,11 +3,15 @@
 
 #include "UI/Widget/SDemoGameHUDWidget.h"
 #include "SlateOptMacros.h"
+#include "UI/Widget/SDemoChatRoomWidget.h"
+#include "UI/Widget/SDemoGameMenuWidget.h"
 #include "UI/Widget/SDemoPlayerStateWidget.h"
 #include "UI/Widget/SDemoPointerWidget.h"
 #include "Widgets/Layout/SDPIScaler.h"
 #include "UI/Widget/SDemoShortcutWidget.h"
 #include "UI/Widget/SDemoRayInfoWidget.h"
+#include "UI/Widget/Package/SDemoPackageWidget.h"
+#include "Widgets/Images/SImage.h"
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -77,54 +81,53 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 
 
 
-	////暗黑色遮罩,放在事件界面和游戏UI中间
-	//+SOverlay::Slot()
-	//	.HAlign(HAlign_Fill)
-	//	.VAlign(VAlign_Fill)
-	//	[
-	//		SAssignNew(BlackShade, SBorder)
-	//		//设置为黑色透明
-	//	.ColorAndOpacity(TAttribute<FLinearColor>(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f)))
-	//	//开始时设置不显示
-	//	.Visibility(EVisibility::Hidden)
-	//	[
-	//		SNew(SImage)
-	//	]
-	//	]
+			//暗黑色遮罩,放在事件界面和游戏UI中间
+			+SOverlay::Slot()
+			.HAlign(HAlign_Fill)
+			.VAlign(VAlign_Fill)
+			[
+				SAssignNew(BlackShade, SBorder)
+				//设置为黑色透明
+				.ColorAndOpacity(TAttribute<FLinearColor>(FLinearColor(0.2f, 0.2f, 0.2f, 0.5f)))
+				//开始时设置不显示
+				.Visibility(EVisibility::Hidden)		// EVisibility::Hidden  不显示
+				[
+					SNew(SImage)								// 这个 SImage 默认时白色的，会应用上边设置的透明度与颜色
+				]
+			]
 
-	////GameMenu
-	//+ SOverlay::Slot()
-	//	.HAlign(HAlign_Center)
-	//	.VAlign(VAlign_Center)
-	//	[
-	//		SAssignNew(GameMenuWidget, SDemoGameMenuWidget)
-	//		.Visibility(EVisibility::Hidden)
-	//	]
+			// GameMenu
+			+ SOverlay::Slot()
+			.HAlign(HAlign_Center)
+			.VAlign(VAlign_Center)
+			[
+				SAssignNew(GameMenuWidget, SDemoGameMenuWidget)
+				.Visibility(EVisibility::Hidden)
+			]
 
-	////chatRoom
-	//+ SOverlay::Slot()
-	//	.HAlign(HAlign_Left)
-	//	.VAlign(VAlign_Bottom)
-	//	[
-	//		SAssignNew(ChatRoomWidget, SDemoChatRoomWidget)
-	//		.Visibility(EVisibility::Hidden)
-	//	]
+			// chatRoom
+			+ SOverlay::Slot()
+			.HAlign(HAlign_Left)
+			.VAlign(VAlign_Bottom)
+			[
+				SAssignNew(ChatRoomWidget, SDemoChatRoomWidget)
+				.Visibility(EVisibility::Hidden)
+			]
 
-
-	////Package
-	//+SOverlay::Slot()
-	//	.HAlign(HAlign_Fill)
-	//	.VAlign(VAlign_Fill)
-	//	[
-	//		SAssignNew(PackageWidget, SDemoPackageWidget)
-	//		//设置DPI
-	//	.UIScaler(UIScaler)
-	//	.Visibility(EVisibility::Hidden)
-	//	]
+			// Package
+			+SOverlay::Slot()
+			.HAlign(HAlign_Fill)
+			.VAlign(VAlign_Fill)
+			[
+				SAssignNew(PackageWidget, SDemoPackageWidget)
+				//设置DPI
+				//.UIScaler(UIScaler)
+				.Visibility(EVisibility::Hidden)
+			]
 		]
 	];
 
-	//InitUIMap();
+	InitUIMap();
 }
 
 //void SDemoGameHUDWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
@@ -151,8 +154,8 @@ float SDemoGameHUDWidget::GetUIScaler() const
 	return GetViewportSize().Y / 1080.f;
 }
 
-//void SDemoGameHUDWidget::ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type NextUI)
-//{
+void SDemoGameHUDWidget::ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type NextUI)
+{
 //	//如果前一模式是Game,说明要显示黑板
 //	if (PreUI == EGameUIType::Game)
 //	{
@@ -180,7 +183,7 @@ float SDemoGameHUDWidget::GetUIScaler() const
 //		if (NextUI == EGameUIType::Pause) GameMenuWidget->ResetMenu();
 //	}
 //
-//}
+}
 
 FVector2D SDemoGameHUDWidget::GetViewportSize() const
 {
@@ -192,15 +195,16 @@ FVector2D SDemoGameHUDWidget::GetViewportSize() const
 	return Result;
 }
 
-//void SDemoGameHUDWidget::InitUIMap()
-//{
-//	UIMap.Add(EGameUIType::Pause, GameMenuWidget);
-//	UIMap.Add(EGameUIType::Package, PackageWidget);
-//	UIMap.Add(EGameUIType::ChatRoom, ChatRoomWidget);
-//	UIMap.Add(EGameUIType::Lose, GameMenuWidget);
-//
-//	//绑定委托
-//	ChatRoomWidget->PushMessage.BindRaw(ChatShowWidget.Get(), &SDemoChatShowWidget::AddMessage);
-//	//消息计时器初始设置为0
-//	MessageTimeCount = 0.f;
-//}
+void SDemoGameHUDWidget::InitUIMap()
+{
+	UIMap.Add(EGameUIType::Pause, GameMenuWidget);
+	UIMap.Add(EGameUIType::Package, PackageWidget);
+	UIMap.Add(EGameUIType::ChatRoom, ChatRoomWidget);
+	UIMap.Add(EGameUIType::Lose, GameMenuWidget);
+
+	////绑定委托
+	//ChatRoomWidget->PushMessage.BindRaw(ChatShowWidget.Get(), &SDemoChatShowWidget::AddMessage);
+
+	////消息计时器初始设置为0
+	//MessageTimeCount = 0.f;
+}

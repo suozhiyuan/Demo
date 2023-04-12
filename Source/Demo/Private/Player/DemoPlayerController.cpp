@@ -43,8 +43,8 @@ void ADemoPlayerController::BeginPlay()
 	IsLeftButtonDown = false;
 	IsRightButtonDown = false;
 
-	////设置默认UI状态为游戏界面
-	//CurrentUIType = EGameUIType::Game;
+	//设置默认UI状态为游戏界面
+	CurrentUIType = EGameUIType::Game;
 
 	////设置缩放状态为无
 	//MiniMapSizeMode = EMiniMapSizeMode::None;
@@ -88,12 +88,12 @@ void ADemoPlayerController::SetupInputComponent()
 	InputComponent->BindAction("ScrollUp", IE_Pressed, this, &ADemoPlayerController::ScrollUpEvent);
 	InputComponent->BindAction("ScrollDown", IE_Pressed, this, &ADemoPlayerController::ScrollDownEvent);
 
-	////绑定ESC键事件并且设置当暂停游戏的时候依然可以运行
-	//InputComponent->BindAction("EscEvent", IE_Pressed, this, &ADemoPlayerController::EscEvent).bExecuteWhenPaused = true;
-	////绑定背包
-	//InputComponent->BindAction("PackageEvent", IE_Pressed, this, &ADemoPlayerController::PackageEvent);
-	////聊天室
-	//InputComponent->BindAction("ChatRoomEvent", IE_Pressed, this, &ADemoPlayerController::ChatRoomEvent);
+	//绑定ESC键事件并且设置当暂停游戏的时候依然可以运行
+	InputComponent->BindAction("EscEvent", IE_Pressed, this, &ADemoPlayerController::EscEvent).bExecuteWhenPaused = true;		// bExecuteWhenPaused 允许游戏暂停时执行
+	//绑定背包
+	InputComponent->BindAction("PackageEvent", IE_Pressed, this, &ADemoPlayerController::PackageEvent);
+	//聊天室
+	InputComponent->BindAction("ChatRoomEvent", IE_Pressed, this, &ADemoPlayerController::ChatRoomEvent);
 
 	////绑定缩放小地图事件
 	//InputComponent->BindAction("AddMapSize", IE_Pressed, this, &ADemoPlayerController::AddMapSizeStart);
@@ -103,41 +103,41 @@ void ADemoPlayerController::SetupInputComponent()
 }
 
 
-//void ADemoPlayerController::EscEvent()
-//{
-//	switch (CurrentUIType)
-//	{
-//	case EGameUIType::Game:
-//		//设置游戏暂停
-//		SetPause(true);
-//		//设置输入模式为GameAndUI
-//		SwitchInputMode(false);
-//		//更新界面
-//		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Pause);
-//		//更新当前UI
-//		CurrentUIType = EGameUIType::Pause;
-//		//锁定输入
-//		LockedInput(true);
-//		break;
-//	case EGameUIType::Pause:
-//	case EGameUIType::Package:
-//	case EGameUIType::ChatRoom:
-//		//解除暂停
-//		SetPause(false);
-//		//设置游戏模式为游戏
-//		SwitchInputMode(true);
-//		//更新界面
-//		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
-//		//更新当前UI
-//		CurrentUIType = EGameUIType::Game;
-//		//解开输入
-//		LockedInput(false);
-//		break;
-//	}
-//}
-//
-//void ADemoPlayerController::PackageEvent()
-//{
+void ADemoPlayerController::EscEvent()
+{
+	switch (CurrentUIType)
+	{
+	case EGameUIType::Game:
+		//设置游戏暂停
+		SetPause(true);
+		//设置输入模式为GameAndUI
+		SwitchInputMode(false);
+		//更新界面 运行委托
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Pause);
+		//更新当前UI
+		CurrentUIType = EGameUIType::Pause;
+		////锁定输入
+		//LockedInput(true);
+		break;
+	case EGameUIType::Pause:
+	case EGameUIType::Package:
+	case EGameUIType::ChatRoom:
+		//解除暂停
+		SetPause(false);
+		//设置游戏模式为游戏
+		SwitchInputMode(true);
+		//更新界面
+		ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Game);
+		//更新当前UI
+		CurrentUIType = EGameUIType::Game;
+		////解开输入
+		//LockedInput(false);
+		break;
+	}
+}
+
+void ADemoPlayerController::PackageEvent()
+{
 //	switch (CurrentUIType)
 //	{
 //	case EGameUIType::Game:
@@ -153,10 +153,10 @@ void ADemoPlayerController::SetupInputComponent()
 //		LockedInput(false);
 //		break;
 //	}
-//}
-//
-//void ADemoPlayerController::ChatRoomEvent()
-//{
+}
+
+void ADemoPlayerController::ChatRoomEvent()
+{
 //	switch (CurrentUIType)
 //	{
 //	case EGameUIType::Game:
@@ -172,32 +172,32 @@ void ADemoPlayerController::SetupInputComponent()
 //		LockedInput(false);
 //		break;
 //	}
-//}
-//
-//
-//void ADemoPlayerController::SwitchInputMode(bool IsGameOnly)
-//{
-//	if (IsGameOnly)
-//	{
-//		//隐藏鼠标
-//		bShowMouseCursor = false;
-//		//设置输入模式为OnlyGame
-//		FInputModeGameOnly InputMode;
-//		InputMode.SetConsumeCaptureMouseDown(true);
-//		SetInputMode(InputMode);
-//	}
-//	else
-//	{
-//		//显示鼠标
-//		bShowMouseCursor = true;
-//		//设置输入模式为GameAndUI
-//		FInputModeGameAndUI InputMode;
-//		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
-//		InputMode.SetHideCursorDuringCapture(false);
-//		SetInputMode(InputMode);
-//	}
-//}
-//
+}
+
+
+void ADemoPlayerController::SwitchInputMode(bool IsGameOnly)
+{
+	if (IsGameOnly)
+	{
+		//隐藏鼠标
+		bShowMouseCursor = false;
+		//设置输入模式为OnlyGame
+		FInputModeGameOnly InputMode;
+		InputMode.SetConsumeCaptureMouseDown(true);									// 响应鼠标点击
+		SetInputMode(InputMode);
+	}
+	else
+	{
+		//显示鼠标
+		bShowMouseCursor = true;
+		//设置输入模式为GameAndUI
+		FInputModeGameAndUI InputMode;
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);			// 锁定在游戏窗口
+		InputMode.SetHideCursorDuringCapture(false);									// 是否隐藏
+		SetInputMode(InputMode);														// 
+	}
+}
+
 //void ADemoPlayerController::LockedInput(bool IsLocked)
 //{
 //	SPCharacter->IsInputLocked = IsLocked;
