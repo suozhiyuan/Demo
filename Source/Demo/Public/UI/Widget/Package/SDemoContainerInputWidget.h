@@ -17,4 +17,7 @@ public:
 
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
+
+	//virtual void ResetContainerPara(int ObjectID, int Num) override;
+
 };

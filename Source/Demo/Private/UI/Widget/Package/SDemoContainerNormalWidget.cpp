@@ -13,5 +13,10 @@ void SDemoContainerNormalWidget::Construct(const FArguments& InArgs)
 		// Populate the widget
 	];
 	*/
+
+	//SDemoContainerBaseWidget::Construct(
+	//	SDemoContainerBaseWidget::FArguments()
+	//	.WorkIndex(InArgs._WorkIndex)
+	//);
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
