@@ -3,6 +3,7 @@
 
 #include "UI/Widget/Package/SDemoPackageWidget.h"
 #include "SlateOptMacros.h"
+#include "Common/DemoHelper.h"
 #include "Player/DemoPackageManager.h"
 #include "UI/Style/DemoGameWidgetStyle.h"
 #include "UI/Style/DemoStyle.h"
@@ -18,8 +19,8 @@ void SDemoPackageWidget::Construct(const FArguments& InArgs)
 	//获取GameStyle
 	GameStyle = &DemoStyle::Get().GetWidgetStyle<FDemoGameStyle>("BPDemoGameStyle");
 
-	////获取DPIScaler
-	//UIScaler = InArgs._UIScaler;
+	//获取DPIScaler
+	UIScaler = InArgs._UIScaler;
 
 	ChildSlot
 		[
@@ -97,37 +98,40 @@ void SDemoPackageWidget::Construct(const FArguments& InArgs)
 			]
 		];
 
-	//MousePosition = FVector2D(0.f, 0.f);
+	MousePosition = FVector2D(0.f, 0.f);
 
-	//IsInitPackageMana = false;
+	IsInitPackageMana = false;
 
 }
 
-//
-//void SDemoPackageWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
-//{
-//
-//	//如果背包显示并且世界存在,实时更新鼠标位置
-//	if (GetVisibility() == EVisibility::Visible && GEngine)
-//	{
-//		GEngine->GameViewport->GetMousePosition(MousePosition);
-//		MousePosition = MousePosition / UIScaler.Get();
-//	}
-//
-//	//如果背包管理器已经初始化
-//	if (IsInitPackageMana) {
-//		//实时更新容器悬停显示
-//		DemoPackageManager::Get()->UpdateHovered(MousePosition, AllottedGeometry);
-//	}
-//
-//
-//}
-END_SLATE_FUNCTION_BUILD_OPTIMIZATION
-
-
-void SDemoPackageWidget::InitPackageManager()
+void SDemoPackageWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
 
+	//如果背包显示并且世界存在,实时更新鼠标位置
+	if (GetVisibility() == EVisibility::Visible && GEngine)
+	{
+		GEngine->GameViewport->GetMousePosition(MousePosition);	// 获取鼠标位置
+		//DemoHelper::Debug(FString("AbsoMousePos: ") + MousePosition.ToString(), 0.f);
+		MousePosition = MousePosition / UIScaler.Get();
+		//DemoHelper::Debug(FString("RelaMousePos: ") + MousePosition.ToString(), 0.f);
+	}
+
+	//如果背包管理器已经初始化
+	if (IsInitPackageMana) 
+	{
+		//实时更新容器悬停显示
+		DemoPackageManager::Get()->UpdateHovered(MousePosition, AllottedGeometry);
+	}
+	//else
+	//{
+	//	InitPackageManager();
+	//}
+}
+END_SLATE_FUNCTION_BUILD_OPTIMIZATION
+
+// GameMode Tike函数初始化
+void SDemoPackageWidget::InitPackageManager()
+{
 	//初始化快捷栏
 	for (int i = 0; i < 9; ++i)
 	{
@@ -137,7 +141,7 @@ void SDemoPackageWidget::InitPackageManager()
 		ShortcutGrid->AddSlot(i, 0)[NewContainer->AsShared()];
 
 		//注册容器到背包管理器
-		//DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Shortcut);
+		DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Shortcut);
 	}
 
 	//初始化背包主体
@@ -146,7 +150,8 @@ void SDemoPackageWidget::InitPackageManager()
 		TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Normal, i);
 		PackageGrid->AddSlot(i % 9, i / 9)[NewContainer->AsShared()];
 
-		//DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Normal);
+		//注册容器到背包管理器
+		DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Normal);
 	}
 
 	//初始化合成台
@@ -155,18 +160,19 @@ void SDemoPackageWidget::InitPackageManager()
 		TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Input, i);
 		CompoundGrid->AddSlot(i % 3, i / 3)[NewContainer->AsShared()];
 
-		//DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Input);
+		//注册容器到背包管理器
+		DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Input);
 	}
 
 	//初始化输出容器
 	TSharedPtr<SDemoContainerBaseWidget> NewContainer = SDemoContainerBaseWidget::CreateContainer(EContainerType::Output, 1);
 	OutputBorder->SetContent(NewContainer->AsShared());
 
-	//DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Output);
-
-
-//	//设置已经初始化背包管理器
-//	IsInitPackageMana = true;
+	//注册容器到背包管理器
+	DemoPackageManager::Get()->InsertContainer(NewContainer, EContainerType::Output);
+	
+	//设置已经初始化背包管理器
+	IsInitPackageMana = true;
 }
 
 

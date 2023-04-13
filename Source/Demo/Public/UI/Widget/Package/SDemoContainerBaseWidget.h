@@ -34,9 +34,9 @@ public:
 	//获取实例
 	static TSharedPtr<SDemoContainerBaseWidget> CreateContainer(EContainerType::Type NeedType, int WorkID);
 
-//	//更新鼠标移动到上面的状态
-//	void UpdateHovered(bool IsHovered);
-//
+	//更新鼠标移动到上面的状态
+	void UpdateHovered(bool IsHovered);
+
 //	//重置自身属性
 //	virtual void ResetContainerPara(int ObjectID, int Num);
 //
@@ -80,9 +80,9 @@ public:
 protected:
 
 	//容器各个组件
-	TSharedPtr<class SBorder> ContainerBorder;
-	TSharedPtr<SBorder> ObjectImage;
-	TSharedPtr<class STextBlock> ObjectNumText;
+	TSharedPtr<class SBorder> ContainerBorder;		// 容器框
+	TSharedPtr<SBorder> ObjectImage;				// 容器图片
+	TSharedPtr<class STextBlock> ObjectNumText;		// 容器文字
 
 	//获取MenuStyle
 	const struct FDemoGameStyle* GameStyle;
@@ -90,9 +90,9 @@ protected:
 	//工作序号,用于标定在背包中的位置作用
 	TAttribute<int> WorkIndex;
 
-//	//是否在Hover状态
-//	bool IsHover;
-//
+	//是否在Hover状态
+	bool IsHover;
+
 //	//物品序号
 //	int ObjectIndex;
 //	//物品数量

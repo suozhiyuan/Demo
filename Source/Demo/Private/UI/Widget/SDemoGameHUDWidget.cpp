@@ -18,7 +18,7 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 {
-
+	// 获取游戏缩放
 	UIScaler.Bind(this, &SDemoGameHUDWidget::GetUIScaler);
 
 	ChildSlot
@@ -121,7 +121,7 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 			[
 				SAssignNew(PackageWidget, SDemoPackageWidget)
 				//设置DPI
-				//.UIScaler(UIScaler)
+				.UIScaler(UIScaler)  	// 创建背包时，把 UIScaler 传进去
 				.Visibility(EVisibility::Hidden)
 			]
 		]

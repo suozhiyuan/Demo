@@ -71,21 +71,21 @@ TSharedPtr<SDemoContainerBaseWidget> SDemoContainerBaseWidget::CreateContainer(E
 	return ResultContainer;
 }
 
-//void SDemoContainerBaseWidget::UpdateHovered(bool IsHovered)
-//{
-//	//如果鼠标移动到上面了
-//	if (IsHovered)
-//	{
-//		if (!IsHover) ContainerBorder->SetBorderImage(&GameStyle->ChoosedContainerBrush);
-//	}
-//	else
-//	{
-//		if (IsHover) ContainerBorder->SetBorderImage(&GameStyle->NormalContainerBrush);
-//	}
-//	//更新当前状态
-//	IsHover = IsHovered;
-//}
-//
+void SDemoContainerBaseWidget::UpdateHovered(bool IsHovered)
+{
+	//如果鼠标移动到上面了
+	if (IsHovered)
+	{
+		if (!IsHover) ContainerBorder->SetBorderImage(&GameStyle->ChoosedContainerBrush);
+	}
+	else
+	{
+		if (IsHover) ContainerBorder->SetBorderImage(&GameStyle->NormalContainerBrush);
+	}
+	//更新当前状态
+	IsHover = IsHovered;
+}
+
 //void SDemoContainerBaseWidget::ResetContainerPara(int ObjectID, int Num)
 //{
 //	//如果输入ID不相同,更新贴图
