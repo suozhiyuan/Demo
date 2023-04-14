@@ -3,6 +3,7 @@
 
 #include "Player/DemoPackageManager.h"
 
+#include "Data/DemoDataHandle.h"
 #include "UI/Widget/Package/SDemoContainerBaseWidget.h"
 
 //开始时对单例指针赋值
@@ -39,18 +40,18 @@ void DemoPackageManager::InsertContainer(TSharedPtr<class SDemoContainerBaseWidg
 	{
 	case EContainerType::Output:
 		OutputContainer = Container;
-		//OutputContainer->CompoundOutput.BindRaw(this, &DemoPackageManager::CompoundOutput);
-		//OutputContainer->ThrowObject.BindRaw(this, &DemoPackageManager::ThrowObject);
+		OutputContainer->CompoundOutput.BindRaw(this, &DemoPackageManager::CompoundOutput);		// 合成输出委托绑定
+		OutputContainer->ThrowObject.BindRaw(this, &DemoPackageManager::ThrowObject);				// 丢弃物品委托绑定
 		break;
 	case EContainerType::Input:
-		//Container->CompoundInput.BindRaw(this, &DemoPackageManager::CompoundInput);
+		Container->CompoundInput.BindRaw(this, &DemoPackageManager::CompoundInput);				// 合成输入委托绑定
 		InputContainerList.Add(Container);
 		break;
 	case EContainerType::Normal:
 		NormalContainerList.Add(Container);
 		break;
 	case EContainerType::Shortcut:
-		//Container->PackShortChange.BindRaw(this, &DemoPackageManager::PackShortChange);
+		Container->PackShortChange.BindRaw(this, &DemoPackageManager::PackShortChange);			// 快捷栏委托绑定
 		ShortcutContainerList.Add(Container);
 		break;
 	}
@@ -101,8 +102,8 @@ void DemoPackageManager::LeftOption(FVector2D MousePos, FGeometry PackGeo)
 	//如果容器不存在并且手上物品不为空
 	if (!ClickedContainer.IsValid() && ObjectIndex != 0)
 	{
-		////把物品丢弃
-		//ThrowObject(ObjectIndex, ObjectNum);
+		//把物品丢弃
+		ThrowObject(ObjectIndex, ObjectNum);
 
 		//重置物品
 		ObjectIndex = ObjectNum = 0;
@@ -173,81 +174,88 @@ TSharedPtr<SDemoContainerBaseWidget> DemoPackageManager::LocateContainer(FVector
 	return nullptr;
 }
 
-//void DemoPackageManager::ThrowObject(int ObjectID, int Num)
-//{
-//	PlayerThrowObject.ExecuteIfBound(ObjectID, Num);
-//}
-//
-//
-//void DemoPackageManager::PackShortChange(int ShortcutID, int ObjectID, int ObjectNum)
-//{
-//	//执行委托,绑定的方法是PlayerState的ChangeHandObject,在playercharacter下进行绑定
-//	ChangeHandObject.ExecuteIfBound(ShortcutID, ObjectID, ObjectNum);
-//}
-//
-//
-//
-//
-//void DemoPackageManager::CompoundOutput(int ObjectID, int Num)
-//{
-//	//如果生产为0,直接return
-//	if (ObjectID == 0) return;
-//	//合成表结构数组
-//	TArray<int> TableMap;
-//	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(InputContainerList); It; ++It) {
-//		TableMap.Add((*It)->GetIndex());
-//	}
-//	TableMap.Add(ObjectID);
-//	//消耗数量的数组
-//	TArray<int> ExpendMap;
-//	//遍历找出符合的合成表并且拿到消耗数量的数组
-//	for (TArray<TSharedPtr<CompoundTable>>::TIterator It(DemoDataHandle::Get()->CompoundTableMap); It; ++It) {
-//		//如果找到符合的直接跳出循环
-//		if ((*It)->DetectExpend(&TableMap, Num, ExpendMap)) break;
-//	}
-//	//如果消耗数组元素数量不是9,直接return
-//	if (ExpendMap.Num() != 9) return;
-//	//循环设置合成输入表的属性
-//	for (int i = 0; i < 9; ++i) {
-//		//如果原有数量减去消耗数量已经小于等于0,直接把物品ID设置为0
-//		int InputID = (InputContainerList[i]->GetNum() - ExpendMap[i] <= 0) ? 0 : InputContainerList[i]->GetIndex();
-//		int InputNum = (InputID == 0) ? 0 : (InputContainerList[i]->GetNum() - ExpendMap[i]);
-//		//重置参数
-//		InputContainerList[i]->ResetContainerPara(InputID, InputNum);
-//	}
-//}
-//
-//void DemoPackageManager::CompoundInput()
-//{
-//	//获取合成台9个容器的物品id和数量写进两个数组
-//	TArray<int> IDMap;
-//	TArray<int> NumMap;
-//	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(InputContainerList); It; ++It) {
-//		IDMap.Add((*It)->GetIndex());
-//		NumMap.Add((*It)->GetNum());
-//	}
-//	//定义检测出来输出框的ID和数量
-//	int OutputIndex = 0;
-//	int OutputNum = 0;
-//	//迭代合成表进行检测
-//	for (TArray<TSharedPtr<CompoundTable>>::TIterator It(DemoDataHandle::Get()->CompoundTableMap); It; ++It) {
-//		(*It)->DetectTable(&IDMap, &NumMap, OutputIndex, OutputNum);
-//		//如果检测出来了,直接跳出循环
-//		if (OutputIndex != 0 && OutputNum != 0) break;
-//	}
-//	//下面对OutputContainer进行赋值
-//	//先判断是否可以叠加
-//	if (MultiplyAble(OutputIndex)) {
-//		//可以叠加的话就直接赋值,包括0,0
-//		OutputContainer->ResetContainerPara(OutputIndex, OutputNum);
-//	}
-//	else {
-//		//不可以叠加的话只添加一个
-//		OutputContainer->ResetContainerPara(OutputIndex, 1);
-//	}
-//}
-//
-//
+// 调用丢弃物品委托
+void DemoPackageManager::ThrowObject(int ObjectID, int Num)
+{
+	PlayerThrowObject.ExecuteIfBound(ObjectID, Num);
+}
+
+// 调用快捷栏委托
+void DemoPackageManager::PackShortChange(int ShortcutID, int ObjectID, int ObjectNum1)
+{
+	//执行委托,绑定的方法是PlayerState的ChangeHandObject,在playercharacter下进行绑定
+	ChangeHandObject.ExecuteIfBound(ShortcutID, ObjectID, ObjectNum1);
+}
+
+// 合成输出
+void DemoPackageManager::CompoundOutput(int ObjectID, int Num)
+{
+	//如果生产为0,直接return
+	if (ObjectID == 0) return;
+	//合成表结构数组
+	TArray<int> TableMap;
+	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(InputContainerList); It; ++It) 
+	{
+		TableMap.Add((*It)->GetIndex());
+	}
+	TableMap.Add(ObjectID);
+	//消耗数量的数组
+	TArray<int> ExpendMap;
+	//遍历找出符合的合成表并且拿到消耗数量的数组
+	for (TArray<TSharedPtr<CompoundTable>>::TIterator It(DemoDataHandle::Get()->CompoundTableMap); It; ++It) 
+	{
+		//如果找到符合的直接跳出循环
+		if ((*It)->DetectExpend(&TableMap, Num, ExpendMap)) break;
+	}
+	//如果消耗数组元素数量不是9,直接return
+	if (ExpendMap.Num() != 9) return;
+	//循环设置合成输入表的属性
+	for (int i = 0; i < 9; ++i) 
+	{
+		//如果原有数量减去消耗数量已经小于等于0,直接把物品ID设置为0
+		int InputID = (InputContainerList[i]->GetNum() - ExpendMap[i] <= 0) ? 0 : InputContainerList[i]->GetIndex();
+		int InputNum = (InputID == 0) ? 0 : (InputContainerList[i]->GetNum() - ExpendMap[i]);
+		//重置参数
+		InputContainerList[i]->ResetContainerPara(InputID, InputNum);
+	}
+}
+
+// 合成输入
+void DemoPackageManager::CompoundInput()
+{
+	//获取合成台9个容器的物品id和数量写进两个数组
+	TArray<int> IDMap;
+	TArray<int> NumMap;
+	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(InputContainerList); It; ++It) 
+	{
+		IDMap.Add((*It)->GetIndex());
+		NumMap.Add((*It)->GetNum());
+	}
+	////定义检测出来输出框的ID和数量
+	//int OutputIndex = 0;
+	//int OutputNum = 0;
+	////迭代合成表进行检测
+	//for (TArray<TSharedPtr<CompoundTable>>::TIterator It(DemoDataHandle::Get()->CompoundTableMap); It; ++It) 
+	//{
+	//	(*It)->DetectTable(&IDMap, &NumMap, OutputIndex, OutputNum);
+	//	//如果检测出来了,直接跳出循环
+	//	if (OutputIndex != 0 && OutputNum != 0) break;
+	//}
+	////下面对OutputContainer进行赋值
+	////先判断是否可以叠加
+	//if (MultiplyAble(OutputIndex)) 
+	//{
+	//	//可以叠加的话就直接赋值,包括0,0
+	//	OutputContainer->ResetContainerPara(OutputIndex, OutputNum);
+	//}
+	//else 
+	//{
+	//	//不可以叠加的话只添加一个
+	//	OutputContainer->ResetContainerPara(OutputIndex, 1);
+	//}
+}
+
+
 //bool DemoPackageManager::MultiplyAble(int ObjectID)
 //{
 //	//获取物品属性

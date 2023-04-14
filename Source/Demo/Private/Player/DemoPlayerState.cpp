@@ -5,8 +5,8 @@
 
 #include "Data/DemoDataHandle.h"
 #include "Data/DemoType.h"
-
-
+#include "Kismet/GameplayStatics.h"
+#include "Player/DemoPlayerController.h"
 
 
 ADemoPlayerState::ADemoPlayerState()
@@ -27,13 +27,13 @@ ADemoPlayerState::ADemoPlayerState()
 	//IsDead = false;
 }
 
-//void ADemoPlayerState::BeginPlay()
-//{
-//	Super::BeginPlay();
-//
-//	//如果控制器指针为空,添加引用
-//	SPController = Cast<ADemoPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-//}
+void ADemoPlayerState::BeginPlay()
+{
+	Super::BeginPlay();
+
+	//如果控制器指针为空,添加引用
+	SPController = Cast<ADemoPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+}
 
 void ADemoPlayerState::Tick(float DeltaSeconds)
 {
@@ -117,6 +117,7 @@ void ADemoPlayerState::ChooseShortcut(bool IsPre)
 	CurrentShortcutIndex = NextIndex;
 }
 
+//获取选中容器内的物品的Index
 int ADemoPlayerState::GetCurrentHandObjectIndex() const
 {
 	if (ShortcutContainerList.Num() == 0) return 0;
@@ -166,16 +167,17 @@ int ADemoPlayerState::GetDamageValue(EResourceType::Type ResourceType)
 	return ObjectAttr->PlantAttack;
 }
 
-//void ADemoPlayerState::ChangeHandObject(int ShortcutID, int ObjectID, int ObjectNum)
-//{
-//	//更改快捷栏信息
-//	ShortcutContainerList[ShortcutID]->SetObject(ObjectID)->SetObjectNum(ObjectNum);
-//	//告诉controller更新一次手持物品
-//	SPController->ChangeHandObject();
-//}
-//
-//
-//
+void ADemoPlayerState::ChangeHandObject(int ShortcutID, int ObjectID, int ObjectNum)
+{
+	//更改快捷栏信息
+	ShortcutContainerList[ShortcutID]->SetObject(ObjectID)->SetObjectNum(ObjectNum);
+
+	//告诉controller更新一次手持物品
+	SPController->ChangeHandObject();
+}
+
+
+
 //void ADemoPlayerState::PromoteHunger()
 //{
 //	//只要超过500,马上设为600

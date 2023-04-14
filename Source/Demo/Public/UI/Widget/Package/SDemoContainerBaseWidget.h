@@ -6,14 +6,14 @@
 #include "Data/DemoType.h"
 #include "Widgets/SCompoundWidget.h"
 
-////合成输入委托
-//DECLARE_DELEGATE(FCompoundInput)
-////合成提取委托,参数是物品序号, 物品数量
-//DECLARE_DELEGATE_TwoParams(FCompoundOutput, int, int)
-////丢弃物品委托,参数是物品序号, 物品数量
-//DECLARE_DELEGATE_TwoParams(FThrowObject, int, int)
-////背包快捷栏更新状态引起游戏变化委托, 参数分别是快捷栏序号, 更新得物品ID, 更新物品数量
-//DECLARE_DELEGATE_ThreeParams(FPackShortChange, int, int, int)
+//合成输入委托
+DECLARE_DELEGATE(FCompoundInput)
+//合成提取委托,参数是物品序号, 物品数量
+DECLARE_DELEGATE_TwoParams(FCompoundOutput, int, int)
+//丢弃物品委托,参数是物品序号, 物品数量
+DECLARE_DELEGATE_TwoParams(FThrowObject, int, int)
+//背包快捷栏更新状态引起游戏变化委托, 参数分别是快捷栏序号, 更新得物品ID, 更新物品数量
+DECLARE_DELEGATE_ThreeParams(FPackShortChange, int, int, int)
 
 /**
  *
@@ -71,27 +71,23 @@ public:
 //
 //	//添加一个元素
 //	void AddObject(int ObjectID);
-//
-//public:
-//
-//	//合成输入委托
-//	FCompoundInput CompoundInput;
-//	//合成输出委托
-//	FCompoundOutput CompoundOutput;
-//	//丢弃物品委托
-//	FThrowObject ThrowObject;
-//	//快捷栏更新委托
-//	FPackShortChange PackShortChange;
-//
-//
+
+public:
+	//合成输入委托
+	FCompoundInput CompoundInput;
+	//合成输出委托
+	FCompoundOutput CompoundOutput;
+	//丢弃物品委托
+	FThrowObject ThrowObject;
+	//快捷栏更新委托
+	FPackShortChange PackShortChange;
+
 protected:
 	//MultiplyAble
 	//获取是否可以叠加
 	bool MultiplyAble(int ObjectID);
 
-
 protected:
-
 	//容器各个组件
 	TSharedPtr<class SBorder> ContainerBorder;		// 容器框
 	TSharedPtr<SBorder> ObjectImage;				// 容器图片

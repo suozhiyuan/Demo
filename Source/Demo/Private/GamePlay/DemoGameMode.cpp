@@ -151,10 +151,10 @@ void ADemoGameMode::InitializePackage()
 	//叫PackageWidget初始化背包管理器
 	InitPackageManager.ExecuteIfBound();
 
-	////绑定丢弃物品委托
-	//DemoPackageManager::Get()->PlayerThrowObject.BindUObject(SPCharacter, &ADemoPlayerCharacter::PlayerThrowObject);
-	////绑定修改快捷栏信息委托
-	//DemoPackageManager::Get()->ChangeHandObject.BindUObject(SPState, &ADemoPlayerState::ChangeHandObject);
+	//绑定丢弃物品委托
+	DemoPackageManager::Get()->PlayerThrowObject.BindUObject(SPCharacter, &ADemoPlayerCharacter::PlayerThrowObject);
+	//绑定修改快捷栏信息委托
+	DemoPackageManager::Get()->ChangeHandObject.BindUObject(SPState, &ADemoPlayerState::ChangeHandObject);
 
 	IsInitPackage = true;
 }
@@ -301,7 +301,7 @@ void ADemoGameMode::InitializePackage()
 //	}
 //
 //}
-//
+
 //void ADemoGameMode::LoadRecordPackage()
 //{
 //	//如果背包没有初始化或者不用加载存档,直接返回

@@ -138,28 +138,28 @@ void ADemoFlobObject::CreateFlobObject(int ObjectID)
 }
 
 
-//void ADemoFlobObject::ThrowFlobObject(int ObjectID, float DirYaw)
-//{
-//	//指定ID
-//	ObjectIndex = ObjectID;
-//
-//	//渲染贴图
-//	RenderTexture();
-//
-//	//随机方向添加力
-//	FRandomStream Stream;
-//
-//	//产生新的随机种子
-//	Stream.GenerateNewSeed();
-//
-//	//添加偏移方向
-//	DirYaw += Stream.RandRange(-30, 30);
-//
-//	FRotator ForceRot = FRotator(0.f, DirYaw, 0.f);
-//
-//	//添加力
-//	BoxCollision->AddForce((FVector(0.f, 0.f, 2.f) + ForceRot.Vector()) * 120000.f);
-//}
+void ADemoFlobObject::ThrowFlobObject(int ObjectID, float DirYaw)
+{
+	//指定ID
+	ObjectIndex = ObjectID;
+
+	//渲染贴图
+	RenderTexture();
+
+	//随机方向添加力
+	FRandomStream Stream;
+
+	//产生新的随机种子
+	Stream.GenerateNewSeed();
+
+	//添加偏移方向
+	DirYaw += Stream.RandRange(-30, 30);
+
+	FRotator ForceRot = FRotator(0.f, DirYaw, 0.f);
+
+	//添加力
+	BoxCollision->AddForce((FVector(0.f, 0.f, 2.f) + ForceRot.Vector()) * 120000.f);
+}
 
 void ADemoFlobObject::RenderTexture()
 {

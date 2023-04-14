@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Data/DemoType.h"
 #include "Components/CapsuleComponent.h"
+#include "Flob/DemoFlobObject.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Hand/DemoHandObject.h"
 
@@ -204,18 +205,21 @@ void ADemoPlayerCharacter::RenderHandObject(bool IsRender)
 	HandObject->GetChildActor()->SetActorHiddenInGame(!IsRender);		// SetActorHiddenInGame   隐藏
 }
 
-//void ADemoPlayerCharacter::PlayerThrowObject(int ObjectID, int Num)
-//{
-//	if (GetWorld()) {
-//		for (int i = 0; i < Num; ++i) {
-//			//生成掉落资源
-//			ADemoFlobObject* FlobObject = GetWorld()->SpawnActor<ADemoFlobObject>(GetActorLocation() + FVector(0.f, 0.f, 50.f), FRotator::ZeroRotator);
-//			//以丢弃方式生成掉落物
-//			FlobObject->ThrowFlobObject(ObjectID, GetActorRotation().Yaw);
-//		}
-//	}
-//}
-//
+void ADemoPlayerCharacter::PlayerThrowObject(int ObjectID, int Num)
+{
+	if (GetWorld()) 
+	{
+		for (int i = 0; i < Num; ++i) 
+		{
+			//生成掉落资源
+			ADemoFlobObject* FlobObject = GetWorld()->SpawnActor<ADemoFlobObject>(GetActorLocation() + FVector(0.f, 0.f, 50.f), FRotator::ZeroRotator);
+
+			//以丢弃方式生成掉落物
+			FlobObject->ThrowFlobObject(ObjectID, GetActorRotation().Yaw);
+		}
+	}
+}
+
 //bool ADemoPlayerCharacter::IsPackageFree(int ObjectID)
 //{
 //	return DemoPackageManager::Get()->SearchFreeSpace(ObjectID);

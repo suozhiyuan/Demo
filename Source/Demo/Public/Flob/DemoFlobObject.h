@@ -20,8 +20,8 @@ public:
 	//生成物品初始化
 	void CreateFlobObject(int ObjectID);
 
-	////丢弃物品初始化,丢弃的物品ID和丢弃方向
-	//void ThrowFlobObject(int ObjectID, float DirYaw);
+	//丢弃物品初始化,丢弃的物品ID和丢弃方向
+	void ThrowFlobObject(int ObjectID, float DirYaw);
 
 
 protected:

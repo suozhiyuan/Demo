@@ -34,8 +34,8 @@ public:
 	//是否渲染手上物品,由Anim进行调用
 	void RenderHandObject(bool IsRender);
 
-	////丢弃物品
-	//void PlayerThrowObject(int ObjectID, int Num);
+	//丢弃物品
+	void PlayerThrowObject(int ObjectID, int Num);
 
 	////背包是否有空间
 	//bool IsPackageFree(int ObjectID);
