@@ -4,6 +4,7 @@
 #include "UI/Widget/Package/SDemoPackageWidget.h"
 #include "SlateOptMacros.h"
 #include "Common/DemoHelper.h"
+#include "Data/DemoDataHandle.h"
 #include "Player/DemoPackageManager.h"
 #include "UI/Style/DemoGameWidgetStyle.h"
 #include "UI/Style/DemoStyle.h"
@@ -175,66 +176,69 @@ void SDemoPackageWidget::InitPackageManager()
 	IsInitPackageMana = true;
 }
 
+int32 SDemoPackageWidget::OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
+{
+	// 一定要先调用一下父类函数
+	SCompoundWidget::OnPaint(Args, AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
 
-//int32 SDemoPackageWidget::OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
-//{
-//	//先调用一下父类函数
-//	SCompoundWidget::OnPaint(Args, AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
-//
-//	//如果背包管理器还没有初始化
-//	if (!IsInitPackageMana) return LayerId;
-//
-//	//如果背包管理器的手上物品不为0,就进行渲染
-//	if (GetVisibility() == EVisibility::Visible && DemoPackageManager::Get()->ObjectIndex != 0 && DemoPackageManager::Get()->ObjectNum != 0)
-//	{
-//		//渲染物品图标
-//		FSlateDrawElement::MakeBox(
-//			OutDrawElements,
-//			LayerId + 30,
-//			AllottedGeometry.ToPaintGeometry(MousePosition - FVector2D(32.f, 32.f), FVector2D(64.f, 64.f)),
-//			DemoDataHandle::Get()->ObjectBrushList[DemoPackageManager::Get()->ObjectIndex],
-//			ESlateDrawEffect::None,
-//			FLinearColor(1.f, 1.f, 1.f, 1.f)
-//		);
-//
-//
-//		//获取物品属性
-//		TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(DemoPackageManager::Get()->ObjectIndex);
-//		//渲染数量,如果是不可叠加物品就不渲染
-//		if (ObjectAttr->ObjectType != EObjectType::Tool && ObjectAttr->ObjectType != EObjectType::Weapon) {
-//			//渲染数量文字
-//			FSlateDrawElement::MakeText(
-//				OutDrawElements,
-//				LayerId + 30,
-//				AllottedGeometry.ToPaintGeometry(MousePosition + FVector2D(12.f, 16.f), FVector2D(16.f, 16.f)),
-//				FString::FromInt(DemoPackageManager::Get()->ObjectNum),
-//				GameStyle->Font_Outline_16,
-//				ESlateDrawEffect::None,
-//				GameStyle->FontColor_Black
-//			);
-//		}
-//
-//	}
-//
-//	return LayerId;
-//
-//}
-//
-//FReply SDemoPackageWidget::OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
-//{
-//	//如果背包管理器还没有初始化
-//	if (!IsInitPackageMana) return FReply::Handled();
-//
-//	//如果是左键点击
-//	if (MouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton)) {
-//		DemoPackageManager::Get()->LeftOption(MousePosition, MyGeometry);
-//	}
-//	//如果是右键
-//	if (MouseEvent.IsMouseButtonDown(EKeys::RightMouseButton)) {
-//		DemoPackageManager::Get()->RightOption(MousePosition, MyGeometry);
-//	}
-//
-//	//MyGeometry.AbsoluteToLocal(MouseEvent.GetScreenSpacePosition());
-//
-//	return FReply::Handled();
-//}
+	//如果背包管理器还没有初始化
+	if (!IsInitPackageMana) return LayerId;
+
+	//如果背包管理器的手上物品不为0,就进行渲染
+	if (GetVisibility() == EVisibility::Visible && DemoPackageManager::Get()->ObjectIndex != 0 && DemoPackageManager::Get()->ObjectNum != 0)
+	{
+		//渲染物品图标
+		FSlateDrawElement::MakeBox
+		(
+			OutDrawElements,				// 要在其中添加元素的列表
+			LayerId + 30,					// 要绘制的层级
+			AllottedGeometry.ToPaintGeometry(MousePosition - FVector2D(32.f, 32.f), FVector2D(64.f, 64.f)),  // 绘制空间的位置和尺寸
+			DemoDataHandle::Get()->ObjectBrushList[DemoPackageManager::Get()->ObjectIndex],		// 笔刷
+			ESlateDrawEffect::None,																// 可选择的绘制效果
+			FLinearColor(1.f, 1.f, 1.f, 1.f)										// 颜色
+		);
+
+		//获取物品属性
+		TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(DemoPackageManager::Get()->ObjectIndex);
+
+		//渲染物品数量,如果是不可叠加物品就不渲染
+		if (ObjectAttr->ObjectType != EObjectType::Tool && ObjectAttr->ObjectType != EObjectType::Weapon)	// 工具和武器不可叠加
+		{
+			//渲染数量文字
+			FSlateDrawElement::MakeText
+			(
+				OutDrawElements,				// 要在其中添加元素的列表
+				LayerId + 30,					// 绘制元素的图层
+				AllottedGeometry.ToPaintGeometry(MousePosition + FVector2D(12.f, 16.f), FVector2D(16.f, 16.f)),	// 位置和尺寸
+				FString::FromInt(DemoPackageManager::Get()->ObjectNum),		// 要绘制的字符串
+				GameStyle->Font_Outline_16,									// 字体笔刷
+				ESlateDrawEffect::None,										// 绘制效果
+				GameStyle->FontColor_Black									// 颜色
+			);
+		}
+
+	}
+	return LayerId;
+}
+
+FReply SDemoPackageWidget::OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
+{
+	//如果背包管理器还没有初始化
+	if (!IsInitPackageMana) return FReply::Handled();
+
+	//如果是左键点击
+	if (MouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton)) 
+	{
+		DemoPackageManager::Get()->LeftOption(MousePosition, MyGeometry);
+	}
+
+	//如果是右键
+	if (MouseEvent.IsMouseButtonDown(EKeys::RightMouseButton)) 
+	{
+		DemoPackageManager::Get()->RightOption(MousePosition, MyGeometry);
+	}
+
+	//MyGeometry.AbsoluteToLocal(MouseEvent.GetScreenSpacePosition());
+
+	return FReply::Handled();
+}
