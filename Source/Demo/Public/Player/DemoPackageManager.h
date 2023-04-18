@@ -37,9 +37,9 @@ public:
 	//添加物品
 	void AddObject(int ObjectID);
 
-//	//吃东西,传入快捷栏的ID,传回是否成功吃掉
-//	bool EatUpEvent(int ShortcutID);
-//
+	//吃东西,传入快捷栏的ID,传回是否成功吃掉
+	bool EatUpEvent(int ShortcutID);
+
 //	//加载存档
 //	void LoadRecord(TArray<int32>* InputIndex, TArray<int32>* InputNum, TArray<int32>* NormalIndex, TArray<int32>* NormalNum, TArray<int32>* ShortcutIndex, TArray<int32>* ShortcutNum);
 //

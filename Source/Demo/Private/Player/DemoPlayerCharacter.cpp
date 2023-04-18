@@ -9,7 +9,10 @@
 #include "Flob/DemoFlobObject.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Hand/DemoHandObject.h"
+#include "Kismet/GameplayStatics.h"
 #include "Player/DemoPackageManager.h"
+#include "Player/DemoPlayerController.h"
+#include "Player/DemoPlayerState.h"
 
 
 // Sets default values
@@ -120,8 +123,8 @@ void ADemoPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	////如果控制器指针为空,添加引用
-	//SPController = Cast<ADemoPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	//如果控制器指针为空,添加引用
+	SPController = Cast<ADemoPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 
 	//把手持物品组件绑定到第三人称模型右手插槽上
 	HandObject->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
@@ -231,18 +234,18 @@ void ADemoPlayerCharacter::AddPackageObject(int ObjectID)
 	DemoPackageManager::Get()->AddObject(ObjectID);
 }
 
-//void ADemoPlayerCharacter::EatUpEvent()
-//{
-//	//如果玩家用户状态为空,直接返回
-//	if (!SPController->SPState) return;
-//	//告诉背包哪个快捷栏吃了东西,如果成功吃掉东西
-//	if (DemoPackageManager::Get()->EatUpEvent(SPController->SPState->CurrentShortcutIndex))
-//	{
-//		//告诉玩家状态类提升饥饿值
-//		SPController->SPState->PromoteHunger();
-//	}
-//}
-//
+void ADemoPlayerCharacter::EatUpEvent()
+{
+	//如果玩家用户状态为空,直接返回
+	if (!SPController->SPState) return;
+	//告诉背包哪个快捷栏吃了东西,如果成功吃掉东西
+	if (DemoPackageManager::Get()->EatUpEvent(SPController->SPState->CurrentShortcutIndex))
+	{
+		//告诉玩家状态类提升饥饿值
+		SPController->SPState->PromoteHunger();
+	}
+}
+
 //bool ADemoPlayerCharacter::IsPlayerDead()
 //{
 //	if (SPController->SPState) return SPController->SPState->IsPlayerDead();

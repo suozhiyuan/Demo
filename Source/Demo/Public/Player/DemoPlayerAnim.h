@@ -31,10 +31,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = PlayAnim)
 		void RenderHandObject(bool IsRender);
 
-//	//吃完东西时调用
-//	UFUNCTION(BlueprintCallable, Category = PlayAnim)
-//		void EatUpEvent();
-//
+	//吃完东西时调用
+	UFUNCTION(BlueprintCallable, Category = PlayAnim)
+		void EatUpEvent();
+
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)

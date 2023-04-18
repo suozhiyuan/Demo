@@ -43,8 +43,8 @@ public:
 	//添加物品到背包
 	void AddPackageObject(int ObjectID);
 
-	////吃完东西调用的事件,由Anim进行调用
-	//void EatUpEvent();
+	//吃完东西调用的事件,由Anim进行调用
+	void EatUpEvent();
 
 	////获取是否已经死亡
 	//bool IsPlayerDead();
@@ -69,8 +69,8 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Demo")
 		UCameraComponent* FirstCamera;					// 第一人称摄像机
 
-	////玩家控制器指针
-	//class ADemoPlayerController* SPController;
+	//玩家控制器指针
+	class ADemoPlayerController* SPController;
 
 	//当前的视角模式
 	EGameViewMode::Type GameView;

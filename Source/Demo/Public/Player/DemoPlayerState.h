@@ -48,9 +48,9 @@ public:
 	//更改快捷栏物品信息
 	void ChangeHandObject(int ShortcutID, int ObjectID, int ObjectNum);
 
-//	//提升饥饿值
-//	void PromoteHunger();
-//
+	//提升饥饿值
+	void PromoteHunger();
+
 //	//是否已经死亡
 //	bool IsPlayerDead();
 //

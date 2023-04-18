@@ -40,12 +40,13 @@ void UDemoPlayerAnim::RenderHandObject(bool IsRender)
 	SPCharacter->RenderHandObject(IsRender);
 }
 
-//void UDemoPlayerAnim::EatUpEvent()
-//{
-//	if (!SPCharacter) return;
-//	//告诉角色我吃完东西了
-//	SPCharacter->EatUpEvent();
-//}
+void UDemoPlayerAnim::EatUpEvent()
+{
+	if (!SPCharacter) return;
+
+	//告诉角色我吃完东西了
+	SPCharacter->EatUpEvent();
+}
 
 void UDemoPlayerAnim::InitSPCharacter()
 {

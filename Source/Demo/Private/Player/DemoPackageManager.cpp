@@ -30,8 +30,8 @@ TSharedRef<DemoPackageManager> DemoPackageManager::Create()
 DemoPackageManager::DemoPackageManager()
 {
 	//初始化物品和数量为0
-	ObjectIndex = 1;
-	ObjectNum = 35;
+	ObjectIndex = 0;
+	ObjectNum = 0;
 }
 
 void DemoPackageManager::InsertContainer(TSharedPtr<class SDemoContainerBaseWidget> Container, EContainerType::Type InsertType)
@@ -346,25 +346,29 @@ void DemoPackageManager::AddObject(int ObjectID)
 	}
 }
 
-//bool DemoPackageManager::EatUpEvent(int ShortcutID)
-//{
-//	//获取物品属性
-//	TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ShortcutContainerList[ShortcutID]->GetIndex());
-//	//如果这个物品是食物
-//	if (ObjectAttr->ObjectType == EObjectType::Food)
-//	{
-//		//新的物品数量
-//		int NewNum = (ShortcutContainerList[ShortcutID]->GetNum() - 1) < 0 ? 0 : (ShortcutContainerList[ShortcutID]->GetNum() - 1);
-//		//新的物品ID
-//		int NewIndex = NewNum == 0 ? 0 : ShortcutContainerList[ShortcutID]->GetIndex();
-//		//更新这个容器属性
-//		ShortcutContainerList[ShortcutID]->ResetContainerPara(NewIndex, NewNum);
-//		//返回成功吃掉食物
-//		return true;
-//	}
-//	return false;
-//}
-//
+bool DemoPackageManager::EatUpEvent(int ShortcutID)
+{
+	//获取物品属性
+	TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ShortcutContainerList[ShortcutID]->GetIndex());
+
+	//如果这个物品是食物
+	if (ObjectAttr->ObjectType == EObjectType::Food)
+	{
+		//吃过后，新的物品数量
+		int NewNum = (ShortcutContainerList[ShortcutID]->GetNum() - 1) < 0 ? 0 : (ShortcutContainerList[ShortcutID]->GetNum() - 1);
+
+		//新的物品ID
+		int NewIndex = NewNum == 0 ? 0 : ShortcutContainerList[ShortcutID]->GetIndex();
+
+		//更新这个快捷容器格子属性
+		ShortcutContainerList[ShortcutID]->ResetContainerPara(NewIndex, NewNum);
+
+		//返回成功吃掉食物
+		return true;
+	}
+	return false;
+}
+
 //void DemoPackageManager::LoadRecord(TArray<int32>* InputIndex, TArray<int32>* InputNum, TArray<int32>* NormalIndex, TArray<int32>* NormalNum, TArray<int32>* ShortcutIndex, TArray<int32>* ShortcutNum)
 //{
 //	for (int i = 0; i < InputContainerList.Num(); ++i)
