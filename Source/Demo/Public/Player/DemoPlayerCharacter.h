@@ -37,11 +37,11 @@ public:
 	//丢弃物品
 	void PlayerThrowObject(int ObjectID, int Num);
 
-	////背包是否有空间
-	//bool IsPackageFree(int ObjectID);
+	//背包是否有空间
+	bool IsPackageFree(int ObjectID);
 
-	////添加物品到背包
-	//void AddPackageObject(int ObjectID);
+	//添加物品到背包
+	void AddPackageObject(int ObjectID);
 
 	////吃完东西调用的事件,由Anim进行调用
 	//void EatUpEvent();

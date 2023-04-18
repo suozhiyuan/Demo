@@ -9,6 +9,7 @@
 #include "Flob/DemoFlobObject.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Hand/DemoHandObject.h"
+#include "Player/DemoPackageManager.h"
 
 
 // Sets default values
@@ -220,16 +221,16 @@ void ADemoPlayerCharacter::PlayerThrowObject(int ObjectID, int Num)
 	}
 }
 
-//bool ADemoPlayerCharacter::IsPackageFree(int ObjectID)
-//{
-//	return DemoPackageManager::Get()->SearchFreeSpace(ObjectID);
-//}
-//
-//void ADemoPlayerCharacter::AddPackageObject(int ObjectID)
-//{
-//	DemoPackageManager::Get()->AddObject(ObjectID);
-//}
-//
+bool ADemoPlayerCharacter::IsPackageFree(int ObjectID)
+{
+	return DemoPackageManager::Get()->SearchFreeSpace(ObjectID);
+}
+
+void ADemoPlayerCharacter::AddPackageObject(int ObjectID)
+{
+	DemoPackageManager::Get()->AddObject(ObjectID);
+}
+
 //void ADemoPlayerCharacter::EatUpEvent()
 //{
 //	//如果玩家用户状态为空,直接返回

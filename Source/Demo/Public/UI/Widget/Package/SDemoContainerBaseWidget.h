@@ -64,14 +64,14 @@ public:
 	 */
 	virtual void RightOperate(int InputID, int InputNum, int& OutputID, int& OutputNum);
 
-//	//是否为空
-//	bool IsEmpty();
-//
-//	//是否有空间
-//	bool RemainSpace(int ObjectID);
-//
-//	//添加一个元素
-//	void AddObject(int ObjectID);
+	//是否为空
+	bool IsEmpty();
+
+	//是否有空间
+	bool RemainSpace(int ObjectID);
+
+	//添加一个元素
+	void AddObject(int ObjectID);
 
 public:
 	//合成输入委托

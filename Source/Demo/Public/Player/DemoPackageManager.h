@@ -31,12 +31,12 @@ public:
 	//右键事件,参数是鼠标位置和PackageWidget的Geometry
 	void RightOption(FVector2D MousePos, FGeometry PackGeo);
 
-//	//是否有插入物品的空间,提供给外部访问
-//	bool SearchFreeSpace(int ObjectID);
-//
-//	//添加物品
-//	void AddObject(int ObjectID);
-//
+	//是否有插入物品的空间，提供给外部访问
+	bool SearchFreeSpace(int ObjectID);
+
+	//添加物品
+	void AddObject(int ObjectID);
+
 //	//吃东西,传入快捷栏的ID,传回是否成功吃掉
 //	bool EatUpEvent(int ShortcutID);
 //
@@ -79,10 +79,15 @@ private:
 
 	//获取是否可以叠加
 	bool MultiplyAble(int ObjectID);
+	
+	/**
+	 * @brief 是否有插入物品的空间,每次只会插入一个,返回可以插入的那个容器
+	 * @param ObjectID 物品ID
+	 * @param FreeContainer 容器的引用
+	 * @return 
+	 */
+	bool SearchFreeSpace(int ObjectID, TSharedPtr<SDemoContainerBaseWidget>& FreeContainer);
 
-//	//是否有插入物品的空间,每次只会插入一个,返回可以插入的那个容器
-//	bool SearchFreeSpace(int ObjectID, TSharedPtr<SDemoContainerBaseWidget>& FreeContainer);
-//
 private:
 
 	//单例指针

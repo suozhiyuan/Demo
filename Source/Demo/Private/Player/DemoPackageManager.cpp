@@ -275,68 +275,77 @@ bool DemoPackageManager::MultiplyAble(int ObjectID)
 	return (ObjectAttr->ObjectType != EObjectType::Tool && ObjectAttr->ObjectType != EObjectType::Weapon);
 }
 
-//bool DemoPackageManager::SearchFreeSpace(int ObjectID, TSharedPtr<SDemoContainerBaseWidget>& FreeContainer)
-//{
-//	//空容器引用
-//	TSharedPtr<SDemoContainerBaseWidget> EmptyContainer;
-//
-//	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(ShortcutContainerList); It; ++It) {
-//		//如果空容器无引用
-//		if (!EmptyContainer.IsValid()) {
-//			if ((*It)->IsEmpty()) EmptyContainer = *It;
-//		}
-//		//如果优先容器有没有引用
-//		if (!FreeContainer.IsValid())
-//		{
-//			//如果这个容器的物品和输入物品ID相同并且有空间,直接指定
-//			if ((*It)->RemainSpace(ObjectID))
-//			{
-//				FreeContainer = *It;
-//				return true;
-//			}
-//		}
-//	}
-//
-//	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(NormalContainerList); It; ++It) {
-//		//如果空容器无引用
-//		if (!EmptyContainer.IsValid()) {
-//			if ((*It)->IsEmpty()) EmptyContainer = *It;
-//		}
-//		//如果优先容器有没有引用
-//		if (!FreeContainer.IsValid())
-//		{
-//			//如果这个容器的物品和输入物品ID相同并且有空间,直接指定
-//			if ((*It)->RemainSpace(ObjectID))
-//			{
-//				FreeContainer = *It;
-//				return true;
-//			}
-//		}
-//	}
-//	//如运行到这里说明需要指定空容器
-//	if (EmptyContainer.IsValid()) {
-//		FreeContainer = EmptyContainer;
-//		return true;
-//	}
-//	//如果连空容器都没有,返回false
-//	return false;
-//}
-//
-//bool DemoPackageManager::SearchFreeSpace(int ObjectID)
-//{
-//	TSharedPtr<SDemoContainerBaseWidget> FreeContainer;
-//	return SearchFreeSpace(ObjectID, FreeContainer);
-//}
-//
-//void DemoPackageManager::AddObject(int ObjectID)
-//{
-//	TSharedPtr<SDemoContainerBaseWidget> FreeContainer;
-//	if (SearchFreeSpace(ObjectID, FreeContainer)) {
-//		//添加物品到容器
-//		FreeContainer->AddObject(ObjectID);
-//	}
-//}
-//
+bool DemoPackageManager::SearchFreeSpace(int ObjectID, TSharedPtr<SDemoContainerBaseWidget>& FreeContainer)
+{
+	//空容器引用
+	TSharedPtr<SDemoContainerBaseWidget> EmptyContainer;
+
+	// 遍历快捷栏，因为如果快捷栏有当前物品，则快捷栏优先
+	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(ShortcutContainerList); It; ++It) 
+	{
+		//如果空容器无引用则直接赋值
+		if (!EmptyContainer.IsValid()) 
+		{
+			if ((*It)->IsEmpty()) EmptyContainer = *It;
+		}
+		//如果优先容器有没有引用
+		if (!FreeContainer.IsValid())
+		{
+			//如果这个容器的物品和输入物品ID相同并且有空间,直接指定
+			if ((*It)->RemainSpace(ObjectID))
+			{
+				FreeContainer = *It;
+				return true;
+			}
+		}
+	}
+
+	// 遍历背包主体
+	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(NormalContainerList); It; ++It) 
+	{
+		//如果空容器无引用
+		if (!EmptyContainer.IsValid()) 
+		{
+			if ((*It)->IsEmpty()) EmptyContainer = *It;
+		}
+		//如果优先容器有没有引用
+		if (!FreeContainer.IsValid())
+		{
+			//如果这个容器的物品和输入物品ID相同并且有空间,直接指定
+			if ((*It)->RemainSpace(ObjectID))
+			{
+				FreeContainer = *It;
+				return true;
+			}
+		}
+	}
+
+	//如运行到这里说明需要指定空容器
+	if (EmptyContainer.IsValid()) 
+	{
+		FreeContainer = EmptyContainer;		// 返回一个空容器引用
+		return true;
+	}
+	//如果连空容器都没有,返回false
+	return false;
+}
+
+bool DemoPackageManager::SearchFreeSpace(int ObjectID)
+{
+	TSharedPtr<SDemoContainerBaseWidget> FreeContainer;
+	return SearchFreeSpace(ObjectID, FreeContainer);
+}
+
+void DemoPackageManager::AddObject(int ObjectID)
+{
+	TSharedPtr<SDemoContainerBaseWidget> FreeContainer;
+	if (SearchFreeSpace(ObjectID, FreeContainer)) 
+	{
+		//添加物品到容器
+		FreeContainer->AddObject(ObjectID);
+	}
+}
+
 //bool DemoPackageManager::EatUpEvent(int ShortcutID)
 //{
 //	//获取物品属性

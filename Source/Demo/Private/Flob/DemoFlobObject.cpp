@@ -91,14 +91,13 @@ void ADemoFlobObject::Tick(float DeltaTime)
 		//如果距离接近0
 		if (FVector::Distance(GetActorLocation(), SPCharacter->GetActorLocation() + FVector(0.f, 0.f, 40.f)) < 10.f)
 		{
-			//判断玩家背包是否有空间
-			//if (SPCharacter->IsPackageFree(ObjectIndex))
-			if(true)
+			// 判断玩家背包是否有空间
+			if (SPCharacter->IsPackageFree(ObjectIndex))
 			{
-				//添加对应的物品到背包
-				//SPCharacter->AddPackageObject(ObjectIndex);
+				// 添加对应的物品到背包
+				SPCharacter->AddPackageObject(ObjectIndex);
 
-				//销毁自己
+				// 销毁自己
 				DestroyEvent();
 			}
 			else 
@@ -192,8 +191,8 @@ void ADemoFlobObject::DetectPlayer()
 				//赋值
 				SPCharacter = Cast<ADemoPlayerCharacter>(It->GetActor());
 
-				//如果背包有空间
-				//if (SPCharacter->IsPackageFree(ObjectIndex))
+				// 如果背包有空间
+				if (SPCharacter->IsPackageFree(ObjectIndex))
 				if(true)
 				{
 					//停止检测

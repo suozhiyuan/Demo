@@ -195,29 +195,31 @@ void SDemoContainerBaseWidget::RightOperate(int InputID, int InputNum, int& Outp
 	ResetContainerPara(InputID, InputNum);
 }
 
-//bool SDemoContainerBaseWidget::IsEmpty()
-//{
-//	return ObjectIndex == 0;
-//}
-//
-////不检测是否为空的情况,为空的情况由上方的方法检测
-//bool SDemoContainerBaseWidget::RemainSpace(int ObjectID)
-//{
-//	if (ObjectIndex == ObjectID && ObjectNum < 64 && MultiplyAble(ObjectIndex)) return true;
-//	return false;
-//}
-//
-//void SDemoContainerBaseWidget::AddObject(int ObjectID)
-//{
-//	if (ObjectIndex == 0)
-//	{
-//		ResetContainerPara(ObjectID, 1);
-//		return;
-//	}
-//	if (ObjectIndex == ObjectID && ObjectNum < 64 && MultiplyAble(ObjectIndex)) {
-//		ResetContainerPara(ObjectIndex, ObjectNum + 1);
-//	}
-//}
+bool SDemoContainerBaseWidget::IsEmpty()
+{
+	return ObjectIndex == 0;
+}
+
+// 判断是否有空间，不检测是否为空的情况,为空的情况由上方的方法检测
+bool SDemoContainerBaseWidget::RemainSpace(int ObjectID)
+{
+	// 如果本地物品与传入物品相同，并且本地物品数量小于64个，并且本地物品可以叠加
+	if (ObjectIndex == ObjectID && ObjectNum < 64 && MultiplyAble(ObjectIndex)) return true;
+	return false;
+}
+
+void SDemoContainerBaseWidget::AddObject(int ObjectID)
+{
+	if (ObjectIndex == 0)
+	{
+		ResetContainerPara(ObjectID, 1);
+		return;
+	}
+	if (ObjectIndex == ObjectID && ObjectNum < 64 && MultiplyAble(ObjectIndex)) 
+	{
+		ResetContainerPara(ObjectIndex, ObjectNum + 1);
+	}
+}
 
 bool SDemoContainerBaseWidget::MultiplyAble(int ObjectID)
 {

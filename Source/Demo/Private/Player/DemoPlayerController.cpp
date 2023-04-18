@@ -540,12 +540,12 @@ void ADemoPlayerController::StateMachine()
 		//修改准星锁定模式
 		UpdatePointer.ExecuteIfBound(false, 0);
 
-		////如果右键按下
-		//if (IsRightButtonDown && SPCharacter->IsPackageFree(Cast<ADemoPickupObject>(RayActor)->ObjectIndex)) 
-		//{
-		//	//把物品捡起来
-		//	SPCharacter->AddPackageObject(Cast<ADemoPickupObject>(RayActor)->TakePickup());
-		//}
+		//如果右键按下
+		if (IsRightButtonDown && SPCharacter->IsPackageFree(Cast<ADemoPickupObject>(RayActor)->ObjectIndex)) 
+		{
+			//把物品捡起来
+			SPCharacter->AddPackageObject(Cast<ADemoPickupObject>(RayActor)->TakePickup());
+		}
 	}
 }
 
