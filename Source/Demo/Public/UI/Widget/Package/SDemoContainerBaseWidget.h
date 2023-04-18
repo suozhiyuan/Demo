@@ -37,11 +37,12 @@ public:
 	//更新鼠标移动到上面的状态
 	void UpdateHovered(bool IsHovered);
 
-	//重置自身属性
+	//重置更新格子属性
 	virtual void ResetContainerPara(int ObjectID, int Num);
 
-	//获取容器的物品ID和数量
+	//获取容器的物品ID
 	int GetIndex() const;
+	//获取容器的物品数量
 	int GetNum() const;
 
 	/**

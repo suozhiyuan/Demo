@@ -274,6 +274,7 @@ struct CompoundTable
 {
 	//合成图
 	TArray<int> CompoundMap;
+
 	//构造函数
 	CompoundTable(TArray<int>* InsertMap)
 	{
@@ -283,18 +284,26 @@ struct CompoundTable
 		}
 	}
 
-	//检测符合表的输出物品ID和数量
+	/**
+	 * @brief 检测符合表的输出物品ID和数量
+	 * @param IDMap			传入物体的ID
+	 * @param NumMap		传入物体的数量
+	 * @param OutputID		输出物体的ID
+	 * @param OutputNum		输出物体的数量
+	 */
 	void DetectTable(TArray<int>* IDMap, TArray<int>* NumMap, int& OutputID, int& OutputNum)
 	{
 		//先默认设定输出ID为表输出ID
 		int TempID = CompoundMap[9];
+
 		//先设定输出数量为64,一点一点减去
 		int TempNum = 64;
+
 		for (int i = 0; i < 9; ++i)
 		{
-			if ((*IDMap)[i] == CompoundMap[i])
+			if ((*IDMap)[i] == CompoundMap[i])	// 合成表第一个内容 是否与合成容器的相等
 			{
-				if ((*IDMap)[i] != 0) TempNum = (*NumMap)[i] < TempNum ? (*NumMap)[i] : TempNum;
+				if ((*IDMap)[i] != 0) TempNum = (*NumMap)[i] < TempNum ? (*NumMap)[i] : TempNum;		// 然后判断合成容器中物品的数量，大于64则最大64
 			}
 			else
 			{
@@ -302,34 +311,49 @@ struct CompoundTable
 				break;
 			}
 		}
-		//如果输出ID不为空,更新Output数据
-		if (TempID != 0 && TempNum != 0) {
+
+		//如果输出ID不为空则说明有匹配数据，更新Output数据
+		if (TempID != 0 && TempNum != 0) 
+		{
 			OutputID = TempID;
 			OutputNum = TempNum;
 		}
 	}
-
-	//根据输入的的物品ID和输出ID序列以及生产数量查询出是否匹配这个合成表并且输出消耗数组
+	
+	/**
+	 * @brief 根据输入的物品 和 输出物品序列 以及 生产数量，查询出是否匹配这个合成表，并且输出消耗数组
+	 * @param TableMap 合成栏物品ID
+	 * @param ProductNum 合成结果数量（拿出的）
+	 * @param ExpendMap 合成栏物品对应减少的数量
+	 * @return 返回是否匹配
+	 */
 	bool DetectExpend(TArray<int>* TableMap, int ProductNum, TArray<int>& ExpendMap)
 	{
 		//是否匹配这个合成表,开始设置为true
 		bool IsMatch = true;
-		for (int i = 0; i < 10; ++i) {
-			//只要有一个不符合,直接设置false
+
+		for (int i = 0; i < 10; ++i) 
+		{
+			// 合成栏内容与配置文件对比，只要有一个不符合,直接设置false
 			if ((*TableMap)[i] != CompoundMap[i])
 			{
 				IsMatch = false;
 				break;
 			}
 		}
+
 		//如果匹配
-		if (IsMatch) {
-			for (int i = 0; i < 9; ++i) {
+		if (IsMatch) 
+		{
+			for (int i = 0; i < 9; ++i) 
+			{
 				//如果不为0,直接Add生产的数量
-				if (CompoundMap[i] != 0) {
+				if (CompoundMap[i] != 0) 
+				{
 					ExpendMap.Add(ProductNum);
 				}
-				else {
+				else 
+				{
 					ExpendMap.Add(0);
 				}
 			}

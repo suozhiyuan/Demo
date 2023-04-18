@@ -8,14 +8,12 @@
 
 DemoJsonHandle::DemoJsonHandle()
 {
-
 	RecordDataFileName = FString("RecordData.json");				//存档文件名
 	ObjectAttrFileName = FString("ObjectAttribute.json");
 	ResourceAttrFileName = FString("ResourceAttribute.json");
-	//CompoundTableFileName = FString("CompoundTable.json");
+	CompoundTableFileName = FString("CompoundTable.json");		//合成表文件名
 
-	RelativePath = FString("Res/ConfigData/");			//相对路径
-
+	RelativePath = FString("Res/ConfigData/");					//相对路径
 }
 
 // 解析存档方法
@@ -151,7 +149,8 @@ void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute
 
 	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))
 	{
-		for (int i = 0; i < JsonParsed.Num(); ++i) {
+		for (int i = 0; i < JsonParsed.Num(); ++i) 
+		{
 			//资源没有序号0,从1开始
 			TArray<TSharedPtr<FJsonValue>> ResourceAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i + 1));
 			FText EN = FText::FromString(ResourceAttr[0]->AsObject()->GetStringField("EN"));
@@ -163,7 +162,8 @@ void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute
 
 			TArray<TSharedPtr<FJsonValue>> FlobObjectInfo = ResourceAttr[4]->AsObject()->GetArrayField(FString("FlobObjectInfo"));
 
-			for (int j = 0; j < FlobObjectInfo.Num(); ++j) {
+			for (int j = 0; j < FlobObjectInfo.Num(); ++j) 
+			{
 
 				FString FlobObjectInfoItem = FlobObjectInfo[j]->AsObject()->GetStringField(FString::FromInt(j));
 				FString ObjectIndexStr;
@@ -194,37 +194,39 @@ void DemoJsonHandle::ResourceAttrJsonRead(TMap<int, TSharedPtr<ResourceAttribute
 
 }
 
-//void DemoJsonHandle::CompoundTableJsonRead(TArray<TSharedPtr<CompoundTable>>& CompoundTableMap)
-//{
-//	FString JsonValue;
-//	LoadStringFromFile(CompoundTableFileName, RelativePath, JsonValue);
-//
-//	TArray<TSharedPtr<FJsonValue>> JsonParsed;
-//	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);
-//
-//	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))
-//	{
-//
-//		for (int i = 0; i < JsonParsed.Num(); ++i) {
-//			TArray<TSharedPtr<FJsonValue>> ObjectAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i));
-//
-//			TArray<int> CompoundTableArr;
-//
-//			for (int j = 0; j < 10; ++j) {
-//				CompoundTableArr.Add(ObjectAttr[j]->AsObject()->GetIntegerField(FString::FromInt(j)));
-//			}
-//
-//			TSharedPtr<CompoundTable> NewTable = MakeShareable(new CompoundTable(&CompoundTableArr));
-//
-//			CompoundTableMap.Add(NewTable);
-//
-//		}
-//
-//	}
-//	else {
-//		DemoHelper::Debug(FString("Deserialize Failed"));
-//	}
-//}
+// 解析合成表
+void DemoJsonHandle::CompoundTableJsonRead(TArray<TSharedPtr<CompoundTable>>& CompoundTableMap)
+{
+	FString JsonValue;
+	LoadStringFromFile(CompoundTableFileName, RelativePath, JsonValue);					// 读取 Json 文件到字符串 JsonValue
+
+	TArray<TSharedPtr<FJsonValue>> JsonParsed;															// 保存解析出来的数据
+	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonValue);			// 将数据存储到 JsonReader 引用
+
+	if (FJsonSerializer::Deserialize(JsonReader, JsonParsed))		// Deserialize 反序列化
+	{
+
+		for (int i = 0; i < JsonParsed.Num(); ++i) 
+		{
+			TArray<TSharedPtr<FJsonValue>> ObjectAttr = JsonParsed[i]->AsObject()->GetArrayField(FString::FromInt(i));
+
+			TArray<int> CompoundTableArr;
+
+			for (int j = 0; j < 10; ++j) 
+			{
+				CompoundTableArr.Add(ObjectAttr[j]->AsObject()->GetIntegerField(FString::FromInt(j)));
+			}
+
+			TSharedPtr<CompoundTable> NewTable = MakeShareable(new CompoundTable(&CompoundTableArr));
+
+			CompoundTableMap.Add(NewTable);
+		}
+	}
+	else 
+	{
+		DemoHelper::Debug(FString("Deserialize Failed"));
+	}
+}
 
 // 读取Json文件到字符串
 bool DemoJsonHandle::LoadStringFromFile(const FString& FileName, const FString& RelaPath, FString& ResultString)

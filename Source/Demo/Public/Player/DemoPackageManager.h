@@ -77,8 +77,9 @@ private:
 	//快捷栏变换事件
 	void PackShortChange(int ShortcutID, int ObjectID, int ObjectNum);
 
-//	//获取是否可以叠加
-//	bool MultiplyAble(int ObjectID);
+	//获取是否可以叠加
+	bool MultiplyAble(int ObjectID);
+
 //	//是否有插入物品的空间,每次只会插入一个,返回可以插入的那个容器
 //	bool SearchFreeSpace(int ObjectID, TSharedPtr<SDemoContainerBaseWidget>& FreeContainer);
 //
@@ -88,9 +89,9 @@ private:
 	static TSharedPtr<DemoPackageManager> PackageInstance;
 
 	//容器列表
-	TArray<TSharedPtr<SDemoContainerBaseWidget>> InputContainerList;		// 输入
-	TArray<TSharedPtr<SDemoContainerBaseWidget>> NormalContainerList;		// 正常的
-	TArray<TSharedPtr<SDemoContainerBaseWidget>> ShortcutContainerList;		// 快捷栏
+	TArray<TSharedPtr<SDemoContainerBaseWidget>> InputContainerList;		// 输入容器列表
+	TArray<TSharedPtr<SDemoContainerBaseWidget>> NormalContainerList;		// 正常的容器列表
+	TArray<TSharedPtr<SDemoContainerBaseWidget>> ShortcutContainerList;		// 快捷栏容器列表
 	//输出容器只有一个
 	TSharedPtr<SDemoContainerBaseWidget> OutputContainer;
 

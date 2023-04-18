@@ -172,8 +172,8 @@ void DemoDataHandle::InitializeGameData()
 	//初始化资源属性图
 	InitResourceAttrMap();
 
-	////初始化合成表图
-	//InitCompoundTableMap();
+	//初始化合成表图
+	InitCompoundTableMap();
 
 	////初始化游戏声音数据
 	//InitializeGameAudio();
@@ -218,13 +218,13 @@ void DemoDataHandle::InitObjectAttr()
 void DemoDataHandle::InitResourceAttrMap()
 {
 	DemoSingleton<DemoJsonHandle>::Get()->ResourceAttrJsonRead(ResourceAttrMap);
-	DemoHelper::Debug(FString("22222222222"),0.f);
+	//DemoHelper::Debug(FString("22222222222"),0.f);
 }
 
-//void DemoDataHandle::InitCompoundTableMap()
-//{
-//	DemoSingleton<DemoJsonHandle>::Get()->CompoundTableJsonRead(CompoundTableMap);
-//}
+void DemoDataHandle::InitCompoundTableMap()
+{
+	DemoSingleton<DemoJsonHandle>::Get()->CompoundTableJsonRead(CompoundTableMap);
+}
 
 //void DemoDataHandle::InitializeGameAudio()
 //{

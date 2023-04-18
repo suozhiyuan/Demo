@@ -30,8 +30,8 @@ TSharedRef<DemoPackageManager> DemoPackageManager::Create()
 DemoPackageManager::DemoPackageManager()
 {
 	//初始化物品和数量为0
-	ObjectIndex = 0;
-	ObjectNum = 0;
+	ObjectIndex = 1;
+	ObjectNum = 35;
 }
 
 void DemoPackageManager::InsertContainer(TSharedPtr<class SDemoContainerBaseWidget> Container, EContainerType::Type InsertType)
@@ -187,34 +187,40 @@ void DemoPackageManager::PackShortChange(int ShortcutID, int ObjectID, int Objec
 	ChangeHandObject.ExecuteIfBound(ShortcutID, ObjectID, ObjectNum1);
 }
 
-// 合成输出
+// 合成输出，拿出的同时减少合成材料
 void DemoPackageManager::CompoundOutput(int ObjectID, int Num)
 {
-	//如果生产为0,直接return
+	//如果合成结果为0,直接return
 	if (ObjectID == 0) return;
-	//合成表结构数组
+
+	//合成表结构数组，将合成栏中9个物品的ID记录
 	TArray<int> TableMap;
 	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(InputContainerList); It; ++It) 
 	{
 		TableMap.Add((*It)->GetIndex());
 	}
-	TableMap.Add(ObjectID);
+	TableMap.Add(ObjectID);		// 将合成结果添加到里边，共10个数据
+
 	//消耗数量的数组
 	TArray<int> ExpendMap;
+
 	//遍历找出符合的合成表并且拿到消耗数量的数组
 	for (TArray<TSharedPtr<CompoundTable>>::TIterator It(DemoDataHandle::Get()->CompoundTableMap); It; ++It) 
 	{
 		//如果找到符合的直接跳出循环
 		if ((*It)->DetectExpend(&TableMap, Num, ExpendMap)) break;
 	}
+
 	//如果消耗数组元素数量不是9,直接return
 	if (ExpendMap.Num() != 9) return;
-	//循环设置合成输入表的属性
+
+	//循环设置合成栏的属性
 	for (int i = 0; i < 9; ++i) 
 	{
 		//如果原有数量减去消耗数量已经小于等于0,直接把物品ID设置为0
 		int InputID = (InputContainerList[i]->GetNum() - ExpendMap[i] <= 0) ? 0 : InputContainerList[i]->GetIndex();
 		int InputNum = (InputID == 0) ? 0 : (InputContainerList[i]->GetNum() - ExpendMap[i]);
+
 		//重置参数
 		InputContainerList[i]->ResetContainerPara(InputID, InputNum);
 	}
@@ -226,43 +232,49 @@ void DemoPackageManager::CompoundInput()
 	//获取合成台9个容器的物品id和数量写进两个数组
 	TArray<int> IDMap;
 	TArray<int> NumMap;
+
 	for (TArray<TSharedPtr<SDemoContainerBaseWidget>>::TIterator It(InputContainerList); It; ++It) 
 	{
 		IDMap.Add((*It)->GetIndex());
 		NumMap.Add((*It)->GetNum());
 	}
-	////定义检测出来输出框的ID和数量
-	//int OutputIndex = 0;
-	//int OutputNum = 0;
-	////迭代合成表进行检测
-	//for (TArray<TSharedPtr<CompoundTable>>::TIterator It(DemoDataHandle::Get()->CompoundTableMap); It; ++It) 
-	//{
-	//	(*It)->DetectTable(&IDMap, &NumMap, OutputIndex, OutputNum);
-	//	//如果检测出来了,直接跳出循环
-	//	if (OutputIndex != 0 && OutputNum != 0) break;
-	//}
-	////下面对OutputContainer进行赋值
-	////先判断是否可以叠加
-	//if (MultiplyAble(OutputIndex)) 
-	//{
-	//	//可以叠加的话就直接赋值,包括0,0
-	//	OutputContainer->ResetContainerPara(OutputIndex, OutputNum);
-	//}
-	//else 
-	//{
-	//	//不可以叠加的话只添加一个
-	//	OutputContainer->ResetContainerPara(OutputIndex, 1);
-	//}
+
+	//定义检测出来输出框的ID和数量
+	int OutputIndex = 0;
+	int OutputNum = 0;
+
+	//迭代合成表进行检测
+	for (TArray<TSharedPtr<CompoundTable>>::TIterator It(DemoDataHandle::Get()->CompoundTableMap); It; ++It) 
+	{
+		(*It)->DetectTable(&IDMap, &NumMap, OutputIndex, OutputNum);
+
+		//如果检测出来了,直接跳出循环
+		if (OutputIndex != 0 && OutputNum != 0) break;
+	}
+
+	//下面对OutputContainer进行赋值
+	//先判断是否可以叠加
+	if (MultiplyAble(OutputIndex)) 
+	{
+		//可以叠加的话就直接赋值,包括0,0
+		OutputContainer->ResetContainerPara(OutputIndex, OutputNum);
+	}
+	else 
+	{
+		//不可以叠加的话只添加一个
+		OutputContainer->ResetContainerPara(OutputIndex, 1);
+	}
 }
 
-//bool DemoPackageManager::MultiplyAble(int ObjectID)
-//{
-//	//获取物品属性
-//	TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ObjectID);
-//	//返回是否是武器或者工具
-//	return (ObjectAttr->ObjectType != EObjectType::Tool && ObjectAttr->ObjectType != EObjectType::Weapon);
-//}
-//
+// 获取是否可以叠加
+bool DemoPackageManager::MultiplyAble(int ObjectID)
+{
+	//获取物品属性
+	TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ObjectID);
+	//返回是否是武器或者工具
+	return (ObjectAttr->ObjectType != EObjectType::Tool && ObjectAttr->ObjectType != EObjectType::Weapon);
+}
+
 //bool DemoPackageManager::SearchFreeSpace(int ObjectID, TSharedPtr<SDemoContainerBaseWidget>& FreeContainer)
 //{
 //	//空容器引用
