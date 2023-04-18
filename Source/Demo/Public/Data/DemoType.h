@@ -275,8 +275,10 @@ struct CompoundTable
 	//合成图
 	TArray<int> CompoundMap;
 	//构造函数
-	CompoundTable(TArray<int>* InsertMap) {
-		for (TArray<int>::TIterator It(*InsertMap); It; ++It) {
+	CompoundTable(TArray<int>* InsertMap)
+	{
+		for (TArray<int>::TIterator It(*InsertMap); It; ++It) 
+		{
 			CompoundMap.Add(*It);
 		}
 	}
