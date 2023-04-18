@@ -4,10 +4,6 @@
 
 #include "CoreMinimal.h"
 
-/**
- * 
- */
-
 UENUM()
 enum class ECultureTeam : uint8
 {
