@@ -255,7 +255,6 @@ void DemoPackageManager::CompoundInput()
 	//}
 }
 
-
 //bool DemoPackageManager::MultiplyAble(int ObjectID)
 //{
 //	//获取物品属性

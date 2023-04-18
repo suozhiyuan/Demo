@@ -61,7 +61,8 @@ namespace EMenuAnim
 }
 
 //视角模式
-namespace EGameViewMode {
+namespace EGameViewMode
+{
 	enum Type
 	{
 		First,
@@ -124,7 +125,6 @@ struct ObjectAttribute
 	//{
 	//	return EN.ToString() + FString("--") + ZH.ToString() + FString("--") + FString::FromInt((int)ObjectType) + FString("--") + FString::FromInt(PlantAttack) + FString("--") + FString::FromInt(MetalAttcck) + FString("--") + FString::FromInt(AnimalAttack) + FString("--") + FString::FromInt(AffectRange) + FString("--") + TexPath;
 	//}
-
 };
 
 //快捷栏容器结构体
