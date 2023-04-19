@@ -20,8 +20,8 @@ public class Demo : ModuleRules
             "Json",                 // Json 工具
             "JsonUtilities",        // Json 工具
             "UMG",                  // UWidgetComponent 依赖
-            //"AIModule",
-            //"GameplayTasks",
+            "AIModule",             // Ai
+            "GameplayTasks",        // 行为树
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

@@ -367,13 +367,13 @@ struct CompoundTable
 UENUM(BlueprintType)
 enum  class EEnemyAIState : uint8
 {
-	ES_Patrol    UMETA(DisplayName = "Patrol"),
-	ES_Chase     UMETA(DisplayName = "Chase"),
-	ES_Escape    UMETA(DisplayName = "Escape"),
-	ES_Attack    UMETA(DisplayName = "Attack"),
-	ES_Hurt      UMETA(DisplayName = "Hurt"),
-	ES_Defence   UMETA(DisplayName = "Defence"),
-	ES_Dead      UMETA(DisplayName = "Dead")
+	ES_Patrol    UMETA(DisplayName = "Patrol"),		// Ñ²Âß
+	ES_Chase     UMETA(DisplayName = "Chase"),		// ×·Öð
+	ES_Escape    UMETA(DisplayName = "Escape"),		// ÌÓÅÜ
+	ES_Attack    UMETA(DisplayName = "Attack"),		// ¹¥»÷
+	ES_Hurt      UMETA(DisplayName = "Hurt"),		// ±»»÷
+	ES_Defence   UMETA(DisplayName = "Defence"),	// ·ÀÊØ
+	ES_Dead      UMETA(DisplayName = "Dead")		// ËÀÍö
 };
 
 //µÐÈË¹¥»÷×´Ì¬
