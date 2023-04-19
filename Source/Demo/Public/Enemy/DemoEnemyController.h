@@ -16,23 +16,23 @@ class DEMO_API ADemoEnemyController : public AAIController
 
 public:
 
-//	ADemoEnemyController();
-//
+	ADemoEnemyController();
+
 //	virtual void Possess(APawn* InPawn) override;
 //
 //	virtual void UnPossess() override;
-//
-//	virtual void Tick(float DeltaTime) override;
-//
-//	//获取玩家的位置
-//	FVector GetPlayerLocation() const;
-//
+
+	virtual void Tick(float DeltaTime) override;
+
+	//获取玩家的位置
+	FVector GetPlayerLocation() const;
+
 //	//玩家是否已经死亡
 //	bool IsPlayerDead();
-//
-//	//看到了玩家,由Character的OnSeePlayer调用
-//	void OnSeePlayer();
-//
+
+	//看到了玩家,由Character的OnSeePlayer调用
+	void OnSeePlayer();
+
 //	//丢失玩家定位
 //	void LoosePlayer();
 //
@@ -56,31 +56,31 @@ public:
 //
 //	//死亡
 //	void EnemyDead();
-//
-//public:
-//
-//	//是否锁定了玩家
-//	bool IsLockPlayer;
-//
-//
-//protected:
-//
-//	virtual void BeginPlay() override;
-//
+
+public:
+
+	//是否锁定了玩家
+	bool IsLockPlayer;
+
+
+protected:
+
+	virtual void BeginPlay() override;
+
 //
 //private:
 //
 //	//更新状态序列
 //	void UpdateStatePama();
-//
-//private:
-//
-//	//玩家的指针
-//	class ADemoPlayerCharacter* SPCharacter;
-//
-//	//敌人角色指针
-//	class ADemoEnemyCharacter* SECharacter;
-//
+
+private:
+
+	//玩家的指针
+	class ADemoPlayerCharacter* SPCharacter;
+
+	//敌人角色指针
+	class ADemoEnemyCharacter* SECharacter;
+
 //	class UBlackboardComponent* BlackboardComp;
 //
 //	class UBehaviorTreeComponent* BehaviorComp;

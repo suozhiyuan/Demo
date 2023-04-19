@@ -3,14 +3,17 @@
 
 #include "Enemy/DemoEnemyController.h"
 
+#include "Enemy/DemoEnemyCharacter.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/DemoPlayerCharacter.h"
 
-//
-//ADemoEnemyController::ADemoEnemyController()
-//{
-//	PrimaryActorTick.bCanEverTick = true;
-//}
-//
-//
+
+ADemoEnemyController::ADemoEnemyController()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+
 //void ADemoEnemyController::Possess(APawn* InPawn)
 //{
 //	//绝对一定必须要调用父类函数
@@ -74,44 +77,47 @@
 //	//停止行为树
 //	if (BehaviorComp) BehaviorComp->StopTree();
 //}
-//
-//void ADemoEnemyController::BeginPlay()
-//{
-//	//绝对一定必须要调用父类函数
-//	Super::BeginPlay();
-//
-//	//初始化一下玩家指针,这个指针会一直存在
-//	SPCharacter = Cast<ADemoPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GWorld, 0));
-//	//如果角色没有初始化
-//	if (!SECharacter) SECharacter = Cast<ADemoEnemyCharacter>(GetPawn());
-//	//初始设定没有锁定玩家
-//	IsLockPlayer = false;
-//	//进行委托绑定
-//	FTimerDelegate EPDisDele = FTimerDelegate::CreateUObject(this, &ADemoEnemyController::UpdateStatePama);
-//	GetWorld()->GetTimerManager().SetTimer(EPDisHandle, EPDisDele, 0.3f, true);
-//	//血量百分比初始化为1
-//	HPRatio = 1;
-//	//设置状态计时器
-//	IsAllowHurt = false;
-//	HurtTimeCount = 0.f;
-//}
-//
-//
-//void ADemoEnemyController::Tick(float DeltaTime)
-//{
-//	Super::Tick(DeltaTime);
-//
-//	//如果玩家指针和角色指针存在
-//	if (SECharacter && SPCharacter) SECharacter->UpdateHPBarRotation(SPCharacter->GetCameraPos());
-//}
-//
-//FVector ADemoEnemyController::GetPlayerLocation() const
-//{
-//	//如果玩家指针存在,返回玩家位置
-//	if (SPCharacter) return SPCharacter->GetActorLocation();
-//	return FVector::ZeroVector;
-//}
-//
+
+void ADemoEnemyController::BeginPlay()
+{
+	//绝对一定必须要调用父类函数，否则C++调用行为树将没有效果
+	Super::BeginPlay();
+
+	//初始化一下玩家指针,这个指针会一直存在
+	SPCharacter = Cast<ADemoPlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GWorld, 0));
+
+	//如果角色没有初始化
+	if (!SECharacter) SECharacter = Cast<ADemoEnemyCharacter>(GetPawn());
+
+	////初始设定没有锁定玩家
+	//IsLockPlayer = false;
+
+	////进行委托绑定
+	//FTimerDelegate EPDisDele = FTimerDelegate::CreateUObject(this, &ADemoEnemyController::UpdateStatePama);
+	//GetWorld()->GetTimerManager().SetTimer(EPDisHandle, EPDisDele, 0.3f, true);
+	////血量百分比初始化为1
+	//HPRatio = 1;
+	////设置状态计时器
+	//IsAllowHurt = false;
+	//HurtTimeCount = 0.f;
+}
+
+
+void ADemoEnemyController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	//如果玩家指针和角色指针存在
+	if (SECharacter && SPCharacter) SECharacter->UpdateHPBarRotation(SPCharacter->GetCameraPos());
+}
+
+FVector ADemoEnemyController::GetPlayerLocation() const
+{
+	//如果玩家指针存在,返回玩家位置
+	if (SPCharacter) return SPCharacter->GetActorLocation();
+	return FVector::ZeroVector;
+}
+
 //bool ADemoEnemyController::IsPlayerDead()
 //{
 //	if (SPCharacter) return SPCharacter->IsPlayerDead();
@@ -130,7 +136,7 @@
 //	//修改最大速度为300
 //	SECharacter->SetMaxSpeed(300.f);
 //}
-//
+
 //void ADemoEnemyController::LoosePlayer()
 //{
 //	//设置丢失玩家的锁定

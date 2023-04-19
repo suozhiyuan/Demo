@@ -21,8 +21,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	////实时更新血条的朝向,由Controller调用,传入玩家位置
-	//void UpdateHPBarRotation(FVector SPLoaction);
+	//实时更新血条的朝向,由Controller调用,传入玩家位置
+	void UpdateHPBarRotation(FVector SPLoaction);
 
 	////修改移动速度
 	//void SetMaxSpeed(float Speed);
@@ -87,28 +87,28 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		class UChildActorComponent* SheildSocket;
 
-	////血条
-	//UPROPERTY(EditAnywhere, Category = Mesh)
-	//	class UWidgetComponent* HPBar;
+	//血条
+	UPROPERTY(EditAnywhere, Category = Mesh)
+		class UWidgetComponent* HPBar;
 
-	////敌人感知
-	//UPROPERTY(EditAnywhere, Category = Mesh)
-	//	class UPawnSensingComponent* EnemySense;
+	//敌人感知
+	UPROPERTY(EditAnywhere, Category = Mesh)
+		class UPawnSensingComponent* EnemySense;
 
-//private:
-//	//绑定到敌人感知的方法
-//	UFUNCTION()
-//		void OnSeePlayer(APawn* PlayerChar);
-//
-//	//血条UI引用
-//	TSharedPtr<class SDemoEnemyHPWidget> HPBarWidget;
-//
-//	//控制器引用
-//	class ADemoEnemyController* SEController;
-//
-//	//血量
-//	float HP;
-//
+private:
+	//绑定到敌人感知的方法
+	UFUNCTION()
+		void OnSeePlayer(APawn* PlayerChar);
+
+	//血条UI引用
+	TSharedPtr<class SDemoEnemyHPWidget> HPBarWidget;
+
+	//控制器引用
+	class ADemoEnemyController* SEController;
+
+	//血量
+	float HP;
+
 //	//动作引用
 //	class UDemoEnemyAnim* SEAnim;
 //

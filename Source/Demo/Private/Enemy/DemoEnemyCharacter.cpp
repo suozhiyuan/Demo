@@ -4,8 +4,12 @@
 #include "Enemy/DemoEnemyCharacter.h"
 
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
 #include "Enemy/DemoEnemyController.h"
 #include "EnemyTool/DemoEnemyTool.h"
+#include "Perception/PawnSensingComponent.h"
+#include "Player/DemoPlayerCharacter.h"
+#include "UI/Widget/SDemoEnemyHPWidget.h"
 
 
 // Sets default values
@@ -39,13 +43,12 @@ ADemoEnemyCharacter::ADemoEnemyCharacter()
 	WeaponSocket = CreateDefaultSubobject<UChildActorComponent>(TEXT("WeaponSocket"));
 	SheildSocket = CreateDefaultSubobject<UChildActorComponent>(TEXT("SheildSocket"));
 
-	////实例化血条
-	//HPBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBar"));
-	//HPBar->AttachTo(RootComponent);
+	//实例化血条
+	HPBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBar"));
+	HPBar->AttachTo(RootComponent);
 
-	////实例化敌人感知组件
-	//EnemySense = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("EnemySense"));
-
+	//实例化敌人感知组件
+	EnemySense = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("EnemySense"));
 
 	////加载死亡动画资源
 	//AnimDead_I = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/Enemy_Dead_I.Enemy_Dead_I'")));
@@ -72,25 +75,26 @@ void ADemoEnemyCharacter::BeginPlay()
 	WeaponSocket->SetChildActorClass(ADemoEnemyTool::SpawnEnemyWeapon());
 	SheildSocket->SetChildActorClass(ADemoEnemyTool::SpawnEnemySheild());
 
-	////设置血条widget
-	//SAssignNew(HPBarWidget, SDemoEnemyHPWidget);
-	//HPBar->SetSlateWidget(HPBarWidget);
-	//HPBar->SetRelativeLocation(FVector(0.f, 0.f, 100.f));
-	//HPBar->SetDrawSize(FVector2D(100.f, 10.f));
-	////设置初始血量
-	//HP = 200.f;
-	//HPBarWidget->ChangeHP(HP / 200.f);
+	//设置血条widget
+	SAssignNew(HPBarWidget, SDemoEnemyHPWidget);
+	HPBar->SetSlateWidget(HPBarWidget);
+	HPBar->SetRelativeLocation(FVector(0.f, 0.f, 100.f));
+	HPBar->SetDrawSize(FVector2D(100.f, 10.f));
+	//设置初始血量
+	HP = 100.f;
+	HPBarWidget->ChangeHP(HP / 200.f);
 
-	////敌人感知参数设置
-	//EnemySense->HearingThreshold = 0.f;
-	//EnemySense->LOSHearingThreshold = 0.f;
-	//EnemySense->SightRadius = 1000.f;
-	//EnemySense->SetPeripheralVisionAngle(55.f);
-	//EnemySense->bHearNoises = false;
-	////绑定看到玩家的方法
-	//FScriptDelegate OnSeePlayerDele;
-	//OnSeePlayerDele.BindUFunction(this, "OnSeePlayer");
-	//EnemySense->OnSeePawn.Add(OnSeePlayerDele);
+	//敌人感知参数设置
+	EnemySense->HearingThreshold = 0.f;					// 不受遮挡时的听觉
+	EnemySense->LOSHearingThreshold = 0.f;				// 
+	EnemySense->SightRadius = 1000.f;					// 最大视野距离
+	EnemySense->SetPeripheralVisionAngle(55.f);			// 最大视野角度
+	EnemySense->bHearNoises = false;					// 是否可以听到声音
+
+	//绑定看到玩家的方法
+	FScriptDelegate OnSeePlayerDele;
+	OnSeePlayerDele.BindUFunction(this, "OnSeePlayer");
+	EnemySense->OnSeePawn.Add(OnSeePlayerDele);
 
 	////设置资源ID是3
 	//ResourceIndex = 3;
@@ -137,13 +141,13 @@ void ADemoEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-//void ADemoEnemyCharacter::UpdateHPBarRotation(FVector SPLoaction)
-//{
-//	FVector StartPos(GetActorLocation().X, GetActorLocation().Y, 0);
-//	FVector TargetPos(SPLoaction.X, SPLoaction.Y, 0.f);
-//	HPBar->SetWorldRotation(FRotationMatrix::MakeFromX(TargetPos - StartPos).Rotator());
-//}
-//
+void ADemoEnemyCharacter::UpdateHPBarRotation(FVector SPLoaction)
+{
+	FVector StartPos(GetActorLocation().X, GetActorLocation().Y, 0);						// 我的位置 看向敌人的方向
+	FVector TargetPos(SPLoaction.X, SPLoaction.Y, 0.f);									// 目标位置
+	HPBar->SetWorldRotation(FRotationMatrix::MakeFromX(TargetPos - StartPos).Rotator());
+}
+
 //void ADemoEnemyCharacter::SetMaxSpeed(float Speed)
 //{
 //	//设置最大运动速度
@@ -286,12 +290,12 @@ void ADemoEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 //{
 //	return HP;
 //}
-//
-//void ADemoEnemyCharacter::OnSeePlayer(APawn* PlayerChar)
-//{
-//	if (Cast<ADemoPlayerCharacter>(PlayerChar)) {
-//
-//		//告诉控制器我看到玩家了
-//		if (SEController) SEController->OnSeePlayer();
-//	}
-//}
+
+void ADemoEnemyCharacter::OnSeePlayer(APawn* PlayerChar)
+{
+	if (Cast<ADemoPlayerCharacter>(PlayerChar)) 
+	{
+		//告诉控制器我看到玩家了
+		//if (SEController) SEController->OnSeePlayer();
+	}
+}

@@ -256,19 +256,19 @@ void ADemoPlayerCharacter::EatUpEvent()
 //{
 //	if (SPController->SPState) SPController->SPState->AcceptDamage(DamageVal);
 //}
-//
-//FVector ADemoPlayerCharacter::GetCameraPos()
-//{
-//	switch (GameView)
-//	{
-//	case EGameViewMode::First:
-//		return FirstCamera->K2_GetComponentLocation();
-//	case EGameViewMode::Third:
-//		return ThirdCamera->K2_GetComponentLocation();
-//	}
-//	return FirstCamera->K2_GetComponentLocation();
-//}
-//
+
+FVector ADemoPlayerCharacter::GetCameraPos()
+{
+	switch (GameView)
+	{
+	case EGameViewMode::First:
+		return FirstCamera->K2_GetComponentLocation();
+	case EGameViewMode::Third:
+		return ThirdCamera->K2_GetComponentLocation();
+	}
+	return FirstCamera->K2_GetComponentLocation();
+}
+
 //float ADemoPlayerCharacter::PlayDeadAnim()
 //{
 //	GetMesh()->PlayAnimation(AnimDead, false);

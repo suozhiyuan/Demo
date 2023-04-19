@@ -19,7 +19,7 @@ public class Demo : ModuleRules
             "SlateCore",            // Slate UI组件
             "Json",                 // Json 工具
             "JsonUtilities",        // Json 工具
-            //"UMG",
+            "UMG",                  // UWidgetComponent 依赖
             //"AIModule",
             //"GameplayTasks",
         });

@@ -52,8 +52,8 @@ public:
 	////接受伤害
 	//void AcceptDamage(int DamageVal);
 
-	////获取摄像机位置
-	//FVector GetCameraPos();
+	//获取摄像机位置
+	FVector GetCameraPos();
 
 	////播放死亡动画,返回播放时长
 	//float PlayDeadAnim();
