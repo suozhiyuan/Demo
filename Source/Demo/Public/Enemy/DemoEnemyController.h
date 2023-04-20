@@ -18,9 +18,9 @@ public:
 
 	ADemoEnemyController();
 
-//	virtual void Possess(APawn* InPawn) override;
-//
-//	virtual void UnPossess() override;
+	virtual void OnPossess(APawn* InPawn) override;
+
+	virtual void OnUnPossess() override;
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -81,10 +81,12 @@ private:
 	//敌人角色指针
 	class ADemoEnemyCharacter* SECharacter;
 
-//	class UBlackboardComponent* BlackboardComp;
-//
-//	class UBehaviorTreeComponent* BehaviorComp;
-//
+	// 黑板数据组件
+	class UBlackboardComponent* BlackboardComp;
+
+	// 行为树组件
+	class UBehaviorTreeComponent* BehaviorComp;
+
 //	//保存与玩家的距离序列,保存8个,每半秒更新一次
 //	TArray<float> EPDisList;
 //

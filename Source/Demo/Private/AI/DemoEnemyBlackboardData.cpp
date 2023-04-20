@@ -29,10 +29,10 @@ void UDemoEnemyBlackboardData::PostLoad()
 	EnemyStateKeyType->EnumName = FString("EEnemyAIState");		// 创建一个 EnemyStateKeyType ，和上一句代码均可创建
 	EnemyState.KeyType = EnemyStateKeyType;
 
-	////等待时间
-	//FBlackboardEntry WaitTime;
-	//WaitTime.EntryName = FName("WaitTime");
-	//WaitTime.KeyType = NewObject<UBlackboardKeyType_Float>();
+	//等待时间
+	FBlackboardEntry WaitTime;										// 黑板条目的定义
+	WaitTime.EntryName = FName("WaitTime");							// 变量名
+	WaitTime.KeyType = NewObject<UBlackboardKeyType_Float>();		// 变量类型
 
 	////攻击类型
 	//FBlackboardEntry AttackType;
@@ -57,7 +57,7 @@ void UDemoEnemyBlackboardData::PostLoad()
 
 	Keys.Add(Destination);
 	Keys.Add(EnemyState);
-	//Keys.Add(WaitTime);
+	Keys.Add(WaitTime);
 	//Keys.Add(AttackType);
 	//Keys.Add(PlayerPawn);
 	//Keys.Add(ProcessFinish);

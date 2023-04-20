@@ -5,8 +5,10 @@
 
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Enemy/DemoEnemyAnim.h"
 #include "Enemy/DemoEnemyController.h"
 #include "EnemyTool/DemoEnemyTool.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Perception/PawnSensingComponent.h"
 #include "Player/DemoPlayerCharacter.h"
 #include "UI/Widget/SDemoEnemyHPWidget.h"
@@ -63,8 +65,8 @@ void ADemoEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	////获取动作引用
-	//SEAnim = Cast<UDemoEnemyAnim>(GetMesh()->GetAnimInstance());
+	//获取动作引用
+	SEAnim = Cast<UDemoEnemyAnim>(GetMesh()->GetAnimInstance());
 	//SEController = Cast<ADemoEnemyController>(GetController());
 
 	//绑定插槽
@@ -148,30 +150,34 @@ void ADemoEnemyCharacter::UpdateHPBarRotation(FVector SPLoaction)
 	HPBar->SetWorldRotation(FRotationMatrix::MakeFromX(TargetPos - StartPos).Rotator());
 }
 
-//void ADemoEnemyCharacter::SetMaxSpeed(float Speed)
-//{
-//	//设置最大运动速度
-//	GetCharacterMovement()->MaxWalkSpeed = Speed;
-//}
-//
-//float ADemoEnemyCharacter::GetIdleWaitTime()
-//{
-//	//如果动作蓝图不存在直接返回3秒
-//	if (!SEAnim) return 3.f;
-//	//创建随机流
-//	FRandomStream Stream;
-//	Stream.GenerateNewSeed();
-//	int IdleTpye = Stream.RandRange(0, 2);
-//	float AnimLength = SEAnim->SetIdelType(IdleTpye);
-//	//更新种子
-//	Stream.GenerateNewSeed();
-//	//产生动作次数
-//	int AnimCount = Stream.RandRange(1, 3);
-//	//返回全部的动画时长
-//	return AnimLength * AnimCount;
-//}
-//
-//
+void ADemoEnemyCharacter::SetMaxSpeed(float Speed)
+{
+	//设置最大运动速度
+	GetCharacterMovement()->MaxWalkSpeed = Speed;
+}
+
+float ADemoEnemyCharacter::GetIdleWaitTime()
+{
+	//如果动作蓝图不存在直接返回3秒
+	if (!SEAnim) return 3.f;
+
+	//创建随机流
+	FRandomStream Stream;
+	Stream.GenerateNewSeed();		// 生成一个新的随机种子
+	int IdleTpye = Stream.RandRange(0, 2);
+	float AnimLength = SEAnim->SetIdelType(IdleTpye);		// 通过随机数确定一个动作
+
+	//更新种子
+	Stream.GenerateNewSeed();
+
+	//产生动作次数
+	int AnimCount = Stream.RandRange(1, 3);
+
+	//返回全部的动画时长
+	return AnimLength * AnimCount;
+}
+
+
 //float ADemoEnemyCharacter::PlayAttackAction(EEnemyAttackType AttackType)
 //{
 //	//如果动作蓝图不存在直接返回0秒

@@ -8,13 +8,13 @@
 
 UDemoEnemyAnim::UDemoEnemyAnim()
 {
-	////获取动作
-	//static ConstructorHelpers::FObjectFinder<UAnimSequence> StaticAnimIdle_I(TEXT("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/MoveGroup/Enemy_Idle_I.Enemy_Idle_I'"));
-	//AnimIdle_I = StaticAnimIdle_I.Object;
-	//static ConstructorHelpers::FObjectFinder<UAnimSequence> StaticAnimIdle_II(TEXT("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/MoveGroup/Enemy_Idle_II.Enemy_Idle_II'"));
-	//AnimIdle_II = StaticAnimIdle_II.Object;
-	//static ConstructorHelpers::FObjectFinder<UAnimSequence> StaticAnimIdle_III(TEXT("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/MoveGroup/Enemy_Idle_III.Enemy_Idle_III'"));
-	//AnimIdle_III = StaticAnimIdle_III.Object;
+	//获取动作
+	static ConstructorHelpers::FObjectFinder<UAnimSequence> StaticAnimIdle_I(TEXT("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/MoveGroup/Enemy_Idle_I.Enemy_Idle_I'"));
+	AnimIdle_I = StaticAnimIdle_I.Object;
+	static ConstructorHelpers::FObjectFinder<UAnimSequence> StaticAnimIdle_II(TEXT("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/MoveGroup/Enemy_Idle_II.Enemy_Idle_II'"));
+	AnimIdle_II = StaticAnimIdle_II.Object;
+	static ConstructorHelpers::FObjectFinder<UAnimSequence> StaticAnimIdle_III(TEXT("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/MoveGroup/Enemy_Idle_III.Enemy_Idle_III'"));
+	AnimIdle_III = StaticAnimIdle_III.Object;
 
 
 //	static ConstructorHelpers::FObjectFinder<UAnimMontage> StaticAnimAttack_I(TEXT("AnimMontage'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/MonEnemy_Attack_I.MonEnemy_Attack_I'"));
@@ -84,21 +84,21 @@ void UDemoEnemyAnim::NativeUpdateAnimation(float DeltaSeconds)
 //	}
 }
 
-//float UDemoEnemyAnim::SetIdelType(int NewType)
-//{
-//	IdleType = FMath::Clamp<float>((float)NewType, 0.f, 2.f);
-//	switch (NewType)
-//	{
-//	case 0:
-//		return AnimIdle_I->GetPlayLength();
-//	case 1:
-//		return AnimIdle_II->GetPlayLength();
-//	case 2:
-//		return AnimIdle_III->GetPlayLength();
-//	}
-//	return AnimIdle_I->GetPlayLength();
-//}
-//
+float UDemoEnemyAnim::SetIdelType(int NewType)
+{
+	IdleType = FMath::Clamp<float>((float)NewType, 0.f, 2.f);
+	switch (NewType)
+	{
+	case 0:
+		return AnimIdle_I->GetPlayLength();
+	case 1:
+		return AnimIdle_II->GetPlayLength();
+	case 2:
+		return AnimIdle_III->GetPlayLength();
+	}
+	return AnimIdle_I->GetPlayLength();
+}
+
 //float UDemoEnemyAnim::PlayAttackAction(EEnemyAttackType AttackType)
 //{
 //	FRandomStream Stream;

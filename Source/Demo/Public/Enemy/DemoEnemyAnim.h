@@ -21,8 +21,8 @@ public:
 	// 重写帧动画更新
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
-//	//设置Idle模式,返回动作时长
-//	float SetIdelType(int NewType);
+	//设置Idle模式,返回动作时长
+	float SetIdelType(int NewType);
 
 //	//播放攻击动画,返回动画时长
 //	float PlayAttackAction(EEnemyAttackType AttackType);
@@ -60,11 +60,11 @@ protected:
 	//保存角色
 	class ADemoEnemyCharacter* SECharacter;
 
-//	//等待动作指针
-//	UAnimSequence* AnimIdle_I;
-//	UAnimSequence* AnimIdle_II;
-//	UAnimSequence* AnimIdle_III;
-//
+	//等待动作指针
+	UAnimSequence* AnimIdle_I;
+	UAnimSequence* AnimIdle_II;
+	UAnimSequence* AnimIdle_III;
+
 //	//攻击动画指针
 //	UAnimMontage* AnimAttack_I;
 //	UAnimMontage* AnimAttack_II;

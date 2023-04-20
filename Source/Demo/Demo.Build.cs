@@ -22,6 +22,7 @@ public class Demo : ModuleRules
             "UMG",                  // UWidgetComponent 依赖
             "AIModule",             // Ai
             "GameplayTasks",        // 行为树
+            "NavigationSystem"      // 导航系统
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

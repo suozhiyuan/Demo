@@ -3,6 +3,9 @@
 
 #include "Enemy/DemoEnemyController.h"
 
+#include "AI/DemoEnemyBlackboardData.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Enemy/DemoEnemyCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/DemoPlayerCharacter.h"
@@ -13,70 +16,71 @@ ADemoEnemyController::ADemoEnemyController()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+// 开始控制，会在BeginPlay之前执行 
+void ADemoEnemyController::OnPossess(APawn* InPawn)
+{
+	//绝对一定必须要调用父类函数
+	Super::OnPossess(InPawn);
 
-//void ADemoEnemyController::Possess(APawn* InPawn)
-//{
-//	//绝对一定必须要调用父类函数
-//	Super::Possess(InPawn);
-//
-//	//顺便在这里实例化一下角色
-//	SECharacter = Cast<ADemoEnemyCharacter>(InPawn);
-//
-//
-//
-//	//获取行为树资源
-//	UBehaviorTree* StaticBehaviorTreeObject = LoadObject<UBehaviorTree>(NULL, TEXT("BehaviorTree'/Game/Blueprint/Enemy/EnemyBehaviorTree.EnemyBehaviorTree'"));
-//
-//	UBehaviorTree* BehaviorTreeObject = DuplicateObject<UBehaviorTree>(StaticBehaviorTreeObject, NULL);
-//
-//	//如果资源不存在,直接返回
-//	if (!BehaviorTreeObject) return;
-//
-//	BehaviorTreeObject->BlackboardAsset = DuplicateObject<UDemoEnemyBlackboard>((UDemoEnemyBlackboard*)StaticBehaviorTreeObject->BlackboardAsset, NULL);
-//
-//
-//
-//	BlackboardComp = Blackboard;
-//
-//	bool IsSuccess = true;
-//
-//	if (BehaviorTreeObject->BlackboardAsset && (Blackboard == nullptr || Blackboard->IsCompatibleWith(BehaviorTreeObject->BlackboardAsset) == false))
-//	{
-//		IsSuccess = UseBlackboard(BehaviorTreeObject->BlackboardAsset, BlackboardComp);
-//	}
-//
-//	if (IsSuccess)
-//	{
-//		BehaviorComp = Cast<UBehaviorTreeComponent>(BrainComponent);
-//		if (!BehaviorComp)
-//		{
-//			BehaviorComp = NewObject<UBehaviorTreeComponent>(this, TEXT("BehaviorComp"));
-//			BehaviorComp->RegisterComponent();
-//		}
-//		BrainComponent = BehaviorComp;
-//		check(BehaviorComp != NULL);
-//
-//		BehaviorComp->StartTree(*BehaviorTreeObject, EBTExecutionMode::Looped);
-//
-//		// 设置预状态为巡逻
-//		BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Patrol);
-//
-//		//修改敌人的初始移动速度是100
-//		SECharacter->SetMaxSpeed(100.f);
-//
-//		/*int32 EnemyStateIndex = BlackboardComp->GetKeyID("EnemyState");
-//		BlackboardComp->SetValue<UBlackboardKeyType_Enum>(EnemyStateIndex, (UBlackboardKeyType_Enum::FDataType)EEnemyAIState::ES_Patrol);*/
-//	}
-//
-//}
-//
-//void ADemoEnemyController::UnPossess()
-//{
-//	Super::UnPossess();
-//
-//	//停止行为树
-//	if (BehaviorComp) BehaviorComp->StopTree();
-//}
+	//顺便在这里实例化一下角色
+	SECharacter = Cast<ADemoEnemyCharacter>(InPawn);
+
+	// 获取行为树资源，这样做会有个问题，1个敌人时行为树有用，多个敌人便会有行为树不生效的问题
+	UBehaviorTree* StaticBehaviorTreeObject = LoadObject<UBehaviorTree>(NULL, TEXT("BehaviorTree'/Game/Blueprint/Enemy/EnemyBehaviorTree.EnemyBehaviorTree'"));
+	// 由于创建多个单位后上方的行为树不在生效，所以这里做了一个复制对象的方法lAi规避该问题
+	UBehaviorTree* BehaviorTreeObject = DuplicateObject<UBehaviorTree>(StaticBehaviorTreeObject, NULL);
+
+	//如果资源不存在,直接返回
+	if (!BehaviorTreeObject) return;
+
+	// 复制黑板数据资源
+	BehaviorTreeObject->BlackboardAsset = DuplicateObject<UDemoEnemyBlackboardData>((UDemoEnemyBlackboardData*)StaticBehaviorTreeObject->BlackboardAsset, NULL);
+
+	BlackboardComp = Blackboard;		// 将父类的黑板赋值给当前黑板数据
+	bool IsSuccess = true;				// 加载黑板数据是否成功
+
+	// BlackboardAsset 存在，Blackboard为空或者与BlackboardAsset不匹配
+	if (BehaviorTreeObject->BlackboardAsset && (Blackboard == nullptr || Blackboard->IsCompatibleWith(BehaviorTreeObject->BlackboardAsset) == false))
+	{
+		IsSuccess = UseBlackboard(BehaviorTreeObject->BlackboardAsset, BlackboardComp);
+	}
+
+	// 绑定行为树组件
+	if (IsSuccess)
+	{
+		BehaviorComp = Cast<UBehaviorTreeComponent>(BrainComponent);									// BrainComponent 负责行为的组件
+		if (!BehaviorComp)
+		{
+			BehaviorComp = NewObject<UBehaviorTreeComponent>(this, TEXT("BehaviorComp"));		// 如果转化没有成功则实例化一下
+			BehaviorComp->RegisterComponent();															// 注册一下
+		}
+		BrainComponent = BehaviorComp;										
+		check(BehaviorComp != NULL);																	// 判断是否为空，为空直接跳出
+
+		BehaviorComp->StartTree(*BehaviorTreeObject, EBTExecutionMode::Looped);						// 启动行为树
+
+		// 以上代码来自于
+		//RunBehaviorTree(BehaviorTreeObject);
+
+		// 设置预状态为巡逻
+		BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Patrol);			// 设置状态枚举
+
+		//修改敌人的初始移动速度是100
+		SECharacter->SetMaxSpeed(100.f);
+
+		// 也是一种修改状态的方法
+		///*int32 EnemyStateIndex = BlackboardComp->GetKeyID("EnemyState");
+		//BlackboardComp->SetValue<UBlackboardKeyType_Enum>(EnemyStateIndex, (UBlackboardKeyType_Enum::FDataType)EEnemyAIState::ES_Patrol);*/
+	}
+}
+
+void ADemoEnemyController::OnUnPossess()
+{
+	Super::OnUnPossess();
+
+	//停止行为树
+	if (BehaviorComp) BehaviorComp->StopTree();
+}
 
 void ADemoEnemyController::BeginPlay()
 {

@@ -24,11 +24,11 @@ public:
 	//实时更新血条的朝向,由Controller调用,传入玩家位置
 	void UpdateHPBarRotation(FVector SPLoaction);
 
-	////修改移动速度
-	//void SetMaxSpeed(float Speed);
+	//修改移动速度
+	void SetMaxSpeed(float Speed);
 
-	////获取Idle等待时长
-	//float GetIdleWaitTime();
+	//获取Idle等待时长
+	float GetIdleWaitTime();
 
 	////播放攻击动画,返回攻击时长
 	//float PlayAttackAction(EEnemyAttackType AttackType);
@@ -109,9 +109,9 @@ private:
 	//血量
 	float HP;
 
-//	//动作引用
-//	class UDemoEnemyAnim* SEAnim;
-//
+	//动作引用
+	class UDemoEnemyAnim* SEAnim;
+
 //	//死亡动画资源
 //	UAnimationAsset* AnimDead_I;
 //	UAnimationAsset* AnimDead_II;
