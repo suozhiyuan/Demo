@@ -246,12 +246,12 @@ void ADemoPlayerCharacter::EatUpEvent()
 	}
 }
 
-//bool ADemoPlayerCharacter::IsPlayerDead()
-//{
-//	if (SPController->SPState) return SPController->SPState->IsPlayerDead();
-//	return false;
-//}
-//
+bool ADemoPlayerCharacter::IsPlayerDead()
+{
+	if (SPController->SPState) return SPController->SPState->IsPlayerDead();
+	return false;
+}
+
 //void ADemoPlayerCharacter::AcceptDamage(int DamageVal)
 //{
 //	if (SPController->SPState) SPController->SPState->AcceptDamage(DamageVal);

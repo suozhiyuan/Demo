@@ -67,7 +67,7 @@ void ADemoEnemyCharacter::BeginPlay()
 
 	//获取动作引用
 	SEAnim = Cast<UDemoEnemyAnim>(GetMesh()->GetAnimInstance());
-	//SEController = Cast<ADemoEnemyController>(GetController());
+	SEController = Cast<ADemoEnemyController>(GetController());
 
 	//绑定插槽
 	WeaponSocket->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("RHSocket"));
@@ -301,7 +301,7 @@ void ADemoEnemyCharacter::OnSeePlayer(APawn* PlayerChar)
 {
 	if (Cast<ADemoPlayerCharacter>(PlayerChar)) 
 	{
-		//告诉控制器我看到玩家了
-		//if (SEController) SEController->OnSeePlayer();
+		// 告诉控制器我看到玩家了
+		if (SEController) SEController->OnSeePlayer();
 	}
 }

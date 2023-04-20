@@ -51,9 +51,9 @@ public:
 	//提升饥饿值
 	void PromoteHunger();
 
-//	//是否已经死亡
-//	bool IsPlayerDead();
-//
+	//是否已经死亡
+	bool IsPlayerDead();
+
 //	//接受伤害
 //	void AcceptDamage(int DamageVal);
 //

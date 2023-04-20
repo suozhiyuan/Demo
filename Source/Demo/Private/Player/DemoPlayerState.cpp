@@ -187,11 +187,11 @@ void ADemoPlayerState::PromoteHunger()
 	Hunger = FMath::Clamp<float>(Hunger + 100.f, 0, 600.f);
 }
 
-//bool ADemoPlayerState::IsPlayerDead()
-//{
-//	return HP <= 0.f;
-//}
-//
+bool ADemoPlayerState::IsPlayerDead()
+{
+	return HP <= 0.f;
+}
+
 //void ADemoPlayerState::AcceptDamage(int DamageVal)
 //{
 //	HP = FMath::Clamp<float>(HP - DamageVal, 0.f, 500.f);

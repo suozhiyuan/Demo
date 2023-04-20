@@ -93,14 +93,16 @@ void ADemoEnemyController::BeginPlay()
 	//如果角色没有初始化
 	if (!SECharacter) SECharacter = Cast<ADemoEnemyCharacter>(GetPawn());
 
-	////初始设定没有锁定玩家
-	//IsLockPlayer = false;
+	//初始设定没有锁定玩家
+	IsLockPlayer = false;
 
 	////进行委托绑定
 	//FTimerDelegate EPDisDele = FTimerDelegate::CreateUObject(this, &ADemoEnemyController::UpdateStatePama);
 	//GetWorld()->GetTimerManager().SetTimer(EPDisHandle, EPDisDele, 0.3f, true);
+
 	////血量百分比初始化为1
 	//HPRatio = 1;
+
 	////设置状态计时器
 	//IsAllowHurt = false;
 	//HurtTimeCount = 0.f;
@@ -122,31 +124,33 @@ FVector ADemoEnemyController::GetPlayerLocation() const
 	return FVector::ZeroVector;
 }
 
-//bool ADemoEnemyController::IsPlayerDead()
-//{
-//	if (SPCharacter) return SPCharacter->IsPlayerDead();
-//	return false;
-//}
-//
-//void ADemoEnemyController::OnSeePlayer()
-//{
-//	//如果已经锁定了玩家或者玩家已经死了,不再执行下面的函数
-//	if (IsLockPlayer || IsPlayerDead()) return;
-//
-//	//设置锁定了玩家
-//	IsLockPlayer = true;
-//	//修改预状态为追逐
-//	BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Chase);
-//	//修改最大速度为300
-//	SECharacter->SetMaxSpeed(300.f);
-//}
+bool ADemoEnemyController::IsPlayerDead()
+{
+	if (SPCharacter) return SPCharacter->IsPlayerDead();
+	return false;
+}
 
-//void ADemoEnemyController::LoosePlayer()
-//{
-//	//设置丢失玩家的锁定
-//	IsLockPlayer = false;
-//}
-//
+void ADemoEnemyController::OnSeePlayer()
+{
+	//如果已经锁定了玩家或者玩家已经死了,不再执行下面的函数
+	if (IsLockPlayer || IsPlayerDead()) return;
+
+	//设置锁定了玩家
+	IsLockPlayer = true;
+
+	//修改预状态为追逐
+	BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Chase);
+
+	//修改最大速度为300
+	SECharacter->SetMaxSpeed(300.f);
+}
+
+void ADemoEnemyController::LoosePlayer()
+{
+	//设置丢失玩家的锁定
+	IsLockPlayer = false;
+}
+
 //bool ADemoEnemyController::IsPlayerAway()
 //{
 //	if (!IsLockPlayer || !SPCharacter || EPDisList.Num() < 6 || IsPlayerDead()) return false;

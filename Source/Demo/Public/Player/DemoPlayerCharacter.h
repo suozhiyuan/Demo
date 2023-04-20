@@ -46,8 +46,8 @@ public:
 	//吃完东西调用的事件,由Anim进行调用
 	void EatUpEvent();
 
-	////获取是否已经死亡
-	//bool IsPlayerDead();
+	//获取是否已经死亡
+	bool IsPlayerDead();
 
 	////接受伤害
 	//void AcceptDamage(int DamageVal);
