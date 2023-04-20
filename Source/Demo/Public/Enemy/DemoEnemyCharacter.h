@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Data/DemoType.h"
 #include "DemoEnemyCharacter.generated.h"
 
 UCLASS()
@@ -30,8 +31,8 @@ public:
 	//获取Idle等待时长
 	float GetIdleWaitTime();
 
-	////播放攻击动画,返回攻击时长
-	//float PlayAttackAction(EEnemyAttackType AttackType);
+	//播放攻击动画,返回攻击时长
+	float PlayAttackAction(EEnemyAttackType AttackType);
 
 	////接受攻击,也可以重写APawn的TakeDamage函数,不过我嫌麻烦
 	//void AcceptDamage(int DamageVal);

@@ -177,16 +177,16 @@ float ADemoEnemyCharacter::GetIdleWaitTime()
 	return AnimLength * AnimCount;
 }
 
+float ADemoEnemyCharacter::PlayAttackAction(EEnemyAttackType AttackType)
+{
+	//如果动作蓝图不存在直接返回0秒
+	if (!SEAnim) return 0.f;
 
-//float ADemoEnemyCharacter::PlayAttackAction(EEnemyAttackType AttackType)
-//{
-//	//如果动作蓝图不存在直接返回0秒
-//	if (!SEAnim) return 0.f;
-//	//返回攻击时长
-//	return SEAnim->PlayAttackAction(AttackType);
-//}
-//
-//
+	//返回攻击时长
+	return SEAnim->PlayAttackAction(AttackType);
+}
+
+
 //void ADemoEnemyCharacter::AcceptDamage(int DamageVal)
 //{
 //	//如果开启了防御,直接返回

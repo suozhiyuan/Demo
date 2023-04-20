@@ -380,9 +380,9 @@ enum  class EEnemyAIState : uint8
 UENUM(BlueprintType)
 enum class EEnemyAttackType : uint8
 {
-	EA_Normal   UMETA(DisplayName = "Normal"),
-	EA_Dash     UMETA(DisplayName = "Dash"),
-	EA_Pursuit  UMETA(DisplayName = "Pursuit")
+	EA_Normal   UMETA(DisplayName = "Normal"),		// ÆÕÍ¨¹¥»÷
+	EA_Dash     UMETA(DisplayName = "Dash"),		// ³å·æ×´Ì¬
+	EA_Pursuit  UMETA(DisplayName = "Pursuit")		// ´óÕÐ
 };
 
 //Ð¡µØÍ¼Ëõ·Å×´Ì¬
