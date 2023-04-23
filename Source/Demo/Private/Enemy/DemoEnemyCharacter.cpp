@@ -101,7 +101,7 @@ void ADemoEnemyCharacter::BeginPlay()
 	////设置资源ID是3
 	//ResourceIndex = 3;
 }
-//
+
 //void ADemoEnemyCharacter::CreateFlobObject()
 //{
 //	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
