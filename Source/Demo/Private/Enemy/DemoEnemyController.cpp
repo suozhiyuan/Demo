@@ -100,12 +100,12 @@ void ADemoEnemyController::BeginPlay()
 	FTimerDelegate EPDisDele = FTimerDelegate::CreateUObject(this, &ADemoEnemyController::UpdateStatePama);
 	GetWorld()->GetTimerManager().SetTimer(EPDisHandle, EPDisDele, 0.3f, true);		// 每0.3秒执行一次时间委托
 
-	////血量百分比初始化为1
-	//HPRatio = 1;
+	//血量百分比初始化为1
+	HPRatio = 1;
 
-	////设置状态计时器
-	//IsAllowHurt = false;
-	//HurtTimeCount = 0.f;
+	//设置状态计时器
+	IsAllowHurt = false;
+	HurtTimeCount = 0.f;
 }
 
 
@@ -180,20 +180,23 @@ void ADemoEnemyController::ResetProcess(bool IsFinish)
 	BlackboardComp->SetValueAsBool("ProcessFinish", IsFinish);
 }
 
-//void ADemoEnemyController::UpdateDamageRatio(float HPRatioVal)
-//{
-//	//更新血值百分比
-//	HPRatio = HPRatioVal;
-//	//状态修改为受伤
-//	if (IsAllowHurt) BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Hurt);
-//	//设置允许受伤状态
-//	IsAllowHurt = false;
-//}
+void ADemoEnemyController::UpdateDamageRatio(float HPRatioVal)
+{
+	//更新血值百分比
+	HPRatio = HPRatioVal;
+
+	//状态修改为受伤
+	if (IsAllowHurt) BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Hurt);
+
+	//设置允许受伤状态
+	IsAllowHurt = false;
+}
 
 void ADemoEnemyController::FinishStateHurt()
 {
 	//如果没有锁定玩家,设置锁定
 	if (!IsLockPlayer) IsLockPlayer = true;
+
 	//如果血值在0.2f以下
 	if (HPRatio < 0.2f)
 	{
@@ -203,8 +206,10 @@ void ADemoEnemyController::FinishStateHurt()
 		Stream.GenerateNewSeed();
 		//先随机一个动作类别
 		int ActionRatio = Stream.RandRange(0, 10);
+
 		//30的几率触发防御
-		if (ActionRatio < 4) {
+		if (ActionRatio < 4) 
+		{
 			//先进入防御状态
 			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
 		}
@@ -222,7 +227,8 @@ void ADemoEnemyController::FinishStateHurt()
 		//先随机一个动作类别
 		int ActionRatio = Stream.RandRange(0, 10);
 		//30的几率触发防御
-		if (ActionRatio < 4) {
+		if (ActionRatio < 4) 
+		{
 			//进入防御状态
 			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
 		}
@@ -284,14 +290,14 @@ void ADemoEnemyController::UpdateStatePama()
 		EPDisList.Push(FVector::Distance(SECharacter->GetActorLocation(), GetPlayerLocation()));
 	}
 
-	////更新受伤害序列,受伤一次后6秒内不允许进入受伤状态
-	//if (HurtTimeCount < 6.f)
-	//{
-	//	HurtTimeCount += 0.3f;
-	//}
-	//else 
-	//{
-	//	HurtTimeCount = 0.f;
-	//	IsAllowHurt = true;
-	//}
+	//更新受伤害序列,受伤一次后6秒内不允许进入受伤状态
+	if (HurtTimeCount < 6.f)
+	{
+		HurtTimeCount += 0.3f;
+	}
+	else 
+	{
+		HurtTimeCount = 0.f;
+		IsAllowHurt = true;
+	}
 }

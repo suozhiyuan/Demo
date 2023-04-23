@@ -32,7 +32,7 @@ UDemoEnemyAnim::UDemoEnemyAnim()
 	static ConstructorHelpers::FObjectFinder<UAnimSequence> StaticAnimAttackSeq_IV(TEXT("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/Enemy_Attack_IV.Enemy_Attack_IV'"));
 	AnimAttackSeq_IV = StaticAnimAttackSeq_IV.Object;
 
-
+	//  ‹…À∂Øª≠
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> StaticAnimHurt(TEXT("AnimMontage'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/MonEnemy_Hurt.MonEnemy_Hurt'"));
 	AnimHurt = StaticAnimHurt.Object;
 

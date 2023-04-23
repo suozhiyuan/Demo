@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "Data/DemoDataHandle.h"
 #include "Data/DemoType.h"
+#include "Enemy/DemoEnemyCharacter.h"
 #include "Hand/DemoHandApple.h"
 #include "Hand/DemoHandAxe.h"
 #include "Hand/DemoHandHammer.h"
@@ -63,22 +64,24 @@ void ADemoHandObject::BeginPlay()
 
 void ADemoHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	DemoHelper::Debug(FString("OnOverlayBegin"), 3.f);
+	// DemoHelper::Debug(FString("OnOverlayBegin"), 3.f);
 
-	//if (Cast<ADemoEnemyCharacter>(OtherActor))
-	//{
-	//	//获取物品属性
-	//	TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ObjectIndex);
-	//	//获取对动物的伤害值
-	//	Cast<ADemoEnemyCharacter>(OtherActor)->AcceptDamage(ObjectAttr->AnimalAttack);
-	//}
+	if (Cast<ADemoEnemyCharacter>(OtherActor))
+	{
+		//获取物品属性
+		TSharedPtr<ObjectAttribute> ObjectAttr = *DemoDataHandle::Get()->ObjectAttrMap.Find(ObjectIndex);
+
+		//获取对动物的伤害值
+		Cast<ADemoEnemyCharacter>(OtherActor)->AcceptDamage(ObjectAttr->AnimalAttack);
+	}
 	////如果音效存在,播放音效,默认音效为拳打
 	//if (OverlaySound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), OverlaySound, OtherActor->GetActorLocation());
 }
 
 void ADemoHandObject::OnOverlayEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	DemoHelper::Debug(FString("OnOverlayEnd"), 3.f);
+	//DemoHelper::Debug(FString("OnOverlayEnd"), 3.f);
+
 }
 
 // Called every frame

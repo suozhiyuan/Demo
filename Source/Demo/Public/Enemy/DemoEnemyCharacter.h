@@ -34,8 +34,8 @@ public:
 	//播放攻击动画,返回攻击时长
 	float PlayAttackAction(EEnemyAttackType AttackType);
 
-	////接受攻击,也可以重写APawn的TakeDamage函数,不过我嫌麻烦
-	//void AcceptDamage(int DamageVal);
+	//接受攻击,也可以重写APawn的TakeDamage函数,不过我嫌麻烦
+	void AcceptDamage(int DamageVal);
 
 	//播放受伤动画
 	float PlayHurtAction();

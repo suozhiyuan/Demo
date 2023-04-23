@@ -45,8 +45,8 @@ public:
 	//告诉控制器动作完成
 	void ResetProcess(bool IsFinish);
 
-//	//接受伤害,传入剩余生命值
-//	void UpdateDamageRatio(float HPRatioVal);
+	//接受伤害,传入剩余生命值
+	void UpdateDamageRatio(float HPRatioVal);
 
 	//完成伤害状态
 	void FinishStateHurt();

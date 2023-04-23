@@ -187,49 +187,52 @@ float ADemoEnemyCharacter::PlayAttackAction(EEnemyAttackType AttackType)
 }
 
 
-//void ADemoEnemyCharacter::AcceptDamage(int DamageVal)
-//{
-//	//如果开启了防御,直接返回
-//	if (SEAnim && SEAnim->IsDefence) return;
-//	//进行血值更新
-//	HP = FMath::Clamp<float>(HP - DamageVal, 0.f, 500.f);
-//	HPBarWidget->ChangeHP(HP / 200.f);
-//	//如果血值小于0
-//	if (HP == 0.f && !DeadHandle.IsValid())
-//	{
-//		//告诉控制器死亡
-//		SEController->EnemyDead();
-//		//停止所有动画
-//		SEAnim->StopAllAction();
-//
-//		float DeadDuration = 0.f;
-//		FRandomStream Stream;
-//		Stream.GenerateNewSeed();
-//		int SelectIndex = Stream.RandRange(0, 1);
-//		if (SelectIndex == 0)
-//		{
-//			GetMesh()->PlayAnimation(AnimDead_I, false);
-//			DeadDuration = AnimDead_I->GetMaxCurrentTime() * 2;
-//		}
-//		else
-//		{
-//			GetMesh()->PlayAnimation(AnimDead_II, false);
-//			DeadDuration = AnimDead_II->GetMaxCurrentTime() * 2;
-//		}
-//
-//		//生成掉落物
-//		CreateFlobObject();
-//
-//		//添加事件委托
-//		FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ADemoEnemyCharacter::DestroyEvent);
-//		GetWorld()->GetTimerManager().SetTimer(DeadHandle, TimerDelegate, DeadDuration, false);
-//	}
-//	else
-//	{
-//		//告诉控制器收到伤害
-//		if (SEController) SEController->UpdateDamageRatio(HP / 200.f);
-//	}
-//}
+void ADemoEnemyCharacter::AcceptDamage(int DamageVal)
+{
+	////如果开启了防御,直接返回
+	//if (SEAnim && SEAnim->IsDefence) return;
+
+	//进行血值更新
+	HP = FMath::Clamp<float>(HP - DamageVal, 0.f, 500.f);		
+	HPBarWidget->ChangeHP(HP / 200.f);
+
+	//如果血值小于0
+	//if (HP == 0.f && !DeadHandle.IsValid())
+	if (HP == 0.f)
+	{
+		////告诉控制器死亡
+		//SEController->EnemyDead();
+		////停止所有动画
+		//SEAnim->StopAllAction();
+
+		//float DeadDuration = 0.f;
+		//FRandomStream Stream;
+		//Stream.GenerateNewSeed();
+		//int SelectIndex = Stream.RandRange(0, 1);
+		//if (SelectIndex == 0)
+		//{
+		//	GetMesh()->PlayAnimation(AnimDead_I, false);
+		//	DeadDuration = AnimDead_I->GetMaxCurrentTime() * 2;
+		//}
+		//else
+		//{
+		//	GetMesh()->PlayAnimation(AnimDead_II, false);
+		//	DeadDuration = AnimDead_II->GetMaxCurrentTime() * 2;
+		//}
+
+		////生成掉落物
+		//CreateFlobObject();
+
+		////添加事件委托
+		//FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ADemoEnemyCharacter::DestroyEvent);
+		//GetWorld()->GetTimerManager().SetTimer(DeadHandle, TimerDelegate, DeadDuration, false);
+	}
+	else
+	{
+		//告诉控制器收到伤害
+		if (SEController) SEController->UpdateDamageRatio(HP / 200.f);
+	}
+}
 
 float ADemoEnemyCharacter::PlayHurtAction()
 {
