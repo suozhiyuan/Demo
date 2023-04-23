@@ -83,7 +83,7 @@ void ADemoEnemyCharacter::BeginPlay()
 	HPBar->SetRelativeLocation(FVector(0.f, 0.f, 100.f));
 	HPBar->SetDrawSize(FVector2D(100.f, 10.f));
 	//设置初始血量
-	HP = 100.f;
+	HP = 200.f;
 	HPBarWidget->ChangeHP(HP / 200.f);
 
 	//敌人感知参数设置
@@ -189,8 +189,8 @@ float ADemoEnemyCharacter::PlayAttackAction(EEnemyAttackType AttackType)
 
 void ADemoEnemyCharacter::AcceptDamage(int DamageVal)
 {
-	////如果开启了防御,直接返回
-	//if (SEAnim && SEAnim->IsDefence) return;
+	//如果开启了防御,直接返回
+	if (SEAnim && SEAnim->IsDefence) return;
 
 	//进行血值更新
 	HP = FMath::Clamp<float>(HP - DamageVal, 0.f, 500.f);		
@@ -242,16 +242,16 @@ float ADemoEnemyCharacter::PlayHurtAction()
 	return SEAnim->PlayHurtAction();
 }
 
-//void ADemoEnemyCharacter::StartDefence()
-//{
-//	if (SEAnim) SEAnim->IsDefence = true;
-//}
-//
-//void ADemoEnemyCharacter::StopDefence()
-//{
-//	if (SEAnim) SEAnim->IsDefence = false;
-//}
-//
+void ADemoEnemyCharacter::StartDefence()
+{
+	if (SEAnim) SEAnim->IsDefence = true;
+}
+
+void ADemoEnemyCharacter::StopDefence()
+{
+	if (SEAnim) SEAnim->IsDefence = false;
+}
+
 //void ADemoEnemyCharacter::DestroyEvent()
 //{
 //	//注销时间函数

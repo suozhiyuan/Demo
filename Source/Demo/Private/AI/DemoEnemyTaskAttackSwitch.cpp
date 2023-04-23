@@ -13,8 +13,8 @@ EBTNodeResult::Type UDemoEnemyTaskAttackSwitch::ExecuteTask(UBehaviorTreeCompone
 	//如果初始化敌人参数不成功,直接返回失败
 	if (!InitEnemyElement(OwnerComp)) return EBTNodeResult::Failed;
 
-	////给玩家指针赋值
-	//OwnerComp.GetBlackboardComponent()->SetValueAsObject(PlayerPawn.SelectedKeyName, SEController->GetPlayerPawn());
+	//给玩家指针赋值
+	OwnerComp.GetBlackboardComponent()->SetValueAsObject(PlayerPawn.SelectedKeyName, SEController->GetPlayerPawn());
 
 	//如果玩家已经死亡
 	if (SEController->IsPlayerDead())

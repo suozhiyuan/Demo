@@ -55,9 +55,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EnemyAnim)
 		float RootBoneAlpha;
 
-//	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EnemyAnim)
-//		bool IsDefence;
-//
+	// ÊÇ·ñ·ÀÓù
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = EnemyAnim)
+		bool IsDefence;
+
 
 protected:
 

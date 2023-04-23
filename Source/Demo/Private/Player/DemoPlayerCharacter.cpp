@@ -114,8 +114,8 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	//一开始输入不锁住输入
 	IsInputLocked = false;
 
-	////初始化没有攻击
-	//IsAttack = false;
+	//初始化没有攻击
+	IsAttack = false;
 }
 
 // Called when the game starts or when spawned
@@ -195,8 +195,8 @@ void ADemoPlayerCharacter::ChangeHandObjectDetect(bool IsOpen)
 	ADemoHandObject* HandObjectClass = Cast<ADemoHandObject>(HandObject->GetChildActor());
 	if (HandObjectClass) HandObjectClass->ChangeOverlayDetect(IsOpen);
 
-	////修改攻击状态
-	//IsAttack = IsOpen;
+	//修改攻击状态
+	IsAttack = IsOpen;
 }
 
 //是否渲染手上物品,由Anim进行调用

@@ -50,10 +50,10 @@ public:
 
 	//完成伤害状态
 	void FinishStateHurt();
-//
-//	//完成防御状态
-//	void FinishStateDefence();
-//
+
+	//完成防御状态
+	void FinishStateDefence();
+
 //	//死亡
 //	void EnemyDead();
 

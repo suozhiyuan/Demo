@@ -40,11 +40,11 @@ public:
 	//播放受伤动画
 	float PlayHurtAction();
 
-	////开启防御
-	//void StartDefence();
+	//开启防御
+	void StartDefence();
 
-	////停止防御
-	//void StopDefence();
+	//停止防御
+	void StopDefence();
 
 	////销毁函数
 	//void DestroyEvent();

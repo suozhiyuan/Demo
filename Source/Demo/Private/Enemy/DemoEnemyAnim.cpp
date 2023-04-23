@@ -44,7 +44,7 @@ UDemoEnemyAnim::UDemoEnemyAnim()
 	RootBoneAlpha = 0.f;
 	CurrentPlayTime = 0.f;
 	StartYPos = 0.f;
-//	IsDefence = false;
+	IsDefence = false;
 }
 
 void UDemoEnemyAnim::NativeUpdateAnimation(float DeltaSeconds)

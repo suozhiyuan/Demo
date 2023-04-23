@@ -207,14 +207,15 @@ void ADemoEnemyController::FinishStateHurt()
 		//先随机一个动作类别
 		int ActionRatio = Stream.RandRange(0, 10);
 
-		//30的几率触发防御
+		// 30的几率触发防御
 		if (ActionRatio < 4) 
 		{
-			//先进入防御状态
+			// 先进入防御状态
 			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
 		}
 		else
 		{
+			// 进入逃跑状态
 			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Escape);
 		}
 	}
@@ -226,6 +227,7 @@ void ADemoEnemyController::FinishStateHurt()
 		Stream.GenerateNewSeed();
 		//先随机一个动作类别
 		int ActionRatio = Stream.RandRange(0, 10);
+
 		//30的几率触发防御
 		if (ActionRatio < 4) 
 		{
@@ -240,34 +242,37 @@ void ADemoEnemyController::FinishStateHurt()
 	}
 }
 
-//void ADemoEnemyController::FinishStateDefence()
-//{
-//	//设置状态完成
-//	ResetProcess(true);
-//	//停止防御动作
-//	SECharacter->StopDefence();
-//	//获取与玩家的距离
-//	float SEToSP = FVector::Distance(SECharacter->GetActorLocation(), GetPlayerLocation());
-//	//如果玩家还在攻击并且距离小于200,继续防御状态
-//	if (SPCharacter->IsAttack && SEToSP < 200.f)
-//	{
-//		BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
-//	}
-//	else
-//	{
-//		//如果血值小于0.2,逃跑
-//		if (HPRatio < 0.2f)
-//		{
-//			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Escape);
-//		}
-//		else
-//		{
-//			//跳到攻击状态
-//			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Attack);
-//		}
-//	}
-//}
-//
+void ADemoEnemyController::FinishStateDefence()
+{
+	//设置状态完成
+	ResetProcess(true);
+
+	//停止防御动作
+	SECharacter->StopDefence();
+
+	//获取与玩家的距离
+	float SEToSP = FVector::Distance(SECharacter->GetActorLocation(), GetPlayerLocation());
+
+	//如果玩家还在攻击并且距离小于200,继续防御状态
+	if (SPCharacter->IsAttack && SEToSP < 200.f)
+	{
+		BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
+	}
+	else
+	{
+		//如果血值小于0.2,逃跑
+		if (HPRatio < 0.2f)
+		{
+			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Escape);
+		}
+		else
+		{
+			//跳到攻击状态
+			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Attack);
+		}
+	}
+}
+
 //void ADemoEnemyController::EnemyDead()
 //{
 //	//停止行为树

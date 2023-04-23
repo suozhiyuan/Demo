@@ -84,8 +84,8 @@ public:
 	//是否锁住输入
 	bool IsInputLocked;
 
-	////是否在攻击
-	//bool IsAttack;
+	//是否在攻击
+	bool IsAttack;
 
 protected:
 	// Called when the game starts or when spawned
