@@ -16,5 +16,4 @@ class DEMO_API UDemoEnemyTaskRotate : public UDemoEnemyTaskBase
 
 	////ÖØÐ´Ö´ÐÐº¯Êý
 	//virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-
 };

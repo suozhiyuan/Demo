@@ -14,24 +14,26 @@ class DEMO_API UDemoEnemyTaskAttachDash : public UDemoEnemyTaskBase
 {
 	GENERATED_BODY()
 
-//	//重写执行函数
-//	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-//	//重写任务终止函数
-//	virtual EBTNodeResult::Type AbortTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-//
-//protected:
-//
-//	//动作结束后事件
-//	void OnAnimationTimerDone();
-//
-//protected:
-//
-//	UPROPERTY(EditAnywhere, Category = "Blackboard")
-//		struct FBlackboardKeySelector WaitTime;
-//
-//	UPROPERTY(EditAnywhere, Category = "Blackboard")
-//		struct FBlackboardKeySelector Destination;
-//
-//	//攻击动作结束后的委托
-//	FTimerHandle TimerHandle;
+	//重写执行函数
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	//重写任务终止函数
+	virtual EBTNodeResult::Type AbortTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+protected:
+
+	//动作结束后事件
+	void OnAnimationTimerDone();
+
+protected:
+
+	// 等待时间
+	UPROPERTY(EditAnywhere, Category = "Blackboard")
+		struct FBlackboardKeySelector WaitTime;
+
+	// 冲刺的目标地点
+	UPROPERTY(EditAnywhere, Category = "Blackboard")
+		struct FBlackboardKeySelector Destination;
+
+	// 攻击动作结束后的委托
+	FTimerHandle TimerHandle;
 };

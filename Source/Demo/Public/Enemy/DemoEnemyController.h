@@ -36,12 +36,12 @@ public:
 	//丢失玩家定位
 	void LoosePlayer();
 
-//	//判定玩家是否在远离
-//	bool IsPlayerAway();
-//
-//	//获取玩家指针
-//	UObject* GetPlayerPawn();
-//
+	//判定玩家是否在远离
+	bool IsPlayerAway();
+
+	//获取玩家指针
+	UObject* GetPlayerPawn();
+
 //	//告诉控制器动作完成
 //	void ResetProcess(bool IsFinish);
 //
@@ -67,11 +67,11 @@ protected:
 
 	virtual void BeginPlay() override;
 
-//
-//private:
-//
-//	//更新状态序列
-//	void UpdateStatePama();
+
+private:
+
+	//更新状态序列
+	void UpdateStatePama();
 
 private:
 
@@ -87,19 +87,19 @@ private:
 	// 行为树组件
 	class UBehaviorTreeComponent* BehaviorComp;
 
-//	//保存与玩家的距离序列,保存8个,每半秒更新一次
-//	TArray<float> EPDisList;
-//
-//	//时间委托句柄
-//	FTimerHandle EPDisHandle;
-//
+	//保存与玩家的距离序列,保存6个,每半秒更新一次
+	TArray<float> EPDisList;
+
+	//时间委托句柄，每0.3秒更新上方数组
+	FTimerHandle EPDisHandle;
+
 //	//血值
 //	float HPRatio;
-//
-//	//是否允许播放受伤状态
-//	bool IsAllowHurt;
-//
-//	//受伤计时器
-//	float HurtTimeCount;
+
+	//是否允许播放受伤状态
+	bool IsAllowHurt;
+
+	//受伤计时器
+	float HurtTimeCount;
 
 };

@@ -13,17 +13,17 @@ UCLASS()
 class DEMO_API UDemoEnemyTaskAttackSwitch : public UDemoEnemyTaskBase
 {
 	GENERATED_BODY()
-//	//重写执行函数
-//	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-//
-//protected:
-//
-//	UPROPERTY(EditAnywhere, Category = "Blackboard")
-//		struct FBlackboardKeySelector AttackType;
-//
-//	UPROPERTY(EditAnywhere, Category = "Blackboard")
-//		struct FBlackboardKeySelector EnemyState;
-//
+	//重写执行函数
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+protected:
+
+	UPROPERTY(EditAnywhere, Category = "Blackboard")
+		struct FBlackboardKeySelector AttackType;
+
+	UPROPERTY(EditAnywhere, Category = "Blackboard")
+		struct FBlackboardKeySelector EnemyState;
+
 //	UPROPERTY(EditAnywhere, Category = "Blackboard")
 //		struct FBlackboardKeySelector PlayerPawn;
 

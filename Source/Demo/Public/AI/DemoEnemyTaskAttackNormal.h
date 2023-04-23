@@ -14,13 +14,11 @@ class DEMO_API UDemoEnemyTaskAttackNormal : public UDemoEnemyTaskBase
 {
 	GENERATED_BODY()
 
-//	//重写执行函数
-//	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-//
-//protected:
-//
-//	UPROPERTY(EditAnywhere, Category = "Blackboard")
-//		struct FBlackboardKeySelector WaitTime;
+	//重写执行函数
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
+protected:
 
+	UPROPERTY(EditAnywhere, Category = "Blackboard")
+		struct FBlackboardKeySelector WaitTime;
 };

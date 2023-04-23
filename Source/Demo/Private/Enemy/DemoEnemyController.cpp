@@ -96,9 +96,9 @@ void ADemoEnemyController::BeginPlay()
 	//初始设定没有锁定玩家
 	IsLockPlayer = false;
 
-	////进行委托绑定
-	//FTimerDelegate EPDisDele = FTimerDelegate::CreateUObject(this, &ADemoEnemyController::UpdateStatePama);
-	//GetWorld()->GetTimerManager().SetTimer(EPDisHandle, EPDisDele, 0.3f, true);
+	//进行定时器委托绑定
+	FTimerDelegate EPDisDele = FTimerDelegate::CreateUObject(this, &ADemoEnemyController::UpdateStatePama);
+	GetWorld()->GetTimerManager().SetTimer(EPDisHandle, EPDisDele, 0.3f, true);		// 每0.3秒执行一次时间委托
 
 	////血量百分比初始化为1
 	//HPRatio = 1;
@@ -151,26 +151,29 @@ void ADemoEnemyController::LoosePlayer()
 	IsLockPlayer = false;
 }
 
-//bool ADemoEnemyController::IsPlayerAway()
-//{
-//	if (!IsLockPlayer || !SPCharacter || EPDisList.Num() < 6 || IsPlayerDead()) return false;
-//	int BiggerNum = 0;
-//	float LastDis = -1.f;
-//	//只要有三个比前面的大,就判定远离了
-//	for (TArray<float>::TIterator It(EPDisList); It; ++It)
-//	{
-//		if (*It > LastDis) BiggerNum += 1;
-//		LastDis = *It;
-//	}
-//	return BiggerNum > 3;
-//}
-//
-//
-//UObject* ADemoEnemyController::GetPlayerPawn()
-//{
-//	return SPCharacter;
-//}
-//
+//判定玩家是否在远离
+bool ADemoEnemyController::IsPlayerAway()
+{
+	// 如果目标锁定，或没有玩家角色，或目标数量小于6，或玩家角色死亡，表示玩家没有远离
+	if (!IsLockPlayer || !SPCharacter || EPDisList.Num() < 6 || IsPlayerDead()) return false;
+
+	int BiggerNum = 0;
+	float LastDis = -1.f;
+
+	//只要有三个比前面的大,就判定远离了
+	for (TArray<float>::TIterator It(EPDisList); It; ++It)
+	{
+		if (*It > LastDis) BiggerNum += 1;
+		LastDis = *It;
+	}
+	return BiggerNum > 3;
+}
+
+UObject* ADemoEnemyController::GetPlayerPawn()
+{
+	return SPCharacter;
+}
+
 //void ADemoEnemyController::ResetProcess(bool IsFinish)
 //{
 //	//修改完成状态
@@ -257,8 +260,6 @@ void ADemoEnemyController::LoosePlayer()
 //			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Attack);
 //		}
 //	}
-//
-//
 //}
 //
 //void ADemoEnemyController::EnemyDead()
@@ -269,28 +270,28 @@ void ADemoEnemyController::LoosePlayer()
 //	//临时代码,注销时间函数
 //	if (EPDisHandle.IsValid()) GetWorld()->GetTimerManager().ClearTimer(EPDisHandle);
 //}
-//
-//void ADemoEnemyController::UpdateStatePama()
-//{
-//	//更新与玩家的距离序列
-//	if (EPDisList.Num() < 6)
-//	{
-//		EPDisList.Push(FVector::Distance(SECharacter->GetActorLocation(), GetPlayerLocation()));
-//	}
-//	else
-//	{
-//		EPDisList.RemoveAt(0);
-//		EPDisList.Push(FVector::Distance(SECharacter->GetActorLocation(), GetPlayerLocation()));
-//	}
-//
-//	//更新受伤害序列,受伤一次后6秒内不允许进入受伤状态
-//	if (HurtTimeCount < 6.f)
-//	{
-//		HurtTimeCount += 0.3f;
-//	}
-//	else {
-//		HurtTimeCount = 0.f;
-//		IsAllowHurt = true;
-//	}
-//
-//}
+
+void ADemoEnemyController::UpdateStatePama()
+{
+	//更新与玩家的距离序列
+	if (EPDisList.Num() < 6)
+	{
+		EPDisList.Push(FVector::Distance(SECharacter->GetActorLocation(), GetPlayerLocation()));
+	}
+	else
+	{
+		EPDisList.RemoveAt(0);		// 最前边的移除
+		EPDisList.Push(FVector::Distance(SECharacter->GetActorLocation(), GetPlayerLocation()));
+	}
+
+	////更新受伤害序列,受伤一次后6秒内不允许进入受伤状态
+	//if (HurtTimeCount < 6.f)
+	//{
+	//	HurtTimeCount += 0.3f;
+	//}
+	//else 
+	//{
+	//	HurtTimeCount = 0.f;
+	//	IsAllowHurt = true;
+	//}
+}
