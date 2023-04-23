@@ -57,7 +57,6 @@ public:
 
 	////播放死亡动画,返回播放时长
 	//float PlayDeadAnim();
-
 public:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Demo")

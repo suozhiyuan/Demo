@@ -146,7 +146,6 @@ void ADemoPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	check(PlayerInputComponent);
-
 	PlayerInputComponent->BindAxis("MoveForWard", this, &ADemoPlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ADemoPlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &ADemoPlayerCharacter::Turn);
