@@ -14,6 +14,6 @@ class DEMO_API UDemoEnemyTaskRotate : public UDemoEnemyTaskBase
 {
 	GENERATED_BODY()
 
-	////重写执行函数
-	//virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	//重写执行函数
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 };

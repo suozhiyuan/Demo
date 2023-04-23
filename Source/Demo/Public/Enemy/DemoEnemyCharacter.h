@@ -37,8 +37,8 @@ public:
 	////接受攻击,也可以重写APawn的TakeDamage函数,不过我嫌麻烦
 	//void AcceptDamage(int DamageVal);
 
-	////播放受伤动画
-	//float PlayHurtAction();
+	//播放受伤动画
+	float PlayHurtAction();
 
 	////开启防御
 	//void StartDefence();

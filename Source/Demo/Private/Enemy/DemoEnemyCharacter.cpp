@@ -230,15 +230,15 @@ float ADemoEnemyCharacter::PlayAttackAction(EEnemyAttackType AttackType)
 //		if (SEController) SEController->UpdateDamageRatio(HP / 200.f);
 //	}
 //}
-//
-//float ADemoEnemyCharacter::PlayHurtAction()
-//{
-//	//如果动作蓝图不存在直接返回0秒
-//	if (!SEAnim) return 0.f;
-//	//返回攻击时长
-//	return SEAnim->PlayHurtAction();
-//}
-//
+
+float ADemoEnemyCharacter::PlayHurtAction()
+{
+	//如果动作蓝图不存在直接返回0秒
+	if (!SEAnim) return 0.f;
+	//返回攻击时长
+	return SEAnim->PlayHurtAction();
+}
+
 //void ADemoEnemyCharacter::StartDefence()
 //{
 //	if (SEAnim) SEAnim->IsDefence = true;

@@ -174,12 +174,12 @@ UObject* ADemoEnemyController::GetPlayerPawn()
 	return SPCharacter;
 }
 
-//void ADemoEnemyController::ResetProcess(bool IsFinish)
-//{
-//	//修改完成状态
-//	BlackboardComp->SetValueAsBool("ProcessFinish", IsFinish);
-//}
-//
+void ADemoEnemyController::ResetProcess(bool IsFinish)
+{
+	//修改完成状态
+	BlackboardComp->SetValueAsBool("ProcessFinish", IsFinish);
+}
+
 //void ADemoEnemyController::UpdateDamageRatio(float HPRatioVal)
 //{
 //	//更新血值百分比
@@ -189,51 +189,51 @@ UObject* ADemoEnemyController::GetPlayerPawn()
 //	//设置允许受伤状态
 //	IsAllowHurt = false;
 //}
-//
-//void ADemoEnemyController::FinishStateHurt()
-//{
-//	//如果没有锁定玩家,设置锁定
-//	if (!IsLockPlayer) IsLockPlayer = true;
-//	//如果血值在0.2f以下
-//	if (HPRatio < 0.2f)
-//	{
-//		//创建随机流
-//		FRandomStream Stream;
-//		//产生新的随机种子
-//		Stream.GenerateNewSeed();
-//		//先随机一个动作类别
-//		int ActionRatio = Stream.RandRange(0, 10);
-//		//30的几率触发防御
-//		if (ActionRatio < 4) {
-//			//先进入防御状态
-//			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
-//		}
-//		else
-//		{
-//			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Escape);
-//		}
-//	}
-//	else
-//	{
-//		//创建随机流
-//		FRandomStream Stream;
-//		//产生新的随机种子
-//		Stream.GenerateNewSeed();
-//		//先随机一个动作类别
-//		int ActionRatio = Stream.RandRange(0, 10);
-//		//30的几率触发防御
-//		if (ActionRatio < 4) {
-//			//进入防御状态
-//			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
-//		}
-//		else
-//		{
-//			//进入攻击
-//			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Attack);
-//		}
-//	}
-//}
-//
+
+void ADemoEnemyController::FinishStateHurt()
+{
+	//如果没有锁定玩家,设置锁定
+	if (!IsLockPlayer) IsLockPlayer = true;
+	//如果血值在0.2f以下
+	if (HPRatio < 0.2f)
+	{
+		//创建随机流
+		FRandomStream Stream;
+		//产生新的随机种子
+		Stream.GenerateNewSeed();
+		//先随机一个动作类别
+		int ActionRatio = Stream.RandRange(0, 10);
+		//30的几率触发防御
+		if (ActionRatio < 4) {
+			//先进入防御状态
+			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
+		}
+		else
+		{
+			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Escape);
+		}
+	}
+	else
+	{
+		//创建随机流
+		FRandomStream Stream;
+		//产生新的随机种子
+		Stream.GenerateNewSeed();
+		//先随机一个动作类别
+		int ActionRatio = Stream.RandRange(0, 10);
+		//30的几率触发防御
+		if (ActionRatio < 4) {
+			//进入防御状态
+			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Defence);
+		}
+		else
+		{
+			//进入攻击
+			BlackboardComp->SetValueAsEnum("EnemyState", (uint8)EEnemyAIState::ES_Attack);
+		}
+	}
+}
+
 //void ADemoEnemyController::FinishStateDefence()
 //{
 //	//设置状态完成

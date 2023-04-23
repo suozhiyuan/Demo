@@ -42,14 +42,14 @@ public:
 	//获取玩家指针
 	UObject* GetPlayerPawn();
 
-//	//告诉控制器动作完成
-//	void ResetProcess(bool IsFinish);
-//
+	//告诉控制器动作完成
+	void ResetProcess(bool IsFinish);
+
 //	//接受伤害,传入剩余生命值
 //	void UpdateDamageRatio(float HPRatioVal);
-//
-//	//完成伤害状态
-//	void FinishStateHurt();
+
+	//完成伤害状态
+	void FinishStateHurt();
 //
 //	//完成防御状态
 //	void FinishStateDefence();
@@ -93,8 +93,8 @@ private:
 	//时间委托句柄，每0.3秒更新上方数组
 	FTimerHandle EPDisHandle;
 
-//	//血值
-//	float HPRatio;
+	//血值
+	float HPRatio;
 
 	//是否允许播放受伤状态
 	bool IsAllowHurt;

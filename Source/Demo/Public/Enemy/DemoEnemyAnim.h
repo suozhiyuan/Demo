@@ -29,9 +29,9 @@ public:
 	//播放攻击动画,返回动画时长
 	float PlayAttackAction(EEnemyAttackType AttackType);
 
-//	//播放受伤动画返回动画时长
-//	float PlayHurtAction();
-//
+	//播放受伤动画返回动画时长
+	float PlayHurtAction();
+
 //	//停止所有动画
 //	void StopAllAction();
 //
@@ -79,8 +79,8 @@ protected:
 	UAnimSequence* AnimAttackSeq_III;
 	UAnimSequence* AnimAttackSeq_IV;
 
-//	//受伤动画指针
-//	UAnimMontage* AnimHurt;
+	//受伤动画指针
+	UAnimMontage* AnimHurt;
 
 	// 动作计时器
 	float CurrentPlayTime;

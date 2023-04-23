@@ -33,8 +33,8 @@ UDemoEnemyAnim::UDemoEnemyAnim()
 	AnimAttackSeq_IV = StaticAnimAttackSeq_IV.Object;
 
 
-//	static ConstructorHelpers::FObjectFinder<UAnimMontage> StaticAnimHurt(TEXT("AnimMontage'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/MonEnemy_Hurt.MonEnemy_Hurt'"));
-//	AnimHurt = StaticAnimHurt.Object;
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> StaticAnimHurt(TEXT("AnimMontage'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/MonEnemy_Hurt.MonEnemy_Hurt'"));
+	AnimHurt = StaticAnimHurt.Object;
 
 
 	//初始化参数
@@ -148,12 +148,12 @@ float UDemoEnemyAnim::PlayAttackAction(EEnemyAttackType AttackType)
 	return 0.f;
 }
 
-//float UDemoEnemyAnim::PlayHurtAction()
-//{
-//	if (!Montage_IsPlaying(AnimHurt)) Montage_Play(AnimHurt);
-//	return AnimHurt->GetPlayLength();
-//}
-//
+float UDemoEnemyAnim::PlayHurtAction()
+{
+	if (!Montage_IsPlaying(AnimHurt)) Montage_Play(AnimHurt);
+	return AnimHurt->GetPlayLength();
+}
+
 //void UDemoEnemyAnim::StopAllAction()
 //{
 //	//停止全部动画
