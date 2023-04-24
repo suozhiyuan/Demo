@@ -390,8 +390,8 @@ namespace EMiniMapSizeMode
 {
 	enum Type
 	{
-		None,
-		Add,
-		Reduce
+		None,				// 正常
+		Add,				// 放大
+		Reduce				// 缩小
 	};
 }

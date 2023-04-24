@@ -47,8 +47,8 @@ void ADemoPlayerController::BeginPlay()
 	//设置默认UI状态为游戏界面
 	CurrentUIType = EGameUIType::Game;
 
-	////设置缩放状态为无
-	//MiniMapSizeMode = EMiniMapSizeMode::None;
+	//设置缩放状态为无
+	MiniMapSizeMode = EMiniMapSizeMode::None;
 }
 
 void ADemoPlayerController::Tick(float DeltaSeconds)
@@ -69,8 +69,8 @@ void ADemoPlayerController::Tick(float DeltaSeconds)
 	// 处理动作状态
 	StateMachine();
 
-	////处理小地图更新
-	//TickMiniMap();
+	//处理小地图更新
+	TickMiniMap();
 }
 
 void ADemoPlayerController::SetupInputComponent()
@@ -96,11 +96,11 @@ void ADemoPlayerController::SetupInputComponent()
 	//聊天室
 	InputComponent->BindAction("ChatRoomEvent", IE_Pressed, this, &ADemoPlayerController::ChatRoomEvent);
 
-	////绑定缩放小地图事件
-	//InputComponent->BindAction("AddMapSize", IE_Pressed, this, &ADemoPlayerController::AddMapSizeStart);
-	//InputComponent->BindAction("AddMapSize", IE_Released, this, &ADemoPlayerController::AddMapSizeStop);
-	//InputComponent->BindAction("ReduceMapSize", IE_Pressed, this, &ADemoPlayerController::ReduceMapSizeStart);
-	//InputComponent->BindAction("ReduceMapSize", IE_Released, this, &ADemoPlayerController::ReduceMapSizeStop);
+	//绑定缩放小地图事件
+	InputComponent->BindAction("AddMapSize", IE_Pressed, this, &ADemoPlayerController::AddMapSizeStart);
+	InputComponent->BindAction("AddMapSize", IE_Released, this, &ADemoPlayerController::AddMapSizeStop);
+	InputComponent->BindAction("ReduceMapSize", IE_Pressed, this, &ADemoPlayerController::ReduceMapSizeStart);
+	InputComponent->BindAction("ReduceMapSize", IE_Released, this, &ADemoPlayerController::ReduceMapSizeStop);
 }
 
 
@@ -208,56 +208,56 @@ void ADemoPlayerController::LockedInput(bool IsLocked)
 	SPCharacter->IsInputLocked = IsLocked;
 }
 
-//void ADemoPlayerController::AddMapSizeStart()
-//{
-//	//如果操作被锁住,直接返回
-//	if (SPCharacter->IsInputLocked) return;
-//
-//	//设置缩放状态为增加
-//	MiniMapSizeMode = EMiniMapSizeMode::Add;
-//}
-//
-//void ADemoPlayerController::AddMapSizeStop()
-//{
-//	//如果操作被锁住,直接返回
-//	if (SPCharacter->IsInputLocked) return;
-//
-//	//设置缩放状态为无
-//	MiniMapSizeMode = EMiniMapSizeMode::None;
-//}
-//
-//void ADemoPlayerController::ReduceMapSizeStart()
-//{
-//	//如果操作被锁住,直接返回
-//	if (SPCharacter->IsInputLocked) return;
-//
-//	//设置缩放状态为减少
-//	MiniMapSizeMode = EMiniMapSizeMode::Reduce;
-//}
-//
-//void ADemoPlayerController::ReduceMapSizeStop()
-//{
-//	//如果操作被锁住,直接返回
-//	if (SPCharacter->IsInputLocked) return;
-//
-//	//设置缩放状态为无
-//	MiniMapSizeMode = EMiniMapSizeMode::None;
-//}
-//
-//void ADemoPlayerController::TickMiniMap()
-//{
-//	switch (MiniMapSizeMode)
-//	{
-//	case EMiniMapSizeMode::Add:
-//		UpdateMiniMapWidth.ExecuteIfBound(5);
-//		break;
-//	case EMiniMapSizeMode::Reduce:
-//		UpdateMiniMapWidth.ExecuteIfBound(-5);
-//		break;
-//	}
-//}
-//
-//
+void ADemoPlayerController::AddMapSizeStart()
+{
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
+
+	//设置缩放状态为增加
+	MiniMapSizeMode = EMiniMapSizeMode::Add;
+}
+
+void ADemoPlayerController::AddMapSizeStop()
+{
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
+
+	//设置缩放状态为无
+	MiniMapSizeMode = EMiniMapSizeMode::None;
+}
+
+void ADemoPlayerController::ReduceMapSizeStart()
+{
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
+
+	//设置缩放状态为减少
+	MiniMapSizeMode = EMiniMapSizeMode::Reduce;
+}
+
+void ADemoPlayerController::ReduceMapSizeStop()
+{
+	//如果操作被锁住,直接返回
+	if (SPCharacter->IsInputLocked) return;
+
+	//设置缩放状态为无
+	MiniMapSizeMode = EMiniMapSizeMode::None;
+}
+
+void ADemoPlayerController::TickMiniMap()
+{
+	switch (MiniMapSizeMode)
+	{
+	case EMiniMapSizeMode::Add:
+		UpdateMiniMapWidth.ExecuteIfBound(10);
+		break;
+	case EMiniMapSizeMode::Reduce:
+		UpdateMiniMapWidth.ExecuteIfBound(-10);
+		break;
+	}
+}
+
+
 //void ADemoPlayerController::PlayerDead()
 //{
 //	//转换到第三视角

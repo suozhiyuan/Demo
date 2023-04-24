@@ -10,8 +10,9 @@
 //初始化背包管理类委托
 DECLARE_DELEGATE(FInitPackageManager)
 
-////注册MiniMap的贴图和材质
-//DECLARE_DELEGATE_OneParam(FRegisterMiniMap, class UTextureRenderTarget2D*)
+//注册MiniMap的贴图和材质
+DECLARE_DELEGATE_OneParam(FRegisterMiniMap, class UTextureRenderTarget2D*)
+
 ////更新MiniMap的数据
 //DECLARE_DELEGATE_FiveParams(FUpdateMapData, const FRotator, const float, const TArray<FVector2D>*, const TArray<bool>*, const TArray<float>*)
 
@@ -48,8 +49,8 @@ public:
 	//初始化背包管理委托,绑定的方法是PackageWidget的InitPackageManager方法
 	FInitPackageManager InitPackageManager;
 
-	////定义委托,绑定的方法是MiniMapWidget的RegisterMiniMap
-	//FRegisterMiniMap RegisterMiniMap;
+	//定义委托,绑定的方法是MiniMapWidget的RegisterMiniMap
+	FRegisterMiniMap RegisterMiniMap;
 
 	////定义委托,用于更新小地图的方向文字位置,绑定的方法的MiniMapWidget的UpdateMapDirection
 	//FUpdateMapData UpdateMapData;

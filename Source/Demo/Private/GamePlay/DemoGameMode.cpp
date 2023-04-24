@@ -2,9 +2,12 @@
 
 
 #include "GamePlay/DemoGameMode.h"
+
+#include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "GamePlay/DemoGameInstance.h"
 #include "Common/DemoHelper.h"
+#include "Common/DemoSceneCapture2D.h"
 #include "Data/DemoDataHandle.h"
 #include "Player/DemoPlayerCharacter.h"
 
@@ -12,6 +15,7 @@
 #include "Player/DemoPlayerState.h"
 #include "UI/HUD/DemoGameHUD.h"
 #include "Data/DemoDataHandle.h"
+#include "Enemy/DemoEnemyCharacter.h"
 #include "Player/DemoPackageManager.h"
 
 
@@ -31,8 +35,9 @@ ADemoGameMode::ADemoGameMode()
 	//开始没有初始化背包
 	IsInitPackage = false;
 
-	////小地图还没生成
-	//IsCreateMiniMap = false;
+	//小地图还没生成
+	IsCreateMiniMap = false;
+
 	////开始设置不需要加载存档
 	//IsNeedLoadRecord = false;
 
@@ -40,8 +45,8 @@ ADemoGameMode::ADemoGameMode()
 
 void ADemoGameMode::Tick(float DeltaSeconds)
 {
-	////初始化与更新小地图摄像机
-	//InitializeMiniMapCamera();
+	//初始化与更新小地图摄像机
+	InitializeMiniMapCamera();
 
 	////给背包加载存档,放在初始化背包上面是为了在第二帧再执行
 	//LoadRecordPackage();
@@ -159,50 +164,53 @@ void ADemoGameMode::InitializePackage()
 	IsInitPackage = true;
 }
 
-//void ADemoGameMode::InitializeMiniMapCamera()
-//{
-//	//如果摄像机还不存在并且世界已经存在
-//	if (!IsCreateMiniMap && GetWorld())
-//	{
-//		//生成小地图摄像机
-//		MiniMapCamera = GetWorld()->SpawnActor<ADemoSceneCapture2D>(ADemoSceneCapture2D::StaticClass());
-//		//运行委托给MiniMapWidget传递渲染的MiniMapTex
-//		RegisterMiniMap.ExecuteIfBound(MiniMapCamera->GetMiniMapTex());
-//		//绑定修改小地图视野的委托
-//		SPController->UpdateMiniMapWidth.BindUObject(MiniMapCamera, &ADemoSceneCapture2D::UpdateMiniMapWidth);
-//		//设置已经生成小地图
-//		IsCreateMiniMap = true;
-//	}
-//
-//	//如果小地图已经创建
-//	if (IsCreateMiniMap)
-//	{
-//		//每帧更新小地图摄像机的位置和旋转
-//		MiniMapCamera->UpdateTransform(SPCharacter->GetActorLocation(), SPCharacter->GetActorRotation());
-//
-//		TArray<FVector2D> EnemyPosList;
-//		TArray<bool> EnemyLockList;
-//		TArray<float> EnemyRotateList;
-//
-//		//获取场景中的敌人
-//		for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt)
-//		{
-//			FVector EnemyPos = FVector((*EnemyIt)->GetActorLocation().X - SPCharacter->GetActorLocation().X, (*EnemyIt)->GetActorLocation().Y - SPCharacter->GetActorLocation().Y, 0.f);
-//			EnemyPos = FQuat(FVector::UpVector, FMath::DegreesToRadians(-SPCharacter->GetActorRotation().Yaw - 90.f)) * EnemyPos;
-//			EnemyPosList.Add(FVector2D(EnemyPos.X, EnemyPos.Y));
-//
-//			EnemyLockList.Add((*EnemyIt)->IsLockPlayer());
-//			EnemyRotateList.Add((*EnemyIt)->GetActorRotation().Yaw - SPCharacter->GetActorRotation().Yaw);
-//		}
-//
-//
-//		//每帧更新小地图的方向文字位置
-//		UpdateMapData.ExecuteIfBound(SPCharacter->GetActorRotation(), MiniMapCamera->GetMapSize(), &EnemyPosList, &EnemyLockList, &EnemyRotateList);
-//
-//	}
-//
-//}
-//
+void ADemoGameMode::InitializeMiniMapCamera()
+{
+	//如果摄像机还不存在并且世界已经存在
+	if (!IsCreateMiniMap && GetWorld())
+	{
+		//生成小地图摄像机
+		MiniMapCamera = GetWorld()->SpawnActor<ADemoSceneCapture2D>(ADemoSceneCapture2D::StaticClass());
+
+		//运行委托给MiniMapWidget传递渲染的MiniMapTex
+		RegisterMiniMap.ExecuteIfBound(MiniMapCamera->GetMiniMapTex());
+
+		//绑定修改小地图视野的委托
+		SPController->UpdateMiniMapWidth.BindUObject(MiniMapCamera, &ADemoSceneCapture2D::UpdateMiniMapWidth);
+
+		//设置已经生成小地图
+		IsCreateMiniMap = true;
+	}
+
+	//如果小地图已经创建
+	if (IsCreateMiniMap)
+	{
+		//每帧更新小地图摄像机的位置和旋转
+		MiniMapCamera->UpdateTransform(SPCharacter->GetActorLocation(), SPCharacter->GetActorRotation());
+
+		//TArray<FVector2D> EnemyPosList;
+		//TArray<bool> EnemyLockList;
+		//TArray<float> EnemyRotateList;
+
+		////获取场景中的敌人
+		//for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt)
+		//{
+		//	FVector EnemyPos = FVector((*EnemyIt)->GetActorLocation().X - SPCharacter->GetActorLocation().X, (*EnemyIt)->GetActorLocation().Y - SPCharacter->GetActorLocation().Y, 0.f);
+		//	EnemyPos = FQuat(FVector::UpVector, FMath::DegreesToRadians(-SPCharacter->GetActorRotation().Yaw - 90.f)) * EnemyPos;
+		//	EnemyPosList.Add(FVector2D(EnemyPos.X, EnemyPos.Y));
+
+		//	EnemyLockList.Add((*EnemyIt)->IsLockPlayer());
+		//	EnemyRotateList.Add((*EnemyIt)->GetActorRotation().Yaw - SPCharacter->GetActorRotation().Yaw);
+		//}
+
+
+		////每帧更新小地图的方向文字位置
+		//UpdateMapData.ExecuteIfBound(SPCharacter->GetActorRotation(), MiniMapCamera->GetMapSize(), &EnemyPosList, &EnemyLockList, &EnemyRotateList);
+
+	}
+
+}
+
 //void ADemoGameMode::LoadRecord()
 //{
 //	//如果RecordName为空,直接renturn

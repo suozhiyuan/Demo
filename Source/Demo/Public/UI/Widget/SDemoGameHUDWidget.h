@@ -44,8 +44,8 @@ public:
 	//玩家状态指针
 	TSharedPtr<class SDemoPlayerStateWidget> PlayerStateWidget;
 
-//	//小地图引用
-//	TSharedPtr<class SDemoMiniMapWidget> MiniMapWidget;
+	//小地图引用
+	TSharedPtr<class SDemoMiniMapWidget> MiniMapWidget;
 
 //	//聊天显示栏引用
 //	TSharedPtr<class SDemoChatShowWidget> ChatShowWidget;

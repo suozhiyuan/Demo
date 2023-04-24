@@ -5,6 +5,7 @@
 #include "SlateOptMacros.h"
 #include "UI/Widget/SDemoChatRoomWidget.h"
 #include "UI/Widget/SDemoGameMenuWidget.h"
+#include "UI/Widget/SDemoMiniMapWidget.h"
 #include "UI/Widget/SDemoPlayerStateWidget.h"
 #include "UI/Widget/SDemoPointerWidget.h"
 #include "Widgets/Layout/SDPIScaler.h"
@@ -61,13 +62,13 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 				SAssignNew(PlayerStateWidget, SDemoPlayerStateWidget)
 			]
 
-			////小地图
-			//+ SOverlay::Slot()
-			//	.HAlign(HAlign_Right)
-			//	.VAlign(VAlign_Top)
-			//	[
-			//		SAssignNew(MiniMapWidget, SDemoMiniMapWidget)
-			//	]
+			//小地图
+			+ SOverlay::Slot()
+				.HAlign(HAlign_Right)
+				.VAlign(VAlign_Top)
+				[
+					SAssignNew(MiniMapWidget, SDemoMiniMapWidget)
+				]
 
 
 			////聊天显示栏
