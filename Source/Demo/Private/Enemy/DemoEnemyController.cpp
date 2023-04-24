@@ -25,16 +25,18 @@ void ADemoEnemyController::OnPossess(APawn* InPawn)
 	//顺便在这里实例化一下角色
 	SECharacter = Cast<ADemoEnemyCharacter>(InPawn);
 
-	// 获取行为树资源，这样做会有个问题，1个敌人时行为树有用，多个敌人便会有行为树不生效的问题
+	/*/
+	 * 获取编辑器下的行为树对象
+	 * 如果直接获取行为树资源来使用会出现创建多个单位后行为树不在生效的问题，但在只有一个单位时没有问题
+	 * 所以这里使用 DuplicateObject 做了一个复制对象的方法来规避该问题
+	 */
 	UBehaviorTree* StaticBehaviorTreeObject = LoadObject<UBehaviorTree>(NULL, TEXT("BehaviorTree'/Game/Blueprint/Enemy/EnemyBehaviorTree.EnemyBehaviorTree'"));
-	// 由于创建多个单位后上方的行为树不在生效，所以这里做了一个复制对象的方法来规避该问题
 	UBehaviorTree* BehaviorTreeObject = DuplicateObject<UBehaviorTree>(StaticBehaviorTreeObject, NULL);
-
 	//如果资源不存在,直接返回
 	if (!BehaviorTreeObject) return;
-
 	// 复制黑板数据资源
 	BehaviorTreeObject->BlackboardAsset = DuplicateObject<UDemoEnemyBlackboardData>((UDemoEnemyBlackboardData*)StaticBehaviorTreeObject->BlackboardAsset, NULL);
+
 
 	BlackboardComp = Blackboard;		// 将父类的黑板赋值给当前黑板数据
 	bool IsSuccess = true;				// 加载黑板数据是否成功
