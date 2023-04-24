@@ -27,7 +27,7 @@ void ADemoEnemyController::OnPossess(APawn* InPawn)
 
 	// 获取行为树资源，这样做会有个问题，1个敌人时行为树有用，多个敌人便会有行为树不生效的问题
 	UBehaviorTree* StaticBehaviorTreeObject = LoadObject<UBehaviorTree>(NULL, TEXT("BehaviorTree'/Game/Blueprint/Enemy/EnemyBehaviorTree.EnemyBehaviorTree'"));
-	// 由于创建多个单位后上方的行为树不在生效，所以这里做了一个复制对象的方法lAi规避该问题
+	// 由于创建多个单位后上方的行为树不在生效，所以这里做了一个复制对象的方法来规避该问题
 	UBehaviorTree* BehaviorTreeObject = DuplicateObject<UBehaviorTree>(StaticBehaviorTreeObject, NULL);
 
 	//如果资源不存在,直接返回

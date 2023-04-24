@@ -36,7 +36,6 @@ ADemoEnemyTool::ADemoEnemyTool()
 	AffectCollision->OnComponentEndOverlap.Add(OverlayEnd);//绑定检测方法到碰撞体
 }
 
-
 void ADemoEnemyTool::ChangeOverlayDetect(bool IsOpen)
 {
 	AffectCollision->SetGenerateOverlapEvents(IsOpen);
