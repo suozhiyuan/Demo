@@ -46,11 +46,11 @@ public:
 	//停止防御
 	void StopDefence();
 
-	////销毁函数
-	//void DestroyEvent();
+	//销毁函数
+	void DestroyEvent();
 
-	////获取物品信息
-	//FText GetInfoText() const;
+	//获取物品信息
+	FText GetInfoText() const;
 
 	////修改手持物品的碰撞检测是否开启
 	//void ChangeWeaponDetect(bool IsOpen);
@@ -65,8 +65,8 @@ public:
 	//float GetHP();
 
 public:
-	////资源ID
-	//int ResourceIndex;
+	//资源ID
+	int ResourceIndex;
 
 	////是否下一帧销毁自己,由GameMode加载游戏存档时进行设置
 	//bool IsDestroyNextTick;
@@ -75,8 +75,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	////生成资掉落函数
-	//void CreateFlobObject();
+	//生成资掉落函数
+	void CreateFlobObject();
 
 protected:
 
@@ -113,10 +113,10 @@ private:
 	//动作引用
 	class UDemoEnemyAnim* SEAnim;
 
-//	//死亡动画资源
-//	UAnimationAsset* AnimDead_I;
-//	UAnimationAsset* AnimDead_II;
-//
-//	//死亡时间委托
-//	FTimerHandle DeadHandle;
+	//死亡动画资源，这里不用蒙太奇，因为蒙太奇播放完会进入其他运动状态，而死亡动作播放完后需要停止然后消失
+	UAnimationAsset* AnimDead_I;
+	UAnimationAsset* AnimDead_II;
+
+	//死亡时间委托，时间到后销毁模型
+	FTimerHandle DeadHandle;
 };

@@ -54,8 +54,8 @@ public:
 	//完成防御状态
 	void FinishStateDefence();
 
-//	//死亡
-//	void EnemyDead();
+	//死亡
+	void EnemyDead();
 
 public:
 
@@ -74,7 +74,6 @@ private:
 	void UpdateStatePama();
 
 private:
-
 	//玩家的指针
 	class ADemoPlayerCharacter* SPCharacter;
 
@@ -101,5 +100,4 @@ private:
 
 	//受伤计时器
 	float HurtTimeCount;
-
 };

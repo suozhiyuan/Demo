@@ -154,12 +154,12 @@ float UDemoEnemyAnim::PlayHurtAction()
 	return AnimHurt->GetPlayLength();
 }
 
-//void UDemoEnemyAnim::StopAllAction()
-//{
-//	//停止全部动画
-//	Montage_Stop(0);
-//}
-//
+void UDemoEnemyAnim::StopAllAction()
+{
+	//停止全部蒙太奇动画
+	Montage_Stop(0);
+}
+
 //void UDemoEnemyAnim::ChangeDetection(bool IsOpen)
 //{
 //	if (SECharacter) SECharacter->ChangeWeaponDetect(IsOpen);

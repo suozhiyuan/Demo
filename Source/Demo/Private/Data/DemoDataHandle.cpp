@@ -18,7 +18,8 @@ TSharedPtr<DemoDataHandle> DemoDataHandle::DataInstance = NULL;
 
 void DemoDataHandle::Initialize()
 {
-	if (!DataInstance.IsValid()) {
+	if (!DataInstance.IsValid()) 
+	{
 		DataInstance = Create();
 	}
 }
@@ -202,7 +203,7 @@ void DemoDataHandle::InitObjectAttr()
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_6);
 	ObjectBrushList.Add(&GameStyle->ObjectBrush_7);
 
-	DemoHelper::Debug(FString("1111111111"),0.f);
+	//DemoHelper::Debug(FString("1111111111"),0.f);
 	////动态生成Object的图片Brush,这段代码会引起奔溃
 	//for (int i = 1; i < ObjectAttrMap.Num(); ++i) {
 	//	//测试函数,动态创建FSlateBrush,一定要创建指针,否则会在函数结束时销毁资源

@@ -273,14 +273,14 @@ void ADemoEnemyController::FinishStateDefence()
 	}
 }
 
-//void ADemoEnemyController::EnemyDead()
-//{
-//	//停止行为树
-//	if (BehaviorComp) BehaviorComp->StopTree(EBTStopMode::Safe);
-//
-//	//临时代码,注销时间函数
-//	if (EPDisHandle.IsValid()) GetWorld()->GetTimerManager().ClearTimer(EPDisHandle);
-//}
+void ADemoEnemyController::EnemyDead()
+{
+	//停止行为树
+	if (BehaviorComp) BehaviorComp->StopTree(EBTStopMode::Safe);
+
+	////临时代码,注销时间函数
+	//if (EPDisHandle.IsValid()) GetWorld()->GetTimerManager().ClearTimer(EPDisHandle);
+}
 
 void ADemoEnemyController::UpdateStatePama()
 {

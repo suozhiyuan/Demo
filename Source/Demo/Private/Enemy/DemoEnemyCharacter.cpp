@@ -5,9 +5,11 @@
 
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Data/DemoDataHandle.h"
 #include "Enemy/DemoEnemyAnim.h"
 #include "Enemy/DemoEnemyController.h"
 #include "EnemyTool/DemoEnemyTool.h"
+#include "Flob/DemoFlobObject.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Perception/PawnSensingComponent.h"
 #include "Player/DemoPlayerCharacter.h"
@@ -52,9 +54,9 @@ ADemoEnemyCharacter::ADemoEnemyCharacter()
 	//实例化敌人感知组件
 	EnemySense = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("EnemySense"));
 
-	////加载死亡动画资源
-	//AnimDead_I = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/Enemy_Dead_I.Enemy_Dead_I'")));
-	//AnimDead_II = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/Enemy_Dead_II.Enemy_Dead_II'")));
+	//加载死亡动画资源
+	AnimDead_I = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/Enemy_Dead_I.Enemy_Dead_I'")));
+	AnimDead_II = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/Enemy_Dead_II.Enemy_Dead_II'")));
 
 	////设置下一帧不销毁自己,得放在构造函数进行初始化,避免与GameMode的加载函数冲突
 	//IsDestroyNextTick = false;
@@ -98,35 +100,36 @@ void ADemoEnemyCharacter::BeginPlay()
 	OnSeePlayerDele.BindUFunction(this, "OnSeePlayer");
 	EnemySense->OnSeePawn.Add(OnSeePlayerDele);
 
-	////设置资源ID是3
-	//ResourceIndex = 3;
+	//设置资源ID是3
+	ResourceIndex = 3;
 }
 
-//void ADemoEnemyCharacter::CreateFlobObject()
-//{
-//	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
-//
-//	//遍历生成
-//	for (TArray<TArray<int>>::TIterator It(ResourceAttr->FlobObjectInfo); It; ++It)
-//	{
-//		//随机流
-//		FRandomStream Stream;
-//		//产生新的随机种子
-//		Stream.GenerateNewSeed();
-//		//生成数量
-//		int Num = Stream.RandRange((*It)[1], (*It)[2]);
-//
-//		if (GetWorld())
-//		{
-//			for (int i = 0; i < Num; ++i)
-//			{
-//				//生成掉落资源
-//				ADemoFlobObject* FlobObject = GetWorld()->SpawnActor<ADemoFlobObject>(GetActorLocation() + FVector(0.f, 0.f, 40.f), FRotator::ZeroRotator);
-//				FlobObject->CreateFlobObject((*It)[0]);
-//			}
-//		}
-//	}
-//}
+//生成资掉落
+void ADemoEnemyCharacter::CreateFlobObject()
+{
+	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+
+	//遍历生成
+	for (TArray<TArray<int>>::TIterator It(ResourceAttr->FlobObjectInfo); It; ++It)
+	{
+		//随机流
+		FRandomStream Stream;
+		//产生新的随机种子
+		Stream.GenerateNewSeed();
+		//生成数量，数组的第2和第3个值
+		int Num = Stream.RandRange((*It)[1], (*It)[2]);
+
+		if (GetWorld())
+		{
+			for (int i = 0; i < Num; ++i)
+			{
+				//生成掉落资源
+				ADemoFlobObject* FlobObject = GetWorld()->SpawnActor<ADemoFlobObject>(GetActorLocation() + FVector(0.f, 0.f, 40.f), FRotator::ZeroRotator);
+				FlobObject->CreateFlobObject((*It)[0]);
+			}
+		}
+	}
+}
 
 // Called every frame
 void ADemoEnemyCharacter::Tick(float DeltaTime)
@@ -186,7 +189,7 @@ float ADemoEnemyCharacter::PlayAttackAction(EEnemyAttackType AttackType)
 	return SEAnim->PlayAttackAction(AttackType);
 }
 
-
+// 接受攻ji
 void ADemoEnemyCharacter::AcceptDamage(int DamageVal)
 {
 	//如果开启了防御,直接返回
@@ -197,35 +200,39 @@ void ADemoEnemyCharacter::AcceptDamage(int DamageVal)
 	HPBarWidget->ChangeHP(HP / 200.f);
 
 	//如果血值小于0
-	//if (HP == 0.f && !DeadHandle.IsValid())
-	if (HP == 0.f)
+	if (HP == 0.f && !DeadHandle.IsValid())			// DeadHandle.IsValid() 如果这个句柄曾经被计时器管理器初始化，则为True
 	{
-		////告诉控制器死亡
-		//SEController->EnemyDead();
-		////停止所有动画
-		//SEAnim->StopAllAction();
+		//告诉控制器死亡，停止行为树
+		SEController->EnemyDead();
 
-		//float DeadDuration = 0.f;
-		//FRandomStream Stream;
-		//Stream.GenerateNewSeed();
-		//int SelectIndex = Stream.RandRange(0, 1);
-		//if (SelectIndex == 0)
-		//{
-		//	GetMesh()->PlayAnimation(AnimDead_I, false);
-		//	DeadDuration = AnimDead_I->GetMaxCurrentTime() * 2;
-		//}
-		//else
-		//{
-		//	GetMesh()->PlayAnimation(AnimDead_II, false);
-		//	DeadDuration = AnimDead_II->GetMaxCurrentTime() * 2;
-		//}
+		//停止所有动画
+		SEAnim->StopAllAction();
 
-		////生成掉落物
-		//CreateFlobObject();
+		// 死亡定时器时间
+		float DeadDuration = 0.f;
 
-		////添加事件委托
-		//FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ADemoEnemyCharacter::DestroyEvent);
-		//GetWorld()->GetTimerManager().SetTimer(DeadHandle, TimerDelegate, DeadDuration, false);
+		// 随机数
+		FRandomStream Stream;
+		Stream.GenerateNewSeed();
+		int SelectIndex = Stream.RandRange(0, 1);
+
+		if (SelectIndex == 0)
+		{
+			GetMesh()->PlayAnimation(AnimDead_I, false);			// 第二个参数：是否循环，不循环的话会一直停留在最后一帧
+			DeadDuration = AnimDead_I->GetMaxCurrentTime() * 2;			// 获取执行时间,计算停留时间
+		}
+		else
+		{
+			GetMesh()->PlayAnimation(AnimDead_II, false);
+			DeadDuration = AnimDead_II->GetMaxCurrentTime() * 2;
+		}
+
+		//生成掉落物
+		CreateFlobObject();
+
+		//添加事件委托
+		FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ADemoEnemyCharacter::DestroyEvent);		// 绑定
+		GetWorld()->GetTimerManager().SetTimer(DeadHandle, TimerDelegate, DeadDuration, false);		// 计时器
 	}
 	else
 	{
@@ -252,14 +259,15 @@ void ADemoEnemyCharacter::StopDefence()
 	if (SEAnim) SEAnim->IsDefence = false;
 }
 
-//void ADemoEnemyCharacter::DestroyEvent()
-//{
-//	//注销时间函数
-//	if (DeadHandle.IsValid()) GetWorld()->GetTimerManager().ClearTimer(DeadHandle);
-//	//销毁自己
-//	GetWorld()->DestroyActor(this);
-//}
-//
+void ADemoEnemyCharacter::DestroyEvent()
+{
+	//注销时间函数
+	if (DeadHandle.IsValid()) GetWorld()->GetTimerManager().ClearTimer(DeadHandle);
+
+	//销毁自己
+	GetWorld()->DestroyActor(this);
+}
+
 //FText ADemoEnemyCharacter::GetInfoText() const
 //{
 //	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
