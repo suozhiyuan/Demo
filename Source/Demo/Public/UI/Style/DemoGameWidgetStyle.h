@@ -79,7 +79,6 @@ struct DEMO_API FDemoGameStyle : public FSlateWidgetStyle
 	UPROPERTY(EditAnywhere, Category = MiniMap)
 		FSlateBrush PawnPointBrush;
 
-
 	//ÕÊº“ Ù–‘±≥æ∞Õº
 	UPROPERTY(EditAnywhere, Category = PlayerState)
 		FSlateBrush PlayerStateBGBrush;

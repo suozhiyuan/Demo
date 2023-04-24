@@ -18,8 +18,8 @@ public:
 	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 
-//	//重写绘制函数
-//	virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
+	//重写绘制函数
+	virtual int32 OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
 
 	//委托接受GameMode传过来的Texture资源
 	void RegisterMiniMap(class UTextureRenderTarget2D* MiniMapRender);
@@ -51,10 +51,10 @@ private:
 	struct FSlateBrush* MiniMapBrush;
 
 	//四个方向的渲染位置
-	FVector2D NorthLocation;
-	FVector2D SouthLocation;
-	FVector2D EastLocation;
-	FVector2D WestLocation;
+	FVector2D NorthLocation;		// 北的位置
+	FVector2D SouthLocation;		// 南的位置
+	FVector2D EastLocation;			// 东的位置
+	FVector2D WestLocation;			// 西的位置
 
 	//小地图尺寸
 	float MapSize;

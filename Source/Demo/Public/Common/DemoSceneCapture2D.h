@@ -27,8 +27,8 @@ public:
 	//更新视野范围
 	void UpdateMiniMapWidth(int Delta);
 
-//	//获取小地图尺寸
-//	float GetMapSize();
+	//获取小地图尺寸
+	float GetMapSize();
 
 private:
 	// 

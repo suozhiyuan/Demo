@@ -57,8 +57,8 @@ void ADemoGameHUD::BeginPlay()
 	// 绑定注册小地图贴图委托
 	GM->RegisterMiniMap.BindRaw(GameHUDWidget->MiniMapWidget.Get(), &SDemoMiniMapWidget::RegisterMiniMap);
 
-	//// 绑定更新小地图数据委托
-	//GM->UpdateMapData.BindRaw(GameHUDWidget->MiniMapWidget.Get(), &SDemoMiniMapWidget::UpdateMapData);
+	// 绑定更新小地图数据委托
+	GM->UpdateMapData.BindRaw(GameHUDWidget->MiniMapWidget.Get(), &SDemoMiniMapWidget::UpdateMapData);
 
 	//// 保存游戏事件绑定
 	//GameHUDWidget->GameMenuWidget->SaveGameDele.BindUObject(GM, &ADemoGameMode::SaveGame);

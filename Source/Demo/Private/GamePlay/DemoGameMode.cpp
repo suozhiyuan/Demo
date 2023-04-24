@@ -188,9 +188,9 @@ void ADemoGameMode::InitializeMiniMapCamera()
 		//每帧更新小地图摄像机的位置和旋转
 		MiniMapCamera->UpdateTransform(SPCharacter->GetActorLocation(), SPCharacter->GetActorRotation());
 
-		//TArray<FVector2D> EnemyPosList;
-		//TArray<bool> EnemyLockList;
-		//TArray<float> EnemyRotateList;
+		TArray<FVector2D> EnemyPosList;		// 敌人位置
+		TArray<bool> EnemyLockList;			// 是否锁定
+		TArray<float> EnemyRotateList;		// 敌人旋转
 
 		////获取场景中的敌人
 		//for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt)
@@ -203,10 +203,16 @@ void ADemoGameMode::InitializeMiniMapCamera()
 		//	EnemyRotateList.Add((*EnemyIt)->GetActorRotation().Yaw - SPCharacter->GetActorRotation().Yaw);
 		//}
 
-
-		////每帧更新小地图的方向文字位置
-		//UpdateMapData.ExecuteIfBound(SPCharacter->GetActorRotation(), MiniMapCamera->GetMapSize(), &EnemyPosList, &EnemyLockList, &EnemyRotateList);
-
+		//每帧更新小地图的方向文字位置
+		UpdateMapData.ExecuteIfBound(SPCharacter->GetActorRotation(), MiniMapCamera->GetMapSize(), &EnemyPosList, &EnemyLockList, &EnemyRotateList);
+		/**
+		 * @brief 委托接受GameMode传过来的玩家旋转,绑定的委托是GameMode的UpdateMapDirection
+		 * @param PlayerRotator			玩家的旋转
+		 * @param MiniMapSize			小地图的大小
+		 * @param EnemyPosList			敌人的位置 2D
+		 * @param EnemyLockList			敌人是否已经锁定了玩家
+		 * @param EnemyRotateList		敌人的旋转
+		 */
 	}
 
 }

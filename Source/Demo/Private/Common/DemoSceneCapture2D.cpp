@@ -55,8 +55,7 @@ void ADemoSceneCapture2D::UpdateMiniMapWidth(int Delta)
 	GetCaptureComponent2D()->OrthoWidth = FMath::Clamp<float>(PreWidth + Delta, 2000.f, 4000.f);		// ÐÞ¸Ä¿í¶È
 }
 
-//float ADemoSceneCapture2D::GetMapSize()
-//{
-//	return GetCaptureComponent2D()->OrthoWidth;
-//}
-//
+float ADemoSceneCapture2D::GetMapSize()
+{
+	return GetCaptureComponent2D()->OrthoWidth;
+}
