@@ -23,8 +23,8 @@ ADemoPlayerState::ADemoPlayerState()
 	//设置初始饥饿值为600
 	Hunger = 600.f;
 
-	////没有死亡
-	//IsDead = false;
+	//没有死亡
+	IsDead = false;
 }
 
 void ADemoPlayerState::BeginPlay()
@@ -63,13 +63,13 @@ void ADemoPlayerState::Tick(float DeltaSeconds)
 	//执行修改玩家状态UI的委托
 	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);			// ExecuteIfBound  执行委托，小于500再开始降低血量与饥饿度
 
-	////如果血值等于0但是没死
-	//if (HP == 0.f && !IsDead) 
-	//{
-	//	//告诉控制器自己死了
-	//	if (SPController) SPController->PlayerDead();
-	//	IsDead = true;
-	//}
+	//如果血值等于0但是没死
+	if (HP == 0.f && !IsDead) 
+	{
+		//告诉控制器自己死了
+		//if (SPController) SPController->PlayerDead();
+		IsDead = true;
+	}
 
 }
 
@@ -192,19 +192,20 @@ bool ADemoPlayerState::IsPlayerDead()
 	return HP <= 0.f;
 }
 
-//void ADemoPlayerState::AcceptDamage(int DamageVal)
-//{
-//	HP = FMath::Clamp<float>(HP - DamageVal, 0.f, 500.f);
-//	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);
-//	//如果血值等于0但是没死
-//	if (HP == 0 && !IsDead)
-//	{
-//		//告诉控制器自己死了
-//		if (SPController) SPController->PlayerDead();
-//		IsDead = true;
-//	}
-//}
-//
+void ADemoPlayerState::AcceptDamage(int DamageVal)
+{
+	HP = FMath::Clamp<float>(HP - DamageVal, 0.f, 500.f);		// 剩余血量
+	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);		// 更新状态UI
+
+	//如果血值等于0但是没死
+	if (HP == 0 && !IsDead)
+	{
+		//告诉控制器自己死了
+		//if (SPController) SPController->PlayerDead();
+		IsDead = true;
+	}
+}
+
 //void ADemoPlayerState::LoadState(float HPVal, float HungerVal)
 //{
 //	HP = HPVal;

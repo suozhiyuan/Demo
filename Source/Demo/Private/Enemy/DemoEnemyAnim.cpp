@@ -160,7 +160,7 @@ void UDemoEnemyAnim::StopAllAction()
 	Montage_Stop(0);
 }
 
-//void UDemoEnemyAnim::ChangeDetection(bool IsOpen)
-//{
-//	if (SECharacter) SECharacter->ChangeWeaponDetect(IsOpen);
-//}
+void UDemoEnemyAnim::ChangeDetection(bool IsOpen)
+{
+	if (SECharacter) SECharacter->ChangeWeaponDetect(IsOpen);
+}

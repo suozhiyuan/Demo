@@ -8,6 +8,7 @@
 #include "Data/DemoType.h"
 #include "Hand/DemoHandObject.h"
 #include "Data/DemoDataHandle.h"
+#include "Enemy/DemoEnemyCharacter.h"
 #include "Pickup/DemoPickupObject.h"
 #include "Player/DemoPlayerCharacter.h"
 #include "Player/DemoPlayerState.h"
@@ -463,23 +464,23 @@ void ADemoPlayerController::RunRayCast()
 	//是否检测到物品
 	bool IsDetected = false;
 	FHitResult Hit = RayGetHitResult(StartPos, EndPos);
-	RayActor = Hit.GetActor();		// 获得检测到的物品
+	RayActor = Hit.GetActor();								// 获得检测到的 Actor
 
-	if (Cast<ADemoPickupObject>(RayActor))		// 检测到的物品，是否是掉落物类
+	if (Cast<ADemoPickupObject>(RayActor))					// 检测到的物品，是否是掉落物类
 	{
 		IsDetected = true;
 		SPState->RayInfoText = Cast<ADemoPickupObject>(RayActor)->GetInfoText();
 	}
-	if (Cast<ADemoResourceObject>(RayActor))
+	if (Cast<ADemoResourceObject>(RayActor))				// 检测到的物品，是否是资源类
 	{
 		IsDetected = true;
 		SPState->RayInfoText = Cast<ADemoResourceObject>(RayActor)->GetInfoText();
 	}
-	//if (Cast<ADemoEnemyCharacter>(RayActor))
-	//{
-	//	IsDetected = true;
-	//	SPState->RayInfoText = Cast<ADemoEnemyCharacter>(RayActor)->GetInfoText();
-	//}
+	if (Cast<ADemoEnemyCharacter>(RayActor))				// 检测到的物品，是否是怪物
+	{
+		IsDetected = true;
+		SPState->RayInfoText = Cast<ADemoEnemyCharacter>(RayActor)->GetInfoText();
+	}
 
 	//如果什么都没有检测到那就设置信息为无
 	if (!IsDetected) 
@@ -494,19 +495,18 @@ void ADemoPlayerController::StateMachine()
 	ChangePreUpperType(EUpperBody::None);
 
 	// 如果是 资源或可拾取物品 则准星不锁定（白色）
-	//if (!Cast<ADemoResourceObject>(RayActor) && !Cast<ADemoPickupObject>(RayActor) && !Cast<ADemoEnemyCharacter>(RayActor)) 
-	if (!Cast<ADemoResourceObject>(RayActor) && !Cast<ADemoPickupObject>(RayActor)) 
+	if (!Cast<ADemoResourceObject>(RayActor) && !Cast<ADemoPickupObject>(RayActor) && !Cast<ADemoEnemyCharacter>(RayActor)) 
 	{
 		//准星显示未锁定
 		UpdatePointer.ExecuteIfBound(false, 1.f);
 	}
 
-	////如果检测到敌人 则锁定模式（）
-	//if (Cast<ADemoEnemyCharacter>(RayActor))
-	//{
-	//	//准星锁定模式
-	//	UpdatePointer.ExecuteIfBound(false, 0.f);
-	//}
+	//如果检测到敌人 则锁定模式（）
+	if (Cast<ADemoEnemyCharacter>(RayActor))
+	{
+		//准星锁定模式
+		UpdatePointer.ExecuteIfBound(false, 0.f);
+	}
 
 	//如果检测到资源
 	if (Cast<ADemoResourceObject>(RayActor)) 

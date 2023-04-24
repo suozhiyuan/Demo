@@ -18,9 +18,9 @@ public:
 
 	ADemoEnemyWeapon();
 	
-	//protected:
-	//
-	//	UFUNCTION()
-	//		virtual void OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+protected:
+
+	//UFUNCTION()			// 加 UFUNCTION() 编译生成会报错，但重新生成不会报错 父类(DemoEnemyTool)中的UFUNCTION的重写不能在其上面有UFUNCTION()声明;它将使用与原始声明相同的参数。
+	virtual void OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 
 };

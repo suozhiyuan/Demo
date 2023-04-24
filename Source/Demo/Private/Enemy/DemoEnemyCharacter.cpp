@@ -268,28 +268,30 @@ void ADemoEnemyCharacter::DestroyEvent()
 	GetWorld()->DestroyActor(this);
 }
 
-//FText ADemoEnemyCharacter::GetInfoText() const
-//{
-//	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
-//	switch (DemoDataHandle::Get()->CurrentCulture)
-//	{
-//	case ECultureTeam::EN:
-//		return ResourceAttr->EN;
-//		break;
-//	case ECultureTeam::ZH:
-//		return ResourceAttr->ZH;
-//		break;
-//	}
-//	return ResourceAttr->ZH;
-//}
-//
-//void ADemoEnemyCharacter::ChangeWeaponDetect(bool IsOpen)
-//{
-//	//如果手持物品存在,修改检测
-//	ADemoEnemyTool* WeaponClass = Cast<ADemoEnemyTool>(WeaponSocket->GetChildActor());
-//	if (WeaponClass) WeaponClass->ChangeOverlayDetect(IsOpen);
-//}
-//
+// 获取物品信息
+FText ADemoEnemyCharacter::GetInfoText() const
+{
+	TSharedPtr<ResourceAttribute> ResourceAttr = *DemoDataHandle::Get()->ResourceAttrMap.Find(ResourceIndex);
+
+	switch (DemoDataHandle::Get()->CurrentCulture)
+	{
+	case ECultureTeam::EN:
+		return ResourceAttr->EN;
+		break;
+	case ECultureTeam::ZH:
+		return ResourceAttr->ZH;
+		break;
+	}
+	return ResourceAttr->ZH;
+}
+
+void ADemoEnemyCharacter::ChangeWeaponDetect(bool IsOpen)
+{
+	//如果手持物品存在,修改检测
+	ADemoEnemyTool* WeaponClass = Cast<ADemoEnemyTool>(WeaponSocket->GetChildActor());
+	if (WeaponClass) WeaponClass->ChangeOverlayDetect(IsOpen);
+}
+
 //bool ADemoEnemyCharacter::IsLockPlayer()
 //{
 //	if (SEController) return SEController->IsLockPlayer;

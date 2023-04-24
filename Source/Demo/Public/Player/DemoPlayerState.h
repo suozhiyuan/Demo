@@ -54,9 +54,9 @@ public:
 	//是否已经死亡
 	bool IsPlayerDead();
 
-//	//接受伤害
-//	void AcceptDamage(int DamageVal);
-//
+	//接受伤害
+	void AcceptDamage(int DamageVal);
+
 //	//加载血量和饥饿度
 //	void LoadState(float HPVal, float HungerVal);
 //
@@ -104,7 +104,7 @@ private:
 	float HP;
 	float Hunger;
 
-//	//是否已经死亡
-//	bool IsDead;
+	//是否已经死亡
+	bool IsDead;
 
 };

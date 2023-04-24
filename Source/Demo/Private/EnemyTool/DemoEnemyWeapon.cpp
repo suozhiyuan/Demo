@@ -4,6 +4,7 @@
 #include "EnemyTool/DemoEnemyWeapon.h"
 
 #include "Components/BoxComponent.h"
+#include "Player/DemoPlayerCharacter.h"
 
 
 ADemoEnemyWeapon::ADemoEnemyWeapon()
@@ -19,10 +20,10 @@ ADemoEnemyWeapon::ADemoEnemyWeapon()
 	AffectCollision->SetRelativeScale3D(FVector(1.125f, 0.22f, 1.f));
 }
 
-//void ADemoEnemyWeapon::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-//{
-//	if (Cast<ADemoPlayerCharacter>(OtherActor))
-//	{
-//		Cast<ADemoPlayerCharacter>(OtherActor)->AcceptDamage(20);
-//	}
-//}
+void ADemoEnemyWeapon::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Cast<ADemoPlayerCharacter>(OtherActor))		// 交互物品是不是玩家，如果是玩家则减血
+	{
+		Cast<ADemoPlayerCharacter>(OtherActor)->AcceptDamage(20);
+	}
+}

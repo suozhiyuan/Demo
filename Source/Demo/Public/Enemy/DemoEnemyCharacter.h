@@ -52,8 +52,8 @@ public:
 	//获取物品信息
 	FText GetInfoText() const;
 
-	////修改手持物品的碰撞检测是否开启
-	//void ChangeWeaponDetect(bool IsOpen);
+	//修改手持物品的碰撞检测是否开启
+	void ChangeWeaponDetect(bool IsOpen);
 
 	////获取是否已经锁定了玩家
 	//bool IsLockPlayer();

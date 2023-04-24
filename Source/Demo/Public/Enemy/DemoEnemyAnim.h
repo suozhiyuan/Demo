@@ -35,9 +35,9 @@ public:
 	//停止所有动画
 	void StopAllAction();
 
-//	//开启和关闭交互动作时的碰撞检测
-//	UFUNCTION(BlueprintCallable, Category = EnemyAnim)
-//		void ChangeDetection(bool IsOpen);
+	//开启和关闭交互动作时的碰撞检测
+	UFUNCTION(BlueprintCallable, Category = EnemyAnim)
+		void ChangeDetection(bool IsOpen);
 
 public:
 

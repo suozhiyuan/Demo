@@ -49,8 +49,8 @@ public:
 	//获取是否已经死亡
 	bool IsPlayerDead();
 
-	////接受伤害
-	//void AcceptDamage(int DamageVal);
+	//接受伤害
+	void AcceptDamage(int DamageVal);
 
 	//获取摄像机位置
 	FVector GetCameraPos();

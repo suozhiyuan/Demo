@@ -251,10 +251,10 @@ bool ADemoPlayerCharacter::IsPlayerDead()
 	return false;
 }
 
-//void ADemoPlayerCharacter::AcceptDamage(int DamageVal)
-//{
-//	if (SPController->SPState) SPController->SPState->AcceptDamage(DamageVal);
-//}
+void ADemoPlayerCharacter::AcceptDamage(int DamageVal)
+{
+	if (SPController->SPState) SPController->SPState->AcceptDamage(DamageVal);
+}
 
 FVector ADemoPlayerCharacter::GetCameraPos()
 {
