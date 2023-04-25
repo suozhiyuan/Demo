@@ -4,6 +4,7 @@
 #include "UI/Widget/SDemoGameHUDWidget.h"
 #include "SlateOptMacros.h"
 #include "UI/Widget/SDemoChatRoomWidget.h"
+#include "UI/Widget/SDemoChatShowWidget.h"
 #include "UI/Widget/SDemoGameMenuWidget.h"
 #include "UI/Widget/SDemoMiniMapWidget.h"
 #include "UI/Widget/SDemoPlayerStateWidget.h"
@@ -70,15 +71,14 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 					SAssignNew(MiniMapWidget, SDemoMiniMapWidget)
 				]
 
-
-			////聊天显示栏
-			//+SOverlay::Slot()
-			//	.HAlign(HAlign_Left)
-			//	.VAlign(VAlign_Bottom)
-			//	.Padding(FMargin(20.f, 0.f, 0.f, 15.f))
-			//	[
-			//		SAssignNew(ChatShowWidget, SDemoChatShowWidget)
-			//	]
+			//聊天显示栏
+			+SOverlay::Slot()
+				.HAlign(HAlign_Left)
+				.VAlign(VAlign_Bottom)
+				.Padding(FMargin(20.f, 0.f, 0.f, 15.f))
+				[
+					SAssignNew(ChatShowWidget, SDemoChatShowWidget)
+				]
 
 
 
@@ -131,22 +131,22 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 	InitUIMap();
 }
 
-//void SDemoGameHUDWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
-//{
-//
-//	//每五秒插入一条信息
-//	if (MessageTimeCount < 5.f) {
-//		MessageTimeCount += InDeltaTime;
-//	}
-//	else
-//	{
-//		ChatShowWidget->AddMessage(NSLOCTEXT("DemoGame", "Enemy", "Enemy"), NSLOCTEXT("DemoGame", "EnemyDialogue", ": Fight with me !"));
-//		ChatRoomWidget->AddMessage(NSLOCTEXT("DemoGame", "Enemy", "Enemy"), NSLOCTEXT("DemoGame", "EnemyDialogue", ": Fight with me !"));
-//		MessageTimeCount = 0.f;
-//	}
-//
-//}
-//
+void SDemoGameHUDWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+{
+
+	//每五秒插入一条信息
+	if (MessageTimeCount < 5.f) 
+	{
+		MessageTimeCount += InDeltaTime;
+	}
+	else
+	{
+		ChatShowWidget->AddMessage(NSLOCTEXT("DemoGame", "Enemy", "Enemy"), NSLOCTEXT("DemoGame", "EnemyDialogue", ": Fight with me !"));
+		//ChatRoomWidget->AddMessage(NSLOCTEXT("DemoGame", "Enemy", "Enemy"), NSLOCTEXT("DemoGame", "EnemyDialogue", ": Fight with me !"));
+		MessageTimeCount = 0.f;
+	}
+}
+
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
@@ -209,6 +209,6 @@ void SDemoGameHUDWidget::InitUIMap()
 	////绑定委托
 	//ChatRoomWidget->PushMessage.BindRaw(ChatShowWidget.Get(), &SDemoChatShowWidget::AddMessage);
 
-	////消息计时器初始设置为0
-	//MessageTimeCount = 0.f;
+	//消息计时器初始设置为0
+	MessageTimeCount = 0.f;
 }

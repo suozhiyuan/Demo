@@ -259,8 +259,7 @@ void ADemoGameMode::InitializeMiniMapCamera()
 //			}
 //			++EnemyCount;
 //		}
-//
-//
+
 //		//—≠ª∑…Ë÷√—“ Ø
 //		int RockCount = 0;
 //		for (TActorIterator<ADemoResourceRock> RockIt(GetWorld()); RockIt; ++RockIt) {

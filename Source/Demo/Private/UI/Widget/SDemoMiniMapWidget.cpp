@@ -217,7 +217,7 @@ int32 SDemoMiniMapWidget::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	(
 		OutDrawElements,
 		LayerId + 10,
-		AllottedGeometry.ToPaintGeometry(NorthLocation - FVector2D(3.f, 3.f), FVector2D(16.f, 16.f)),
+		AllottedGeometry.ToPaintGeometry(NorthLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
 		NSLOCTEXT("DemoGame", "N", "N"),
 		GameStyle->Font_20,
 		ESlateDrawEffect::None,
@@ -227,7 +227,7 @@ int32 SDemoMiniMapWidget::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	(
 		OutDrawElements,
 		LayerId + 10,
-		AllottedGeometry.ToPaintGeometry(SouthLocation - FVector2D(3.f, 3.f), FVector2D(16.f, 16.f)),
+		AllottedGeometry.ToPaintGeometry(SouthLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
 		NSLOCTEXT("DemoGame", "S", "S"),
 		GameStyle->Font_20,
 		ESlateDrawEffect::None,
@@ -237,7 +237,7 @@ int32 SDemoMiniMapWidget::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	(
 		OutDrawElements,
 		LayerId + 10,
-		AllottedGeometry.ToPaintGeometry(EastLocation - FVector2D(3.f, 3.f), FVector2D(16.f, 16.f)),
+		AllottedGeometry.ToPaintGeometry(EastLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
 		NSLOCTEXT("DemoGame", "E", "E"),
 		GameStyle->Font_20,
 		ESlateDrawEffect::None,
@@ -247,7 +247,7 @@ int32 SDemoMiniMapWidget::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	(
 		OutDrawElements,
 		LayerId + 10,
-		AllottedGeometry.ToPaintGeometry(WestLocation - FVector2D(3.f, 3.f), FVector2D(16.f, 16.f)),
+		AllottedGeometry.ToPaintGeometry(WestLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
 		NSLOCTEXT("DemoGame", "W", "W"),
 		GameStyle->Font_20,
 		ESlateDrawEffect::None,

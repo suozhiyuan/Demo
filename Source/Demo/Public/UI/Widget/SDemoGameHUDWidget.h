@@ -23,7 +23,7 @@ public:
 	void Construct(const FArguments& InArgs);
 
 
-	//virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
+	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
 	//绑定到UIScaler的方法
 	float GetUIScaler() const;
@@ -47,8 +47,8 @@ public:
 	//小地图引用
 	TSharedPtr<class SDemoMiniMapWidget> MiniMapWidget;
 
-//	//聊天显示栏引用
-//	TSharedPtr<class SDemoChatShowWidget> ChatShowWidget;
+	//聊天显示栏
+	TSharedPtr<class SDemoChatShowWidget> ChatShowWidget;
 
 	//游戏菜单
 	TSharedPtr<class SDemoGameMenuWidget> GameMenuWidget;
@@ -78,7 +78,7 @@ private:
 	//UIMap
 	TMap<EGameUIType::Type, TSharedPtr<SCompoundWidget>> UIMap;
 
-//	//消息计时器
-//	float MessageTimeCount;
+	//消息计时器
+	float MessageTimeCount;
 
 };
