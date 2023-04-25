@@ -216,7 +216,6 @@ void ADemoGameMode::InitializeMiniMapCamera()
 		 * @param EnemyRotateList		µÐÈËµÄÐý×ª
 		 */
 	}
-
 }
 
 //void ADemoGameMode::LoadRecord()
