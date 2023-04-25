@@ -192,16 +192,19 @@ void ADemoGameMode::InitializeMiniMapCamera()
 		TArray<bool> EnemyLockList;			// 是否锁定
 		TArray<float> EnemyRotateList;		// 敌人旋转
 
-		////获取场景中的敌人
-		//for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt)
-		//{
-		//	FVector EnemyPos = FVector((*EnemyIt)->GetActorLocation().X - SPCharacter->GetActorLocation().X, (*EnemyIt)->GetActorLocation().Y - SPCharacter->GetActorLocation().Y, 0.f);
-		//	EnemyPos = FQuat(FVector::UpVector, FMath::DegreesToRadians(-SPCharacter->GetActorRotation().Yaw - 90.f)) * EnemyPos;
-		//	EnemyPosList.Add(FVector2D(EnemyPos.X, EnemyPos.Y));
+		//获取场景中的敌人
+		for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt)
+		{
+			// 计算相对位置
+			FVector EnemyPos = FVector((*EnemyIt)->GetActorLocation().X - SPCharacter->GetActorLocation().X, (*EnemyIt)->GetActorLocation().Y - SPCharacter->GetActorLocation().Y, 0.f);
 
-		//	EnemyLockList.Add((*EnemyIt)->IsLockPlayer());
-		//	EnemyRotateList.Add((*EnemyIt)->GetActorRotation().Yaw - SPCharacter->GetActorRotation().Yaw);
-		//}
+			//EnemyPos = FQuat(FVector::UpVector, FMath::DegreesToRadians(-SPCharacter->GetActorRotation().Yaw - 90.f)) * EnemyPos;
+			//EnemyPosList.Add(FVector2D(EnemyPos.X, EnemyPos.Y));
+			EnemyPosList.Add(TArray<FVector2D>::ElementType(EnemyPos));
+
+			EnemyLockList.Add((*EnemyIt)->IsLockPlayer());
+			EnemyRotateList.Add((*EnemyIt)->GetActorRotation().Yaw - SPCharacter->GetActorRotation().Yaw);		// 相对于玩家的Yaw方向
+		}
 
 		//每帧更新小地图的方向文字位置
 		UpdateMapData.ExecuteIfBound(SPCharacter->GetActorRotation(), MiniMapCamera->GetMapSize(), &EnemyPosList, &EnemyLockList, &EnemyRotateList);

@@ -292,12 +292,12 @@ void ADemoEnemyCharacter::ChangeWeaponDetect(bool IsOpen)
 	if (WeaponClass) WeaponClass->ChangeOverlayDetect(IsOpen);
 }
 
-//bool ADemoEnemyCharacter::IsLockPlayer()
-//{
-//	if (SEController) return SEController->IsLockPlayer;
-//	return false;
-//}
-//
+bool ADemoEnemyCharacter::IsLockPlayer()
+{
+	if (SEController) return SEController->IsLockPlayer;
+	return false;
+}
+
 //void ADemoEnemyCharacter::LoadHP(float HPVal)
 //{
 //	HP = HPVal;

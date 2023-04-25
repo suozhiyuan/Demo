@@ -41,8 +41,8 @@ private:
 	//显示MiniMap的图片
 	TSharedPtr<SImage> MiniMapImage;
 
-//	//显示玩家视野的图片
-//	TSharedPtr<SImage> EnemyViewImage;
+	//显示玩家视野的图片
+	TSharedPtr<SImage> EnemyViewImage;
 
 	//视野材质
 	class UMaterialInstanceDynamic* EnemyViewMatDynamic;
