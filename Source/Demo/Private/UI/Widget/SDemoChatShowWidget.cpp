@@ -139,7 +139,7 @@ void SDemoChatShowWidget::AddMessage(FText NewName, FText NewContent)
 	{
 		//从未激活列表中提取出一个信息
 		InsertItem = UnActiveList[0];
-		UnActiveList.RemoveAt(0);			// RemoveAt  移除给定位置的元素
+		UnActiveList.RemoveAt(0);
 	}
 	else
 	{
