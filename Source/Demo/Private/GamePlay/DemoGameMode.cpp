@@ -198,9 +198,8 @@ void ADemoGameMode::InitializeMiniMapCamera()
 			// 计算相对位置
 			FVector EnemyPos = FVector((*EnemyIt)->GetActorLocation().X - SPCharacter->GetActorLocation().X, (*EnemyIt)->GetActorLocation().Y - SPCharacter->GetActorLocation().Y, 0.f);
 
-			//EnemyPos = FQuat(FVector::UpVector, FMath::DegreesToRadians(-SPCharacter->GetActorRotation().Yaw - 90.f)) * EnemyPos;
-			//EnemyPosList.Add(FVector2D(EnemyPos.X, EnemyPos.Y));
-			EnemyPosList.Add(TArray<FVector2D>::ElementType(EnemyPos));
+			EnemyPos = FQuat(FVector::UpVector, FMath::DegreesToRadians(-SPCharacter->GetActorRotation().Yaw - 90.f)) * EnemyPos;
+			EnemyPosList.Add(FVector2D(EnemyPos.X, EnemyPos.Y));
 
 			EnemyLockList.Add((*EnemyIt)->IsLockPlayer());
 			EnemyRotateList.Add((*EnemyIt)->GetActorRotation().Yaw - SPCharacter->GetActorRotation().Yaw);		// 相对于玩家的Yaw方向
