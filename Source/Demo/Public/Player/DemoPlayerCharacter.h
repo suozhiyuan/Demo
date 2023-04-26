@@ -55,8 +55,8 @@ public:
 	//获取摄像机位置
 	FVector GetCameraPos();
 
-	////播放死亡动画,返回播放时长
-	//float PlayDeadAnim();
+	//播放死亡动画,返回播放时长
+	float PlayDeadAnim();
 public:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Demo")
@@ -105,7 +105,6 @@ private:
 
 
 private:
-
 	//第一人称的骨骼模型
 	UPROPERTY(VisibleDefaultsOnly, Category = "Demo")
 		USkeletalMeshComponent* MeshFirst;
@@ -118,6 +117,6 @@ private:
 	float BaseLookUpRate;
 	float BaseTurnRate;
 
-	////死亡动画资源
-	//class UAnimationAsset* AnimDead;
+	//死亡动画资源
+	UAnimationAsset* AnimDead;
 };

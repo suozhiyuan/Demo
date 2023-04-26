@@ -46,14 +46,14 @@ void ADemoPlayerState::Tick(float DeltaSeconds)
 	}
 	else 
 	{
-		//if (!IsDead) 
-		//{
+		if (!IsDead) 
+		{
 			//如果饥饿不为0,持续减饥饿度,每秒减2
 			Hunger -= DeltaSeconds * 2;
 
 			//持续加血,每秒加1
 			HP += DeltaSeconds;
-		//}
+		}
 	}
 
 	//设定范围
@@ -66,11 +66,10 @@ void ADemoPlayerState::Tick(float DeltaSeconds)
 	//如果血值等于0但是没死
 	if (HP == 0.f && !IsDead) 
 	{
-		//告诉控制器自己死了
-		//if (SPController) SPController->PlayerDead();
+		// 告诉控制器自己死了
+		if (SPController) SPController->PlayerDead();
 		IsDead = true;
 	}
-
 }
 
 // 提供给 ShortcutWidget 的添加快捷栏容器委托，在 GameHUD 中绑定了
@@ -200,8 +199,8 @@ void ADemoPlayerState::AcceptDamage(int DamageVal)
 	//如果血值等于0但是没死
 	if (HP == 0 && !IsDead)
 	{
-		//告诉控制器自己死了
-		//if (SPController) SPController->PlayerDead();
+		// 告诉控制器自己死了
+		if (SPController) SPController->PlayerDead();
 		IsDead = true;
 	}
 }

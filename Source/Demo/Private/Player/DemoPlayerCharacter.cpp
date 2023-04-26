@@ -92,8 +92,8 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	//实例化手上物品
 	HandObject = CreateDefaultSubobject<UChildActorComponent>(TEXT("HandObject"));
 
-	////加载死亡动画资源
-	//AnimDead = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Player/Animation/Player_Death.Player_Death'")));
+	//加载死亡动画资源
+	AnimDead = Cast<UAnimationAsset>(StaticLoadObject(UAnimationAsset::StaticClass(), NULL, *FString("AnimSequence'/Game/Res/PolygonAdventure/Mannequin/Player/Animation/Player_Death.Player_Death'")));
 
 	//初始化参数
 	BaseTurnRate = 45.f;
@@ -268,11 +268,11 @@ FVector ADemoPlayerCharacter::GetCameraPos()
 	return FirstCamera->K2_GetComponentLocation();
 }
 
-//float ADemoPlayerCharacter::PlayDeadAnim()
-//{
-//	GetMesh()->PlayAnimation(AnimDead, false);
-//	return AnimDead->GetMaxCurrentTime();
-//}
+float ADemoPlayerCharacter::PlayDeadAnim()
+{
+	GetMesh()->PlayAnimation(AnimDead, false);
+	return AnimDead->GetMaxCurrentTime();
+}
 
 void ADemoPlayerCharacter::MoveForward(float Value)
 {

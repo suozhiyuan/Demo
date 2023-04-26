@@ -258,35 +258,36 @@ void ADemoPlayerController::TickMiniMap()
 }
 
 
-//void ADemoPlayerController::PlayerDead()
-//{
-//	//转换到第三视角
-//	SPCharacter->ChangeView(EGameViewMode::Third);
-//	//告诉角色播放死亡动画,获得死亡时间
-//	float DeadDuration = SPCharacter->PlayDeadAnim();
-//	//锁住输入
-//	LockedInput(true);
-//	//添加事件委托
-//	FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ADemoPlayerController::DeadTimeOut);
-//	//延时跳转UI
-//	GetWorld()->GetTimerManager().SetTimer(DeadHandle, TimerDelegate, DeadDuration, false);
-//}
-//
-//void ADemoPlayerController::DeadTimeOut()
-//{
-//	//设置游戏暂停
-//	SetPause(true);
-//	//设置游戏模式为混合
-//	SwitchInputMode(false);
-//	//更新界面
-//	ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Lose);
-//	//更新当前UI
-//	CurrentUIType = EGameUIType::Lose;
-//	//锁住输入
-//	LockedInput(true);
-//}
+void ADemoPlayerController::PlayerDead()
+{
+	// 先转换到第三视角
+	SPCharacter->ChangeView(EGameViewMode::Third);
 
+	//告诉角色播放死亡动画,获得死亡时间
+	float DeadDuration = SPCharacter->PlayDeadAnim();
 
+	//锁住输入
+	LockedInput(true);
+
+	//添加时间委托
+	FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ADemoPlayerController::DeadTimeOut);
+	//通过时间委托延时跳转UI
+	GetWorld()->GetTimerManager().SetTimer(DeadHandle, TimerDelegate, DeadDuration, false);
+}
+
+void ADemoPlayerController::DeadTimeOut()
+{
+	//设置游戏暂停
+	SetPause(true);
+	//设置游戏模式为显示鼠标，输入模式为GameAndUI
+	SwitchInputMode(false);
+	//更新界面，显示失败
+	ShowGameUI.ExecuteIfBound(CurrentUIType, EGameUIType::Lose);
+	//更新当前UI
+	CurrentUIType = EGameUIType::Lose;
+	//锁住输入
+	LockedInput(true);
+}
 
 void ADemoPlayerController::ChangeHandObject()
 {
