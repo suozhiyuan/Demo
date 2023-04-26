@@ -142,7 +142,7 @@ void SDemoGameHUDWidget::Tick(const FGeometry& AllottedGeometry, const double In
 	else
 	{
 		ChatShowWidget->AddMessage(NSLOCTEXT("DemoGame", "Enemy", "Enemy"), NSLOCTEXT("DemoGame", "EnemyDialogue", ": Fight with me !"));
-		//ChatRoomWidget->AddMessage(NSLOCTEXT("DemoGame", "Enemy", "Enemy"), NSLOCTEXT("DemoGame", "EnemyDialogue", ": Fight with me !"));
+		ChatRoomWidget->AddMessage(NSLOCTEXT("DemoGame", "Enemy", "Enemy"), NSLOCTEXT("DemoGame", "EnemyDialogue", ": Fight with me !"));
 		MessageTimeCount = 0.f;
 	}
 }
@@ -178,8 +178,8 @@ void SDemoGameHUDWidget::ShowGameUI(EGameUIType::Type PreUI, EGameUIType::Type N
 		//显示现在状态对应的UI
 		UIMap.Find(NextUI)->Get()->SetVisibility(EVisibility::Visible);
 
-		////显示现在状态对应的UI
-		//if (NextUI == EGameUIType::ChatRoom) ChatRoomWidget->ScrollToEnd();
+		//显示现在状态对应的UI
+		if (NextUI == EGameUIType::ChatRoom) ChatRoomWidget->ScrollToEnd();
 
 		////如果是失败,只显示一个按钮
 		//if (NextUI == EGameUIType::Lose) GameMenuWidget->GameLose();
@@ -206,8 +206,8 @@ void SDemoGameHUDWidget::InitUIMap()
 	UIMap.Add(EGameUIType::ChatRoom, ChatRoomWidget);
 	UIMap.Add(EGameUIType::Lose, GameMenuWidget);
 
-	////绑定委托
-	//ChatRoomWidget->PushMessage.BindRaw(ChatShowWidget.Get(), &SDemoChatShowWidget::AddMessage);
+	//绑定委托
+	ChatRoomWidget->PushMessage.BindRaw(ChatShowWidget.Get(), &SDemoChatShowWidget::AddMessage);
 
 	//消息计时器初始设置为0
 	MessageTimeCount = 0.f;
