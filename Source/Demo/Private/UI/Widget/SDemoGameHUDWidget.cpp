@@ -37,7 +37,6 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 				SAssignNew(ShortcutWidget, SDemoShortcutWidget)
 			]
 
-
 			//射线信息
 			+SOverlay::Slot()
 			.HAlign(HAlign_Center)
@@ -45,7 +44,6 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 			[
 				SAssignNew(RayInfoWidget, SDemoRayInfoWidget)
 			]
-
 
 			//准星
 			+SOverlay::Slot()
@@ -65,20 +63,20 @@ void SDemoGameHUDWidget::Construct(const FArguments& InArgs)
 
 			//小地图
 			+ SOverlay::Slot()
-				.HAlign(HAlign_Right)
-				.VAlign(VAlign_Top)
-				[
-					SAssignNew(MiniMapWidget, SDemoMiniMapWidget)
-				]
+			.HAlign(HAlign_Right)
+			.VAlign(VAlign_Top)
+			[
+				SAssignNew(MiniMapWidget, SDemoMiniMapWidget)
+			]
 
 			//聊天显示栏
 			+SOverlay::Slot()
-				.HAlign(HAlign_Left)
-				.VAlign(VAlign_Bottom)
-				.Padding(FMargin(20.f, 0.f, 0.f, 15.f))
-				[
-					SAssignNew(ChatShowWidget, SDemoChatShowWidget)
-				]
+			.HAlign(HAlign_Left)
+			.VAlign(VAlign_Bottom)
+			.Padding(FMargin(20.f, 0.f, 0.f, 15.f))
+			[
+				SAssignNew(ChatShowWidget, SDemoChatShowWidget)
+			]
 
 
 
