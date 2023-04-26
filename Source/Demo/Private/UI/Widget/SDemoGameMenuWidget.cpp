@@ -189,7 +189,8 @@ void SDemoGameMenuWidget::ChangeCulture(ECultureTeam Cultrue)
 
 void SDemoGameMenuWidget::ChangeVolume(const float MusicVolume, const float SoundVolume)
 {
-	//DemoDataHandle::Get()->ResetGameVolume(MusicVolume, SoundVolume);
+	// 获取DemoDataHandle单例，直接修改音量
+	DemoDataHandle::Get()->ResetGameVolume(MusicVolume, SoundVolume);
 }
 
 void SDemoGameMenuWidget::GameLose()

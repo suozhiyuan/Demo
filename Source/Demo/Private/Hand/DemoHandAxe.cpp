@@ -6,7 +6,7 @@
 
 ADemoHandAxe::ADemoHandAxe()
 {
-	//给模型组件添加模型
+	//给模型组件添加模型，构造函数加载资源可以用 FObjectFinder 也可以用 LoadObject，但在其他地方只能用 LoadObject
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> StaticBaseMesh(TEXT("StaticMesh'/Game/Res/PolygonAdventure/Meshes/SM_Wep_Axe_01.SM_Wep_Axe_01'"));
 	BaseMesh->SetStaticMesh(StaticBaseMesh.Object);
 
@@ -27,6 +27,6 @@ void ADemoHandAxe::BeginPlay()
 	//定义物品序号
 	ObjectIndex = 5;
 
-	////从新加载砍树的音效
-	//OverlaySound = LoadObject<USoundWave>(NULL, TEXT("SoundWave'/Game/Res/Sound/GameSound/Axe.Axe'"));
+	//从新加载砍树的音效，构造函数加载资源可以用 FObjectFinder 也可以用 LoadObject，但在其他地方只能用 LoadObject
+	OverlaySound = LoadObject<USoundWave>(NULL, TEXT("SoundWave'/Game/Res/Sound/GameSound/Axe.Axe'"));
 }

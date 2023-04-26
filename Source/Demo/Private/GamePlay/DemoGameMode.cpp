@@ -136,15 +136,15 @@ void ADemoGameMode::BeginPlay()
 	//DemoHelper::Debug(FString("DataHandle : ") + DemoDataHandle::Get()->RecordName, 30.f);
 	//DemoHelper::Debug(FString("GameInstance : ") + Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName, 30.f);
 
-	////初始化游戏数据
-	//DemoDataHandle::Get()->InitializeGameData();
+	//初始化游戏数据
+	DemoDataHandle::Get()->InitializeGameData();
 
 	if (!SPController) InitGamePlayModule();
 
-	////播放背景音乐
-	//USoundWave* BGMusic = LoadObject<USoundWave>(NULL, TEXT("SoundWave'/Game/Res/Sound/GameSound/GameBG.GameBG'"));
-	//BGMusic->bLooping = true;
-	//UGameplayStatics::PlaySound2D(GetWorld(), BGMusic, 0.1f);
+	//播放背景音乐
+	USoundWave* BGMusic = LoadObject<USoundWave>(NULL, TEXT("SoundWave'/Game/Res/Sound/GameSound/GameBG.GameBG'"));		// 加载音乐资源
+	BGMusic->bLooping = true;																										// 设置是否循环
+	UGameplayStatics::PlaySound2D(GetWorld(), BGMusic, 0.1f);															// 播放，参数3为初始音量，默认值是1
 
 	//LoadRecord();
 }

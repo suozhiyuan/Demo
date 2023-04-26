@@ -79,17 +79,20 @@ private:
 	void InitializeGameAudio();
 
 private:
-
 	static TSharedPtr<DemoDataHandle> DataInstance;
+
 	//保存Menu的声音
 	TMap<FString, TArray<USoundCue*>> MenuAudioResource;
+
 	//获取MenuStyle,里面存放有声音文件
 	const struct FDemoMenuStyle* MenuStyle;
+
 	//获取GameStyle
 	const struct FDemoGameStyle* GameStyle;
+
 	//音乐组件
-	class USoundMix* DemoSoundMix;
-	class USoundClass* DemoMusicClass;
+	USoundMix* DemoSoundMix;
+	USoundClass* DemoMusicClass;
 	USoundClass* DemoSoundClass;
-	class FAudioDevice* AudioDevice;
+	FAudioDevice* AudioDevice;			// 音乐播放设备
 };

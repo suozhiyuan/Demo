@@ -3,6 +3,7 @@
 
 #include "Data/DemoDataHandle.h"
 
+#include "AudioDevice.h"
 #include "Common/DemoHelper.h"
 #include "Data/DemoSingleton.h"
 #include "Internationalization/Internationalization.h"
@@ -96,14 +97,14 @@ void DemoDataHandle::ResetGameVolume(float MusicVol, float SoundVol)
 	if (MusicVol > 0)
 	{
 		MusicVolume = MusicVol;
-		////使用混音器来设置
-		//AudioDevice->SetSoundMixClassOverride(DemoSoundMix, DemoMusicClass, MusicVolume, 1.f, 0.2f, false);
+		//使用混音器来设置
+		AudioDevice->SetSoundMixClassOverride(DemoSoundMix, DemoMusicClass, MusicVolume, 1.f, 0.2f, false);
 	}
 	if (SoundVol > 0)
 	{
 		SoundVolume = SoundVol;
-		////使用混音器来设置
-		//AudioDevice->SetSoundMixClassOverride(DemoSoundMix, DemoSoundClass, SoundVolume, 1.f, 0.2f, false);
+		//使用混音器来设置
+		AudioDevice->SetSoundMixClassOverride(DemoSoundMix, DemoSoundClass, SoundVolume, 1.f, 0.2f, false);
 	}
 	//更新存档数据
 	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
@@ -176,8 +177,8 @@ void DemoDataHandle::InitializeGameData()
 	//初始化合成表图
 	InitCompoundTableMap();
 
-	////初始化游戏声音数据
-	//InitializeGameAudio();
+	//初始化游戏声音数据
+	InitializeGameAudio();
 }
 
 void DemoDataHandle::AddNewRecord()
@@ -219,7 +220,6 @@ void DemoDataHandle::InitObjectAttr()
 void DemoDataHandle::InitResourceAttrMap()
 {
 	DemoSingleton<DemoJsonHandle>::Get()->ResourceAttrJsonRead(ResourceAttrMap);
-	//DemoHelper::Debug(FString("22222222222"),0.f);
 }
 
 void DemoDataHandle::InitCompoundTableMap()
@@ -227,20 +227,21 @@ void DemoDataHandle::InitCompoundTableMap()
 	DemoSingleton<DemoJsonHandle>::Get()->CompoundTableJsonRead(CompoundTableMap);
 }
 
-//void DemoDataHandle::InitializeGameAudio()
-//{
-//	//获取混音器和音类
-//	DemoSoundMix = LoadObject<USoundMix>(NULL, TEXT("SoundMix'/Game/Blueprint/Sound/DemoSoundMix.DemoSoundMix'"));
-//	DemoMusicClass = LoadObject<USoundClass>(NULL, TEXT("SoundClass'/Game/Blueprint/Sound/DemoMusicClass.DemoMusicClass'"));
-//	DemoSoundClass = LoadObject<USoundClass>(NULL, TEXT("SoundClass'/Game/Blueprint/Sound/DemoSoundClass.DemoSoundClass'"));
-//
-//	//获取音乐设备
-//	AudioDevice = GEngine->GetMainAudioDevice();
-//
-//	//推送混音器到设备
-//	AudioDevice->PushSoundMixModifier(DemoSoundMix);
-//
-//	//根据音量设置一次声音
-//	ResetGameVolume(MusicVolume, SoundVolume);
-//}
-//
+void DemoDataHandle::InitializeGameAudio()
+{
+	//获取混音器和音类
+	DemoSoundMix = LoadObject<USoundMix>(NULL, TEXT("SoundMix'/Game/Blueprint/Sound/DemoSoundMix.DemoSoundMix'"));
+	DemoMusicClass = LoadObject<USoundClass>(NULL, TEXT("SoundClass'/Game/Blueprint/Sound/DemoMusicClass.DemoMusicClass'"));
+	DemoSoundClass = LoadObject<USoundClass>(NULL, TEXT("SoundClass'/Game/Blueprint/Sound/DemoSoundClass.DemoSoundClass'"));
+
+	//获取音乐设备
+	//AudioDevice = GEngine->GetMainAudioDevice();
+	AudioDevice = GEngine->GetMainAudioDevice().GetAudioDevice();
+
+	//推送混音器到设备
+	AudioDevice->PushSoundMixModifier(DemoSoundMix);
+
+	//根据音量设置一次声音
+	ResetGameVolume(MusicVolume, SoundVolume);
+}
+

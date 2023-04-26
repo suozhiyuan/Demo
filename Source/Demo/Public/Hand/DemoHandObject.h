@@ -40,9 +40,7 @@ protected:
 	UFUNCTION()
 		virtual void OnOverlayEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-
 protected:
-
 	//¸ù×é¼þ
 	class USceneComponent* RootScene;
 

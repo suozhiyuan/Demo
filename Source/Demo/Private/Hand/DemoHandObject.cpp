@@ -50,9 +50,9 @@ ADemoHandObject::ADemoHandObject()
 	OverlayEnd.BindUFunction(this, "OnOverlayEnd");
 	AffectCollision->OnComponentEndOverlap.Add(OverlayEnd);
 
-	////默认拳头音效
-	//static ConstructorHelpers::FObjectFinder<USoundWave> StaticSound(TEXT("SoundWave'/Game/Res/Sound/GameSound/Punch.Punch'"));
-	//OverlaySound = StaticSound.Object;
+	// 获取拳头音效
+	static ConstructorHelpers::FObjectFinder<USoundWave> StaticSound(TEXT("SoundWave'/Game/Res/Sound/GameSound/Punch.Punch'"));
+	OverlaySound = StaticSound.Object;
 }
 
  // Called when the game starts or when spawned
@@ -74,8 +74,8 @@ void ADemoHandObject::OnOverlayBegin(UPrimitiveComponent* OverlappedComponent, A
 		//获取对动物的伤害值
 		Cast<ADemoEnemyCharacter>(OtherActor)->AcceptDamage(ObjectAttr->AnimalAttack);
 	}
-	////如果音效存在,播放音效,默认音效为拳打
-	//if (OverlaySound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), OverlaySound, OtherActor->GetActorLocation());
+	//如果音效存在,播放音效,默认音效为拳打
+	if (OverlaySound) UGameplayStatics::PlaySoundAtLocation(GetWorld(), OverlaySound, OtherActor->GetActorLocation());
 }
 
 void ADemoHandObject::OnOverlayEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
