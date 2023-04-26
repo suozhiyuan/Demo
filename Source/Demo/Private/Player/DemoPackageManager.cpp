@@ -369,20 +369,24 @@ bool DemoPackageManager::EatUpEvent(int ShortcutID)
 	return false;
 }
 
-//void DemoPackageManager::LoadRecord(TArray<int32>* InputIndex, TArray<int32>* InputNum, TArray<int32>* NormalIndex, TArray<int32>* NormalNum, TArray<int32>* ShortcutIndex, TArray<int32>* ShortcutNum)
-//{
-//	for (int i = 0; i < InputContainerList.Num(); ++i)
-//	{
-//		if ((*InputIndex)[i] != 0) InputContainerList[i]->ResetContainerPara((*InputIndex)[i], (*InputNum)[i]);
-//	}
-//	for (int i = 0; i < NormalContainerList.Num(); ++i) {
-//		if ((*NormalIndex)[i] != 0) NormalContainerList[i]->ResetContainerPara((*NormalIndex)[i], (*NormalNum)[i]);
-//	}
-//	for (int i = 0; i < ShortcutContainerList.Num(); ++i) {
-//		if ((*ShortcutIndex)[i] != 0) ShortcutContainerList[i]->ResetContainerPara((*ShortcutIndex)[i], (*ShortcutNum)[i]);
-//	}
-//}
-//
+void DemoPackageManager::LoadRecord(TArray<int32>* InputIndex, TArray<int32>* InputNum, TArray<int32>* NormalIndex, TArray<int32>* NormalNum, TArray<int32>* ShortcutIndex, TArray<int32>* ShortcutNum)
+{
+	for (int i = 0; i < InputContainerList.Num(); ++i)
+	{
+		if ((*InputIndex)[i] != 0) InputContainerList[i]->ResetContainerPara((*InputIndex)[i], (*InputNum)[i]);
+	}
+
+	for (int i = 0; i < NormalContainerList.Num(); ++i) 
+	{
+		if ((*NormalIndex)[i] != 0) NormalContainerList[i]->ResetContainerPara((*NormalIndex)[i], (*NormalNum)[i]);
+	}
+
+	for (int i = 0; i < ShortcutContainerList.Num(); ++i) 
+	{
+		if ((*ShortcutIndex)[i] != 0) ShortcutContainerList[i]->ResetContainerPara((*ShortcutIndex)[i], (*ShortcutNum)[i]);
+	}
+}
+
 //void DemoPackageManager::SaveData(TArray<int32>& InputIndex, TArray<int32>& InputNum, TArray<int32>& NormalIndex, TArray<int32>& NormalNum, TArray<int32>& ShortcutIndex, TArray<int32>& ShortcutNum)
 //{
 //	for (int i = 0; i < InputContainerList.Num(); ++i)

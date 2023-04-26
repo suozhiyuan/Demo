@@ -36,7 +36,6 @@ UDemoEnemyAnim::UDemoEnemyAnim()
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> StaticAnimHurt(TEXT("AnimMontage'/Game/Res/PolygonAdventure/Mannequin/Enemy/Animation/FightGroup/MonEnemy_Hurt.MonEnemy_Hurt'"));
 	AnimHurt = StaticAnimHurt.Object;
 
-
 	//初始化参数
 	Speed = 0.f;
 	IdleType = 0.f;

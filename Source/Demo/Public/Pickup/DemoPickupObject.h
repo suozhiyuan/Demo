@@ -28,8 +28,8 @@ public:
 	// 物品ID
 	int ObjectIndex;
 
-	////是否下一帧销毁
-	//bool IsDestroyNextTick;
+	//是否下一帧销毁
+	bool IsDestroyNextTick;
 
 protected:
 	// Called when the game starts or when spawned

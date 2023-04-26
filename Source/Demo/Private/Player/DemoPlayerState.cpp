@@ -205,14 +205,15 @@ void ADemoPlayerState::AcceptDamage(int DamageVal)
 	}
 }
 
-//void ADemoPlayerState::LoadState(float HPVal, float HungerVal)
-//{
-//	HP = HPVal;
-//	Hunger = HungerVal;
-//	//执行修改玩家状态UI的委托
-//	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);
-//}
-//
+void ADemoPlayerState::LoadState(float HPVal, float HungerVal)
+{
+	HP = HPVal;
+	Hunger = HungerVal;
+
+	//执行修改玩家状态UI的委托
+	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);
+}
+
 //void ADemoPlayerState::SaveState(float& HPVal, float& HungerVal)
 //{
 //	HPVal = HP;

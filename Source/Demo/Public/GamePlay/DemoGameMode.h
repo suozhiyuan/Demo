@@ -34,9 +34,8 @@ public:
 	//组件赋值,给GameHUD调用,避免空引用引起崩溃
 	void InitGamePlayModule();
 
-	//保存游戏
-	//void SaveGame();
-
+	// 保存游戏
+	void SaveGame();
 
 public:
 
@@ -57,7 +56,6 @@ public:
 
 
 protected:
-
 	virtual void BeginPlay() override;
 
 	//初始化背包管理类
@@ -72,9 +70,7 @@ protected:
 	//给背包进行加载存档,这个函数一定要在第二帧再执行,否则快捷栏没初始化完成会崩溃
 	void LoadRecordPackage();
 
-
 private:
-
 	//是否已经初始化背包
 	bool IsInitPackage;
 

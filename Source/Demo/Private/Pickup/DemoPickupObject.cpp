@@ -23,15 +23,14 @@ ADemoPickupObject::ADemoPickupObject()
 	//设置模型碰撞为PickupProfile
 	BaseMesh->SetCollisionProfileName(FName("PickupProfile"));
 
-	////设置下一帧不销毁
-	//IsDestroyNextTick = false;
+	//设置下一帧不销毁
+	IsDestroyNextTick = false;
 }
 
 // Called when the game starts or when spawned
 void ADemoPickupObject::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 // Called every frame
@@ -39,9 +38,8 @@ void ADemoPickupObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	////如果下一帧销毁,自行销毁
-	//if (IsDestroyNextTick) GetWorld()->DestroyActor(this);
-
+	//如果下一帧销毁,自行销毁
+	if (IsDestroyNextTick) GetWorld()->DestroyActor(this);
 }
 
 FText ADemoPickupObject::GetInfoText() const

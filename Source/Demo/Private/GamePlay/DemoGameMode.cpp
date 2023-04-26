@@ -16,7 +16,12 @@
 #include "UI/HUD/DemoGameHUD.h"
 #include "Data/DemoDataHandle.h"
 #include "Enemy/DemoEnemyCharacter.h"
+#include "GamePlay/DemoSaveGame.h"
+#include "Pickup/DemoPickupStone.h"
+#include "Pickup/DemoPickupWood.h"
 #include "Player/DemoPackageManager.h"
+#include "Resource/DemoResourceRock.h"
+#include "Resource/DemoResourceTree.h"
 
 
 ADemoGameMode::ADemoGameMode()
@@ -38,8 +43,8 @@ ADemoGameMode::ADemoGameMode()
 	//小地图还没生成
 	IsCreateMiniMap = false;
 
-	////开始设置不需要加载存档
-	//IsNeedLoadRecord = false;
+	//开始设置不需要加载存档
+	IsNeedLoadRecord = false;
 
 }
 
@@ -48,11 +53,11 @@ void ADemoGameMode::Tick(float DeltaSeconds)
 	//初始化与更新小地图摄像机
 	InitializeMiniMapCamera();
 
-	////给背包加载存档,放在初始化背包上面是为了在第二帧再执行
-	//LoadRecordPackage();
+	//给背包加载存档,放在初始化背包上面是为了在第二帧再执行
+	LoadRecordPackage();
 
 	//初始化背包
-	InitializePackage();	
+	InitializePackage();
 }
 
 void ADemoGameMode::InitGamePlayModule()
@@ -146,7 +151,7 @@ void ADemoGameMode::BeginPlay()
 	BGMusic->bLooping = true;																										// 设置是否循环
 	UGameplayStatics::PlaySound2D(GetWorld(), BGMusic, 0.1f);															// 播放，参数3为初始音量，默认值是1
 
-	//LoadRecord();
+	LoadRecord();
 }
 
 void ADemoGameMode::InitializePackage()
@@ -218,113 +223,131 @@ void ADemoGameMode::InitializeMiniMapCamera()
 	}
 }
 
-//void ADemoGameMode::LoadRecord()
-//{
-//	//如果RecordName为空,直接renturn
-//	if (DemoDataHandle::Get()->RecordName.IsEmpty() || DemoDataHandle::Get()->RecordName.Equals(FString("Default"))) return;
-//	//循环检测存档是否已经存在
-//	for (TArray<FString>::TIterator It(DemoDataHandle::Get()->RecordDataList); It; ++It) {
-//		//如果有一个一样就直接设置为true,并且直接跳出循环
-//		if ((*It).Equals(DemoDataHandle::Get()->RecordName)) {
-//			IsNeedLoadRecord = true;
-//			break;
-//		}
-//	}
-//	//如果需要加载,进行存档的加载,如果存档存在,进行加载
-//	if (IsNeedLoadRecord && UGameplayStatics::DoesSaveGameExist(DemoDataHandle::Get()->RecordName, 0))
-//	{
-//		GameRecord = Cast<UDemoSaveGame>(UGameplayStatics::LoadGameFromSlot(DemoDataHandle::Get()->RecordName, 0));
-//	}
-//	else {
-//		IsNeedLoadRecord = false;
-//	}
-//	//如果需要加载并且存档存在
-//	if (IsNeedLoadRecord && GameRecord)
-//	{
-//		//设置玩家位置和血量
-//		SPCharacter->SetActorLocation(GameRecord->PlayerLocation);
-//		SPState->LoadState(GameRecord->PlayerHP, GameRecord->PlayerHunger);
-//
-//		//循环设置敌人
-//		int EnemyCount = 0;
-//		for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt) {
-//			if (EnemyCount < GameRecord->EnemyLoaction.Num())
-//			{
-//				(*EnemyIt)->SetActorLocation(GameRecord->EnemyLoaction[EnemyCount]);
-//				(*EnemyIt)->LoadHP(GameRecord->EnemyHP[EnemyCount]);
-//			}
-//			else {
-//				//告诉这个敌人下一帧销毁
-//				(*EnemyIt)->IsDestroyNextTick = true;
-//			}
-//			++EnemyCount;
-//		}
+void ADemoGameMode::LoadRecord()
+{
+	// 如果 RecordName 为空,直接 renturn。 如果是 Default,表明不需要加载存档
+	if (DemoDataHandle::Get()->RecordName.IsEmpty() || DemoDataHandle::Get()->RecordName.Equals(FString("Default"))) return;
 
-//		//循环设置岩石
-//		int RockCount = 0;
-//		for (TActorIterator<ADemoResourceRock> RockIt(GetWorld()); RockIt; ++RockIt) {
-//			if (RockCount < GameRecord->ResourceRock.Num()) {
-//				(*RockIt)->SetActorLocation(GameRecord->ResourceRock[RockCount]);
-//			}
-//			else {
-//				//告诉这个资源下一帧销毁
-//				(*RockIt)->IsDestroyNextTick = true;
-//			}
-//			++RockCount;
-//		}
-//
-//		//循环设置树木
-//		int TreeCount = 0;
-//		for (TActorIterator<ADemoResourceTree> TreeIt(GetWorld()); TreeIt; ++TreeIt) {
-//			if (TreeCount < GameRecord->ResourceTree.Num()) {
-//				(*TreeIt)->SetActorLocation(GameRecord->ResourceTree[TreeCount]);
-//			}
-//			else {
-//				//告诉这个资源下一帧销毁
-//				(*TreeIt)->IsDestroyNextTick = true;
-//			}
-//			++TreeCount;
-//		}
-//
-//		//循环设置拾取物品石头
-//		int StoneCount = 0;
-//		for (TActorIterator<ADemoPickupStone> StoneIt(GetWorld()); StoneIt; ++StoneIt) {
-//			if (StoneCount < GameRecord->PickupStone.Num()) {
-//				(*StoneIt)->SetActorLocation(GameRecord->PickupStone[StoneCount]);
-//			}
-//			else {
-//				//告诉这个资源下一帧销毁
-//				(*StoneIt)->IsDestroyNextTick = true;
-//			}
-//			++StoneCount;
-//		}
-//
-//		//循环设置拾取物品木头
-//		int WoodCount = 0;
-//		for (TActorIterator<ADemoPickupWood> WoodIt(GetWorld()); WoodIt; ++WoodIt) {
-//			if (WoodCount < GameRecord->PickupWood.Num()) {
-//				(*WoodIt)->SetActorLocation(GameRecord->PickupWood[WoodCount]);
-//			}
-//			else {
-//				//告诉这个资源下一帧销毁
-//				(*WoodIt)->IsDestroyNextTick = true;
-//			}
-//			++WoodCount;
-//		}
-//
-//	}
-//
-//}
+	// 循环检测存档是否已经存在
+	for (TArray<FString>::TIterator It(DemoDataHandle::Get()->RecordDataList); It; ++It) 
+	{
+		//如果有一个一样就直接设置为true,并且直接跳出循环
+		if ((*It).Equals(DemoDataHandle::Get()->RecordName))		// Equals 字符串对比，如果相同则返回 true
+		{
+			IsNeedLoadRecord = true;
+			break;
+		}
+	}
 
-//void ADemoGameMode::LoadRecordPackage()
-//{
-//	//如果背包没有初始化或者不用加载存档,直接返回
-//	if (!IsInitPackage || !IsNeedLoadRecord) return;
-//
-//	if (IsNeedLoadRecord && GameRecord)
-//	{
-//		DemoPackageManager::Get()->LoadRecord(&GameRecord->InputIndex, &GameRecord->InputNum, &GameRecord->NormalIndex, &GameRecord->NormalNum, &GameRecord->ShortcutIndex, &GameRecord->ShortcutNum);
-//	}
-//	//最后设置不用加载存档了
-//	IsNeedLoadRecord = false;
-//}
+	// 如果需要加载 并且 存档存在,进行加载
+	if (IsNeedLoadRecord && UGameplayStatics::DoesSaveGameExist(DemoDataHandle::Get()->RecordName, 0))			// DoesSaveGameExist 查看是否存在具有指定名称的存档
+	{
+		GameRecord = Cast<UDemoSaveGame>(UGameplayStatics::LoadGameFromSlot(DemoDataHandle::Get()->RecordName, 0));		// LoadGameFromSlot 从给定名称加载存档
+	}
+	else
+	{
+		IsNeedLoadRecord = false;
+	}
+
+	//如果需要加载并且存档存在
+	if (IsNeedLoadRecord && GameRecord)
+	{
+		//设置玩家位置和血量
+		SPCharacter->SetActorLocation(GameRecord->PlayerLocation);
+		SPState->LoadState(GameRecord->PlayerHP, GameRecord->PlayerHunger);
+
+		//循环设置敌人
+		int EnemyCount = 0;
+		for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt) 
+		{
+			if (EnemyCount < GameRecord->EnemyLoaction.Num())
+			{
+				(*EnemyIt)->SetActorLocation(GameRecord->EnemyLoaction[EnemyCount]);
+				(*EnemyIt)->LoadHP(GameRecord->EnemyHP[EnemyCount]);
+			}
+			else 
+			{
+				//告诉这个敌人下一帧销毁
+				(*EnemyIt)->IsDestroyNextTick = true;
+			}
+			++EnemyCount;
+		}
+
+		//循环设置岩石
+		int RockCount = 0;
+		for (TActorIterator<ADemoResourceRock> RockIt(GetWorld()); RockIt; ++RockIt) 
+		{
+			if (RockCount < GameRecord->ResourceRock.Num()) 
+			{
+				(*RockIt)->SetActorLocation(GameRecord->ResourceRock[RockCount]);
+			}
+			else 
+			{
+				//告诉这个资源下一帧销毁
+				(*RockIt)->IsDestroyNextTick = true;
+			}
+			++RockCount;
+		}
+
+		//循环设置树木
+		int TreeCount = 0;
+		for (TActorIterator<ADemoResourceTree> TreeIt(GetWorld()); TreeIt; ++TreeIt) 
+		{
+			if (TreeCount < GameRecord->ResourceTree.Num()) 
+			{
+				(*TreeIt)->SetActorLocation(GameRecord->ResourceTree[TreeCount]);
+			}
+			else 
+			{
+				//告诉这个资源下一帧销毁
+				(*TreeIt)->IsDestroyNextTick = true;
+			}
+			++TreeCount;
+		}
+
+		//循环设置拾取物品石头
+		int StoneCount = 0;
+		for (TActorIterator<ADemoPickupStone> StoneIt(GetWorld()); StoneIt; ++StoneIt) 
+		{
+			if (StoneCount < GameRecord->PickupStone.Num()) 
+			{
+				(*StoneIt)->SetActorLocation(GameRecord->PickupStone[StoneCount]);
+			}
+			else 
+			{
+				//告诉这个资源下一帧销毁
+				(*StoneIt)->IsDestroyNextTick = true;
+			}
+			++StoneCount;
+		}
+
+		//循环设置拾取物品木头
+		int WoodCount = 0;
+		for (TActorIterator<ADemoPickupWood> WoodIt(GetWorld()); WoodIt; ++WoodIt) 
+		{
+			if (WoodCount < GameRecord->PickupWood.Num()) 
+			{
+				(*WoodIt)->SetActorLocation(GameRecord->PickupWood[WoodCount]);
+			}
+			else 
+			{
+				//告诉这个资源下一帧销毁
+				(*WoodIt)->IsDestroyNextTick = true;
+			}
+			++WoodCount;
+		}
+	}
+}
+
+void ADemoGameMode::LoadRecordPackage()
+{
+	//如果背包没有初始化 或者 不用加载存档,直接返回
+	if (!IsInitPackage || !IsNeedLoadRecord) return;
+
+	if (IsNeedLoadRecord && GameRecord)
+	{
+		DemoPackageManager::Get()->LoadRecord(&GameRecord->InputIndex, &GameRecord->InputNum, &GameRecord->NormalIndex, &GameRecord->NormalNum, &GameRecord->ShortcutIndex, &GameRecord->ShortcutNum);
+	}
+	//最后设置不用加载存档了
+	IsNeedLoadRecord = false;
+}

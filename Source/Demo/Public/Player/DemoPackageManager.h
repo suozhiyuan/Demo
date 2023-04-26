@@ -39,9 +39,17 @@ public:
 
 	//吃东西,传入快捷栏的ID,传回是否成功吃掉
 	bool EatUpEvent(int ShortcutID);
-
-//	//加载存档
-//	void LoadRecord(TArray<int32>* InputIndex, TArray<int32>* InputNum, TArray<int32>* NormalIndex, TArray<int32>* NormalNum, TArray<int32>* ShortcutIndex, TArray<int32>* ShortcutNum);
+	
+	/**
+	 * @brief 加载存档
+	 * @param InputIndex			合成容器物品ID
+	 * @param InputNum 				合成容器物品数量
+	 * @param NormalIndex 			背包主体物品ID
+	 * @param NormalNum 			背包主体物品数量
+	 * @param ShortcutIndex 		快捷栏物品ID
+	 * @param ShortcutNum 			快捷栏物品数量
+	 */
+	void LoadRecord(TArray<int32>* InputIndex, TArray<int32>* InputNum, TArray<int32>* NormalIndex, TArray<int32>* NormalNum, TArray<int32>* ShortcutIndex, TArray<int32>* ShortcutNum);
 //
 //	void SaveData(TArray<int32>& InputIndex, TArray<int32>& InputNum, TArray<int32>& NormalIndex, TArray<int32>& NormalNum, TArray<int32>& ShortcutIndex, TArray<int32>& ShortcutNum);
 
@@ -97,6 +105,7 @@ private:
 	TArray<TSharedPtr<SDemoContainerBaseWidget>> InputContainerList;		// 输入容器列表
 	TArray<TSharedPtr<SDemoContainerBaseWidget>> NormalContainerList;		// 正常的容器列表
 	TArray<TSharedPtr<SDemoContainerBaseWidget>> ShortcutContainerList;		// 快捷栏容器列表
+
 	//输出容器只有一个
 	TSharedPtr<SDemoContainerBaseWidget> OutputContainer;
 

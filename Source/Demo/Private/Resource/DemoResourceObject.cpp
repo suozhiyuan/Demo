@@ -25,8 +25,8 @@ ADemoResourceObject::ADemoResourceObject()
 	//开启交互检测
 	BaseMesh->SetGenerateOverlapEvents(true);
 
-	//设置在下一帧不销毁
-	//IsDestroyNextTick = false;
+	// 设置在下一帧不销毁
+	IsDestroyNextTick = false;
 }
 
  // Called when the game starts or when spawned
@@ -73,9 +73,8 @@ void ADemoResourceObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//如果检测到下一帧要销毁
-	//if (IsDestroyNextTick) GetWorld()->DestroyActor(this);
-
+	// 如果检测到下一帧要销毁
+	if (IsDestroyNextTick) GetWorld()->DestroyActor(this);
 }
 
 // 获取物品信息
