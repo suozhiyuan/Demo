@@ -214,11 +214,11 @@ void ADemoPlayerState::LoadState(float HPVal, float HungerVal)
 	UpdateStateWidget.ExecuteIfBound(HP / 500.f, Hunger / 500.f);
 }
 
-//void ADemoPlayerState::SaveState(float& HPVal, float& HungerVal)
-//{
-//	HPVal = HP;
-//	HungerVal = Hunger;
-//}
+void ADemoPlayerState::SaveState(float& HPVal, float& HungerVal)
+{
+	HPVal = HP;
+	HungerVal = Hunger;
+}
 
 // 获取快捷栏物品信息
 FText ADemoPlayerState::GetShortcutInfoText() const

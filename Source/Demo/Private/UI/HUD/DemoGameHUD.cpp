@@ -13,6 +13,7 @@
 #include "UI/Widget/SDemoShortcutWidget.h"
 #include "UI/Widget/SDemoRayInfoWidget.h"
 #include "Player/DemoPlayerController.h"
+#include "UI/Widget/SDemoGameMenuWidget.h"
 #include "UI/Widget/SDemoMiniMapWidget.h"
 #include "UI/Widget/SDemoPlayerStateWidget.h"
 #include "UI/Widget/Package/SDemoPackageWidget.h"
@@ -60,8 +61,8 @@ void ADemoGameHUD::BeginPlay()
 	// 绑定更新小地图数据委托
 	GM->UpdateMapData.BindRaw(GameHUDWidget->MiniMapWidget.Get(), &SDemoMiniMapWidget::UpdateMapData);
 
-	//// 保存游戏事件绑定
-	//GameHUDWidget->GameMenuWidget->SaveGameDele.BindUObject(GM, &ADemoGameMode::SaveGame);
+	// 保存游戏事件绑定
+	GameHUDWidget->GameMenuWidget->SaveGameDele.BindUObject(GM, &ADemoGameMode::SaveGame);
 }
 
 

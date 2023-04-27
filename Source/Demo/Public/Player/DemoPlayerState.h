@@ -60,9 +60,9 @@ public:
 	//加载血量和饥饿度
 	void LoadState(float HPVal, float HungerVal);
 
-//	//保存血量和饥饿值到指定数据
-//	void SaveState(float& HPVal, float& HungerVal);
-//
+	//保存血量和饥饿值到指定数据
+	void SaveState(float& HPVal, float& HungerVal);
+
 
 public:
 	//当前被选中的快捷栏序号

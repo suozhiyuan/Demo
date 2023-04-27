@@ -306,10 +306,10 @@ void ADemoEnemyCharacter::LoadHP(float HPVal)
 	HPBarWidget->ChangeHP(HP / 200.f);
 }
 
-//float ADemoEnemyCharacter::GetHP()
-//{
-//	return HP;
-//}
+float ADemoEnemyCharacter::GetHP()
+{
+	return HP;
+}
 
 void ADemoEnemyCharacter::OnSeePlayer(APawn* PlayerChar)
 {

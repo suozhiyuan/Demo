@@ -61,8 +61,8 @@ public:
 	//加载血量
 	void LoadHP(float HPVal);
 
-	////获取血量,保存游戏时调用
-	//float GetHP();
+	//获取血量,保存游戏时调用
+	float GetHP();
 
 public:
 	//资源ID

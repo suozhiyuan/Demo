@@ -68,71 +68,74 @@ void ADemoGameMode::InitGamePlayModule()
 	SPState = Cast<ADemoPlayerState>(SPController->PlayerState);
 }
 
-//void ADemoGameMode::SaveGame()
-//{
-//	//如果存档名是Default,不进行保存
-//	if (DemoDataHandle::Get()->RecordName.Equals(FString("Default"))) return;
-//
-//	//创建一个新的存档
-//	UDemoSaveGame* NewRecord = Cast<UDemoSaveGame>(UGameplayStatics::CreateSaveGameObject(UDemoSaveGame::StaticClass()));
-//
-//	//对存档进行赋值
-//	//设置玩家位置和血量
-//	NewRecord->PlayerLocation = SPCharacter->GetActorLocation();
-//	SPState->SaveState(NewRecord->PlayerHP, NewRecord->PlayerHunger);
-//
-//	//循环设置敌人
-//	for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt)
-//	{
-//		NewRecord->EnemyLoaction.Add((*EnemyIt)->GetActorLocation());
-//		NewRecord->EnemyHP.Add((*EnemyIt)->GetHP());
-//	}
-//
-//	//循环设置岩石
-//	for (TActorIterator<ADemoResourceRock> RockIt(GetWorld()); RockIt; ++RockIt)
-//	{
-//		NewRecord->ResourceRock.Add((*RockIt)->GetActorLocation());
-//	}
-//
-//	//循环设置树木
-//	for (TActorIterator<ADemoResourceTree> TreeIt(GetWorld()); TreeIt; ++TreeIt) {
-//		NewRecord->ResourceTree.Add((*TreeIt)->GetActorLocation());
-//	}
-//
-//	//循环设置拾取物品石头
-//	for (TActorIterator<ADemoPickupStone> StoneIt(GetWorld()); StoneIt; ++StoneIt) {
-//		NewRecord->PickupStone.Add((*StoneIt)->GetActorLocation());
-//	}
-//
-//	//循环设置拾取物品木头
-//	for (TActorIterator<ADemoPickupWood> WoodIt(GetWorld()); WoodIt; ++WoodIt) {
-//		NewRecord->PickupWood.Add((*WoodIt)->GetActorLocation());
-//	}
-//
-//	//获取背包数据
-//	DemoPackageManager::Get()->SaveData(NewRecord->InputIndex, NewRecord->InputNum, NewRecord->NormalIndex, NewRecord->NormalNum, NewRecord->ShortcutIndex, NewRecord->ShortcutNum);
-//
-//	//查看是否已经有存档存在
-//	if (UGameplayStatics::DoesSaveGameExist(DemoDataHandle::Get()->RecordName, 0)) {
-//		//有的话先删除
-//		UGameplayStatics::DeleteGameInSlot(DemoDataHandle::Get()->RecordName, 0);
-//	}
-//	//保存存档
-//	UGameplayStatics::SaveGameToSlot(NewRecord, DemoDataHandle::Get()->RecordName, 0);
-//
-//	//查看json是否已经有这个存档
-//	bool IsRecordExist = false;
-//	for (TArray<FString>::TIterator It(DemoDataHandle::Get()->RecordDataList); It; ++It)
-//	{
-//		//只要有一个相同,就跳出
-//		if ((*It).Equals(DemoDataHandle::Get()->RecordName)) {
-//			IsRecordExist = true;
-//			break;
-//		}
-//	}
-//	//如果存档不存在,让数据管理类添加存档到json
-//	if (!IsRecordExist) DemoDataHandle::Get()->AddNewRecord();
-//}
+void ADemoGameMode::SaveGame()
+{
+	//如果存档名是Default,不进行保存
+	if (DemoDataHandle::Get()->RecordName.Equals(FString("Default"))) return;
+
+	//创建一个新的存档
+	UDemoSaveGame* NewRecord = Cast<UDemoSaveGame>(UGameplayStatics::CreateSaveGameObject(UDemoSaveGame::StaticClass()));
+
+	//对存档进行赋值
+	//设置玩家位置和血量
+	NewRecord->PlayerLocation = SPCharacter->GetActorLocation();
+	SPState->SaveState(NewRecord->PlayerHP, NewRecord->PlayerHunger);
+
+	//循环设置敌人
+	for (TActorIterator<ADemoEnemyCharacter> EnemyIt(GetWorld()); EnemyIt; ++EnemyIt)
+	{
+		NewRecord->EnemyLoaction.Add((*EnemyIt)->GetActorLocation());
+		NewRecord->EnemyHP.Add((*EnemyIt)->GetHP());
+	}
+
+	//循环设置岩石
+	for (TActorIterator<ADemoResourceRock> RockIt(GetWorld()); RockIt; ++RockIt)
+	{
+		NewRecord->ResourceRock.Add((*RockIt)->GetActorLocation());
+	}
+
+	//循环设置树木
+	for (TActorIterator<ADemoResourceTree> TreeIt(GetWorld()); TreeIt; ++TreeIt)
+	{
+		NewRecord->ResourceTree.Add((*TreeIt)->GetActorLocation());
+	}
+
+	//循环设置拾取物品石头
+	for (TActorIterator<ADemoPickupStone> StoneIt(GetWorld()); StoneIt; ++StoneIt) 
+	{
+		NewRecord->PickupStone.Add((*StoneIt)->GetActorLocation());
+	}
+
+	//循环设置拾取物品木头
+	for (TActorIterator<ADemoPickupWood> WoodIt(GetWorld()); WoodIt; ++WoodIt)
+	{
+		NewRecord->PickupWood.Add((*WoodIt)->GetActorLocation());
+	}
+
+	////获取背包数据
+	//DemoPackageManager::Get()->SaveData(NewRecord->InputIndex, NewRecord->InputNum, NewRecord->NormalIndex, NewRecord->NormalNum, NewRecord->ShortcutIndex, NewRecord->ShortcutNum);
+
+	////查看是否已经有存档存在
+	//if (UGameplayStatics::DoesSaveGameExist(DemoDataHandle::Get()->RecordName, 0)) {
+	//	//有的话先删除
+	//	UGameplayStatics::DeleteGameInSlot(DemoDataHandle::Get()->RecordName, 0);
+	//}
+	////保存存档
+	//UGameplayStatics::SaveGameToSlot(NewRecord, DemoDataHandle::Get()->RecordName, 0);
+
+	////查看json是否已经有这个存档
+	//bool IsRecordExist = false;
+	//for (TArray<FString>::TIterator It(DemoDataHandle::Get()->RecordDataList); It; ++It)
+	//{
+	//	//只要有一个相同,就跳出
+	//	if ((*It).Equals(DemoDataHandle::Get()->RecordName)) {
+	//		IsRecordExist = true;
+	//		break;
+	//	}
+	//}
+	////如果存档不存在,让数据管理类添加存档到json
+	//if (!IsRecordExist) DemoDataHandle::Get()->AddNewRecord();
+}
 
 
 void ADemoGameMode::BeginPlay()
