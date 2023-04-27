@@ -45,10 +45,10 @@ private:
 	TSharedPtr<SImage> EnemyViewImage;
 
 	//视野材质
-	class UMaterialInstanceDynamic* EnemyViewMatDynamic;
+	UMaterialInstanceDynamic* EnemyViewMatDynamic;
 
 	//MiniMap笔刷
-	struct FSlateBrush* MiniMapBrush;
+	FSlateBrush* MiniMapBrush;
 
 	//四个方向的渲染位置
 	FVector2D NorthLocation;		// 北的位置

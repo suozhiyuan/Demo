@@ -53,7 +53,7 @@ void ADemoGameMode::Tick(float DeltaSeconds)
 	//初始化与更新小地图摄像机
 	InitializeMiniMapCamera();
 
-	//给背包加载存档,放在初始化背包上面是为了在第二帧再执行
+	//给背包加载存档, 第二帧再执行
 	LoadRecordPackage();
 
 	//初始化背包
