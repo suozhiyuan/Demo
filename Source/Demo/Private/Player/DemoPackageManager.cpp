@@ -387,19 +387,23 @@ void DemoPackageManager::LoadRecord(TArray<int32>* InputIndex, TArray<int32>* In
 	}
 }
 
-//void DemoPackageManager::SaveData(TArray<int32>& InputIndex, TArray<int32>& InputNum, TArray<int32>& NormalIndex, TArray<int32>& NormalNum, TArray<int32>& ShortcutIndex, TArray<int32>& ShortcutNum)
-//{
-//	for (int i = 0; i < InputContainerList.Num(); ++i)
-//	{
-//		InputIndex.Add(InputContainerList[i]->GetIndex());
-//		InputNum.Add(InputContainerList[i]->GetNum());
-//	}
-//	for (int i = 0; i < NormalContainerList.Num(); ++i) {
-//		NormalIndex.Add(NormalContainerList[i]->GetIndex());
-//		NormalNum.Add(NormalContainerList[i]->GetNum());
-//	}
-//	for (int i = 0; i < ShortcutContainerList.Num(); ++i) {
-//		ShortcutIndex.Add(ShortcutContainerList[i]->GetIndex());
-//		ShortcutNum.Add(ShortcutContainerList[i]->GetNum());
-//	}
-//}
+void DemoPackageManager::SaveData(TArray<int32>& InputIndex, TArray<int32>& InputNum, TArray<int32>& NormalIndex, TArray<int32>& NormalNum, TArray<int32>& ShortcutIndex, TArray<int32>& ShortcutNum)
+{
+	for (int i = 0; i < InputContainerList.Num(); ++i)
+	{
+		InputIndex.Add(InputContainerList[i]->GetIndex());
+		InputNum.Add(InputContainerList[i]->GetNum());
+	}
+
+	for (int i = 0; i < NormalContainerList.Num(); ++i) 
+	{
+		NormalIndex.Add(NormalContainerList[i]->GetIndex());
+		NormalNum.Add(NormalContainerList[i]->GetNum());
+	}
+
+	for (int i = 0; i < ShortcutContainerList.Num(); ++i) 
+	{
+		ShortcutIndex.Add(ShortcutContainerList[i]->GetIndex());
+		ShortcutNum.Add(ShortcutContainerList[i]->GetNum());
+	}
+}

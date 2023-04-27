@@ -112,29 +112,31 @@ void ADemoGameMode::SaveGame()
 		NewRecord->PickupWood.Add((*WoodIt)->GetActorLocation());
 	}
 
-	////获取背包数据
-	//DemoPackageManager::Get()->SaveData(NewRecord->InputIndex, NewRecord->InputNum, NewRecord->NormalIndex, NewRecord->NormalNum, NewRecord->ShortcutIndex, NewRecord->ShortcutNum);
+	//获取背包数据
+	DemoPackageManager::Get()->SaveData(NewRecord->InputIndex, NewRecord->InputNum, NewRecord->NormalIndex, NewRecord->NormalNum, NewRecord->ShortcutIndex, NewRecord->ShortcutNum);
 
-	////查看是否已经有存档存在
-	//if (UGameplayStatics::DoesSaveGameExist(DemoDataHandle::Get()->RecordName, 0)) {
-	//	//有的话先删除
-	//	UGameplayStatics::DeleteGameInSlot(DemoDataHandle::Get()->RecordName, 0);
-	//}
-	////保存存档
-	//UGameplayStatics::SaveGameToSlot(NewRecord, DemoDataHandle::Get()->RecordName, 0);
+	//查看是否已经有存档存在
+	if (UGameplayStatics::DoesSaveGameExist(DemoDataHandle::Get()->RecordName, 0)) 
+	{
+		//有的话先删除
+		UGameplayStatics::DeleteGameInSlot(DemoDataHandle::Get()->RecordName, 0);
+	}
+	//保存存档
+	UGameplayStatics::SaveGameToSlot(NewRecord, DemoDataHandle::Get()->RecordName, 0);
 
-	////查看json是否已经有这个存档
-	//bool IsRecordExist = false;
-	//for (TArray<FString>::TIterator It(DemoDataHandle::Get()->RecordDataList); It; ++It)
-	//{
-	//	//只要有一个相同,就跳出
-	//	if ((*It).Equals(DemoDataHandle::Get()->RecordName)) {
-	//		IsRecordExist = true;
-	//		break;
-	//	}
-	//}
-	////如果存档不存在,让数据管理类添加存档到json
-	//if (!IsRecordExist) DemoDataHandle::Get()->AddNewRecord();
+	//查看json是否已经有这个存档
+	bool IsRecordExist = false;
+	for (TArray<FString>::TIterator It(DemoDataHandle::Get()->RecordDataList); It; ++It)
+	{
+		//只要有一个相同,就跳出
+		if ((*It).Equals(DemoDataHandle::Get()->RecordName)) 
+		{
+			IsRecordExist = true;
+			break;
+		}
+	}
+	//如果存档不存在,让数据管理类添加存档到json
+	if (!IsRecordExist) DemoDataHandle::Get()->AddNewRecord();
 }
 
 

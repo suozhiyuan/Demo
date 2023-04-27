@@ -185,6 +185,7 @@ void DemoDataHandle::AddNewRecord()
 {
 	//将现在的存档名添加到数组
 	RecordDataList.Add(RecordName);
+
 	//更新json数据
 	DemoSingleton<DemoJsonHandle>::Get()->UpdateRecordData(GetEnumValueAsString<ECultureTeam>(FString("ECultureTeam"), CurrentCulture), MusicVolume, SoundVolume, &RecordDataList);
 }
