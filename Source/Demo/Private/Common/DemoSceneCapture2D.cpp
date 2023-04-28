@@ -12,7 +12,7 @@ ADemoSceneCapture2D::ADemoSceneCapture2D()
 	//设置每帧更新
 	GetCaptureComponent2D()->bCaptureEveryFrame = true;
 
-	//设置渲染图片的格式是xxx，不然渲染出来的图片会有马赛克
+	//设置渲染图片的格式，不然渲染出来的图片会有马赛克
 	GetCaptureComponent2D()->CaptureSource = ESceneCaptureSource::SCS_SceneColorSceneDepth;
 
 	//设置视野模式为正交模式

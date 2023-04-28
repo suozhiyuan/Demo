@@ -29,13 +29,11 @@ ADemoGameMode::ADemoGameMode()
 	//允许开启tick函数
 	PrimaryActorTick.bCanEverTick = true;
 
-
 	//添加组件
 	HUDClass = ADemoGameHUD::StaticClass();
 	PlayerControllerClass = ADemoPlayerController::StaticClass();
 	PlayerStateClass = ADemoPlayerState::StaticClass();
 	DefaultPawnClass = ADemoPlayerCharacter::StaticClass();
-
 
 	//开始没有初始化背包
 	IsInitPackage = false;
@@ -45,7 +43,6 @@ ADemoGameMode::ADemoGameMode()
 
 	//开始设置不需要加载存档
 	IsNeedLoadRecord = false;
-
 }
 
 void ADemoGameMode::Tick(float DeltaSeconds)
@@ -143,11 +140,11 @@ void ADemoGameMode::SaveGame()
 void ADemoGameMode::BeginPlay()
 {
 	// 测试代码，DataHandle 和 GameInstance 同样都有跨场景保存数据的功能
-	//DemoHelper::Debug(FString("DataHandle : ") + DemoDataHandle::Get()->RecordName, 30.f);
-	//DemoHelper::Debug(FString("GameInstance : ") + Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName, 30.f);
+	DemoHelper::Debug(FString("DataHandle : ") + DemoDataHandle::Get()->RecordName, 30.f);
+	DemoHelper::Debug(FString("GameInstance : ") + Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName, 30.f);
 
-	//初始化游戏数据
-	DemoDataHandle::Get()->InitializeGameData();
+	// 初始化游戏数据
+	//DemoDataHandle::Get()->InitializeGameData();
 
 	if (!SPController) InitGamePlayModule();
 
@@ -176,14 +173,15 @@ void ADemoGameMode::InitializePackage()
 
 void ADemoGameMode::InitializeMiniMapCamera()
 {
-	//如果摄像机还不存在并且世界已经存在
+	//如果地图正交像机还不存在 并且 世界已经存在
 	if (!IsCreateMiniMap && GetWorld())
 	{
 		//生成小地图摄像机
 		MiniMapCamera = GetWorld()->SpawnActor<ADemoSceneCapture2D>(ADemoSceneCapture2D::StaticClass());
 
-		//运行委托给MiniMapWidget传递渲染的MiniMapTex
-		RegisterMiniMap.ExecuteIfBound(MiniMapCamera->GetMiniMapTex());
+		// 独立窗口运行游戏时会崩溃
+		//运行委托给 MiniMapWidget 传递渲染的 MiniMapTex
+		//RegisterMiniMap.ExecuteIfBound(MiniMapCamera->GetMiniMapTex());
 
 		//绑定修改小地图视野的委托
 		SPController->UpdateMiniMapWidth.BindUObject(MiniMapCamera, &ADemoSceneCapture2D::UpdateMiniMapWidth);

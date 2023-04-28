@@ -161,7 +161,7 @@ void SDemoMiniMapWidget::UpdateMapData(const FRotator PlayerRotator, const float
 		}
 	}
 
-	int ViewCount = 0;
+	//int ViewCount = 0;
 
 	////修改敌人视野缩放比例
 	//EnemyViewMatDynamic->SetScalarParameterValue(FName("Scale"), 1000.f / MapSize);
@@ -199,72 +199,72 @@ int32 SDemoMiniMapWidget::OnPaint(const FPaintArgs& Args, const FGeometry& Allot
 	//先调用一下父类函数
 	SCompoundWidget::OnPaint(Args, AllottedGeometry, MyCullingRect, OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
 
-	//渲染玩家图标， MakeBox 绘制图片
-	FSlateDrawElement::MakeBox
-	(
-		OutDrawElements,
-		LayerId + 100,					// 数字越大，层级越上
-		AllottedGeometry.ToPaintGeometry(FVector2D(155.f, 155.f), FVector2D(10.f, 10.f)),		// 位置以及大小
-		&GameStyle->PawnPointBrush,		// 笔刷
-		ESlateDrawEffect::None,			// 效果
-		FLinearColor(1.f, 1.f, 0.f, 1.f)		// 颜色
-	);
+	////渲染玩家图标， MakeBox 绘制图片
+	//FSlateDrawElement::MakeBox
+	//(
+	//	OutDrawElements,
+	//	LayerId + 100,					// 数字越大，层级越上
+	//	AllottedGeometry.ToPaintGeometry(FVector2D(155.f, 155.f), FVector2D(10.f, 10.f)),		// 位置以及大小
+	//	&GameStyle->PawnPointBrush,		// 笔刷
+	//	ESlateDrawEffect::None,			// 效果
+	//	FLinearColor(1.f, 1.f, 0.f, 1.f)		// 颜色
+	//);
 
-	//渲染东西南北文字， MakeText 绘制文字
-	FSlateDrawElement::MakeText
-	(
-		OutDrawElements,
-		LayerId + 100,
-		AllottedGeometry.ToPaintGeometry(NorthLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
-		NSLOCTEXT("DemoGame", "N", "N"),
-		GameStyle->Font_20,
-		ESlateDrawEffect::None,
-		FLinearColor(1.f, 1.f, 1.f, 1.f)
-	);
-	FSlateDrawElement::MakeText
-	(
-		OutDrawElements,
-		LayerId + 100,
-		AllottedGeometry.ToPaintGeometry(SouthLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
-		NSLOCTEXT("DemoGame", "S", "S"),
-		GameStyle->Font_20,
-		ESlateDrawEffect::None,
-		FLinearColor(1.f, 1.f, 1.f, 1.f)
-	);
-	FSlateDrawElement::MakeText
-	(
-		OutDrawElements,
-		LayerId + 100,
-		AllottedGeometry.ToPaintGeometry(EastLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
-		NSLOCTEXT("DemoGame", "E", "E"),
-		GameStyle->Font_20,
-		ESlateDrawEffect::None,
-		FLinearColor(1.f, 1.f, 1.f, 1.f)
-	);
-	FSlateDrawElement::MakeText
-	(
-		OutDrawElements,
-		LayerId + 100,
-		AllottedGeometry.ToPaintGeometry(WestLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
-		NSLOCTEXT("DemoGame", "W", "W"),
-		GameStyle->Font_20,
-		ESlateDrawEffect::None,
-		FLinearColor(1.f, 1.f, 1.f, 1.f)
-	);
+	////渲染东西南北文字， MakeText 绘制文字
+	//FSlateDrawElement::MakeText
+	//(
+	//	OutDrawElements,
+	//	LayerId + 100,
+	//	AllottedGeometry.ToPaintGeometry(NorthLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
+	//	NSLOCTEXT("DemoGame", "N", "N"),
+	//	GameStyle->Font_20,
+	//	ESlateDrawEffect::None,
+	//	FLinearColor(1.f, 1.f, 1.f, 1.f)
+	//);
+	//FSlateDrawElement::MakeText
+	//(
+	//	OutDrawElements,
+	//	LayerId + 100,
+	//	AllottedGeometry.ToPaintGeometry(SouthLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
+	//	NSLOCTEXT("DemoGame", "S", "S"),
+	//	GameStyle->Font_20,
+	//	ESlateDrawEffect::None,
+	//	FLinearColor(1.f, 1.f, 1.f, 1.f)
+	//);
+	//FSlateDrawElement::MakeText
+	//(
+	//	OutDrawElements,
+	//	LayerId + 100,
+	//	AllottedGeometry.ToPaintGeometry(EastLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
+	//	NSLOCTEXT("DemoGame", "E", "E"),
+	//	GameStyle->Font_20,
+	//	ESlateDrawEffect::None,
+	//	FLinearColor(1.f, 1.f, 1.f, 1.f)
+	//);
+	//FSlateDrawElement::MakeText
+	//(
+	//	OutDrawElements,
+	//	LayerId + 100,
+	//	AllottedGeometry.ToPaintGeometry(WestLocation - FVector2D(8.f, 8.f), FVector2D(16.f, 16.f)),
+	//	NSLOCTEXT("DemoGame", "W", "W"),
+	//	GameStyle->Font_20,
+	//	ESlateDrawEffect::None,
+	//	FLinearColor(1.f, 1.f, 1.f, 1.f)
+	//);
 
-	//渲染敌人位置，红色为锁定玩家，绿色为没有锁定
-	for (int i = 0; i < EnemyPos.Num(); ++i) 
-	{
-		//渲染敌人图标
-		FSlateDrawElement::MakeBox
-		(
-			OutDrawElements,
-			LayerId + 100,
-			AllottedGeometry.ToPaintGeometry(EnemyPos[i] - FVector2D(5.f, 5.f), FVector2D(10.f, 10.f)),
-			&GameStyle->PawnPointBrush,
-			ESlateDrawEffect::None,
-			EnemyLock[i] ? FLinearColor(1.f, 0.f, 0.f, 1.f) : FLinearColor(0.f, 1.f, 0.f, 1.f)
-		);
-	}
+	////渲染敌人位置，红色为锁定玩家，绿色为没有锁定
+	//for (int i = 0; i < EnemyPos.Num(); ++i) 
+	//{
+	//	//渲染敌人图标
+	//	FSlateDrawElement::MakeBox
+	//	(
+	//		OutDrawElements,
+	//		LayerId + 100,
+	//		AllottedGeometry.ToPaintGeometry(EnemyPos[i] - FVector2D(5.f, 5.f), FVector2D(10.f, 10.f)),
+	//		&GameStyle->PawnPointBrush,
+	//		ESlateDrawEffect::None,
+	//		EnemyLock[i] ? FLinearColor(1.f, 0.f, 0.f, 1.f) : FLinearColor(0.f, 1.f, 0.f, 1.f)
+	//	);
+	//}
 	return LayerId;
 }

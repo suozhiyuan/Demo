@@ -25,7 +25,7 @@ public:
 	void RegisterMiniMap(class UTextureRenderTarget2D* MiniMapRender);
 	
 	/**
-	 * @brief 委托接受GameMode传过来的玩家旋转,绑定的委托是GameMode的UpdateMapDirection
+	 * @brief 委托接受GameMode传过来的玩家旋转,绑定的委托是 GameMode 的 UpdateMapDirection
 	 * @param PlayerRotator			玩家的旋转
 	 * @param MiniMapSize			小地图的大小
 	 * @param EnemyPosList			敌人的位置 2D

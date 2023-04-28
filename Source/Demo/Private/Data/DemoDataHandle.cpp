@@ -140,8 +140,6 @@ void DemoDataHandle::InitRecordData()
 
 	//≥ı ºªØ”Ô—‘
 	ChangeLocalizationCulture(GetEnumValueFromString<ECultureTeam>(FString("ECultureTeam"), Culture));
-
-
 }
 
 void DemoDataHandle::InitializedMenuAudio()

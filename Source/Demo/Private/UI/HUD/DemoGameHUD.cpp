@@ -64,6 +64,3 @@ void ADemoGameHUD::BeginPlay()
 	// 保存游戏事件绑定
 	GameHUDWidget->GameMenuWidget->SaveGameDele.BindUObject(GM, &ADemoGameMode::SaveGame);
 }
-
-
-

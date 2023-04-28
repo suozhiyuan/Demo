@@ -201,6 +201,7 @@ void SDemoMenuWidget::MenuItemOnClicked(EMenuItem::Type ItemType)
 		}
 		break;
 	case EMenuItem::EnterRecord:
+
 		// 告诉选择存档更新存档名
 		ChooseRecordWidget->UpdateRecordName();
 		DemoHelper::PlayerSoundAndCall(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), MenuStyle->StartGameSound, this, &SDemoMenuWidget::EnterGame);

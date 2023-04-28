@@ -38,7 +38,6 @@ public:
 	void SaveGame();
 
 public:
-
 	class ADemoPlayerController* SPController;
 
 	class ADemoPlayerCharacter* SPCharacter;
@@ -48,7 +47,7 @@ public:
 	//初始化背包管理委托,绑定的方法是PackageWidget的InitPackageManager方法
 	FInitPackageManager InitPackageManager;
 
-	//定义委托,绑定的方法是MiniMapWidget的RegisterMiniMap
+	//定义委托,绑定的方法是 MiniMapWidget 的 RegisterMiniMap
 	FRegisterMiniMap RegisterMiniMap;
 
 	//定义委托,用于更新小地图的方向文字位置,绑定的方法的MiniMapWidget的UpdateMapDirection
