@@ -213,16 +213,17 @@ void ADemoGameMode::InitializeMiniMapCamera()
 			EnemyRotateList.Add((*EnemyIt)->GetActorRotation().Yaw - SPCharacter->GetActorRotation().Yaw);		// 相对于玩家的Yaw方向
 		}
 
-		//每帧更新小地图的方向文字位置
-		UpdateMapData.ExecuteIfBound(SPCharacter->GetActorRotation(), MiniMapCamera->GetMapSize(), &EnemyPosList, &EnemyLockList, &EnemyRotateList);
-		/**
-		 * @brief 委托接受GameMode传过来的玩家旋转,绑定的委托是GameMode的UpdateMapDirection
-		 * @param PlayerRotator			玩家的旋转
-		 * @param MiniMapSize			小地图的大小
-		 * @param EnemyPosList			敌人的位置 2D
-		 * @param EnemyLockList			敌人是否已经锁定了玩家
-		 * @param EnemyRotateList		敌人的旋转
-		 */
+		// 注掉小地图资源加载后，这里会调用到小地图资源
+		////每帧更新小地图的方向文字位置
+		//UpdateMapData.ExecuteIfBound(SPCharacter->GetActorRotation(), MiniMapCamera->GetMapSize(), &EnemyPosList, &EnemyLockList, &EnemyRotateList);
+		///**
+		// * @brief 委托接受GameMode传过来的玩家旋转,绑定的委托是GameMode的UpdateMapDirection
+		// * @param PlayerRotator			玩家的旋转
+		// * @param MiniMapSize			小地图的大小
+		// * @param EnemyPosList			敌人的位置 2D
+		// * @param EnemyLockList			敌人是否已经锁定了玩家
+		// * @param EnemyRotateList		敌人的旋转
+		// */
 	}
 }
 

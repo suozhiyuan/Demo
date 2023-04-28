@@ -161,37 +161,37 @@ void SDemoMiniMapWidget::UpdateMapData(const FRotator PlayerRotator, const float
 		}
 	}
 
-	//int ViewCount = 0;
+	int ViewCount = 0;
 
-	////修改敌人视野缩放比例
-	//EnemyViewMatDynamic->SetScalarParameterValue(FName("Scale"), 1000.f / MapSize);
-	//for (int i = 0; i < EnemyViewPos.Num(); i++)
-	//{
-	//	ViewCount++;
-	//	FString PosName = FString("Position_") + FString::FromInt(i + 1);		// 位置
-	//	FString AngleName = FString("Angle_") + FString::FromInt(i + 1);			// 旋转
+	//修改敌人视野缩放比例
+	EnemyViewMatDynamic->SetScalarParameterValue(FName("Scale"), 1000.f / MapSize);
+	for (int i = 0; i < EnemyViewPos.Num(); i++)
+	{
+		ViewCount++;
+		FString PosName = FString("Position_") + FString::FromInt(i + 1);		// 位置
+		FString AngleName = FString("Angle_") + FString::FromInt(i + 1);			// 旋转
 
-	//	//如果没锁定玩家就渲染
-	//	if (!EnemyViewLock[i]) 
-	//	{
-	//		EnemyViewMatDynamic->SetVectorParameterValue(FName(*PosName), FLinearColor((EnemyViewPos[i].X - 20.f) / 280.f, (EnemyViewPos[i].Y - 20.f) / 280.f, 0.f, 0.f));
-	//		EnemyViewMatDynamic->SetScalarParameterValue(FName(*AngleName), EnemyViewRotate[i]);
-	//	}
-	//	else
-	//	{
-	//		EnemyViewMatDynamic->SetVectorParameterValue(FName(*PosName), FLinearColor(0.f, 0.f, 0.f, 0.f));
-	//		EnemyViewMatDynamic->SetScalarParameterValue(FName(*AngleName), 0.f);
-	//	}
-	//}
+		//如果没锁定玩家就渲染
+		if (!EnemyViewLock[i]) 
+		{
+			EnemyViewMatDynamic->SetVectorParameterValue(FName(*PosName), FLinearColor((EnemyViewPos[i].X - 20.f) / 280.f, (EnemyViewPos[i].Y - 20.f) / 280.f, 0.f, 0.f));
+			EnemyViewMatDynamic->SetScalarParameterValue(FName(*AngleName), EnemyViewRotate[i]);
+		}
+		else
+		{
+			EnemyViewMatDynamic->SetVectorParameterValue(FName(*PosName), FLinearColor(0.f, 0.f, 0.f, 0.f));
+			EnemyViewMatDynamic->SetScalarParameterValue(FName(*AngleName), 0.f);
+		}
+	}
 
-	////把剩下的视野都不渲染
-	//for (ViewCount += 1; ViewCount < 11; ++ViewCount) 
-	//{
-	//	FString PosName = FString("Position_") + FString::FromInt(ViewCount);
-	//	FString AngleName = FString("Angle_") + FString::FromInt(ViewCount);
-	//	EnemyViewMatDynamic->SetVectorParameterValue(FName(*PosName), FLinearColor(0.f, 0.f, 0.f, 0.f));
-	//	EnemyViewMatDynamic->SetScalarParameterValue(FName(*AngleName), 0.f);
-	//}
+	//把剩下的视野都不渲染
+	for (ViewCount += 1; ViewCount < 11; ++ViewCount) 
+	{
+		FString PosName = FString("Position_") + FString::FromInt(ViewCount);
+		FString AngleName = FString("Angle_") + FString::FromInt(ViewCount);
+		EnemyViewMatDynamic->SetVectorParameterValue(FName(*PosName), FLinearColor(0.f, 0.f, 0.f, 0.f));
+		EnemyViewMatDynamic->SetScalarParameterValue(FName(*AngleName), 0.f);
+	}
 }
 
 int32 SDemoMiniMapWidget::OnPaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
