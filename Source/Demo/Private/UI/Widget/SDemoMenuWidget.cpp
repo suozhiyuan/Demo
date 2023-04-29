@@ -417,11 +417,12 @@ void SDemoMenuWidget::PlayClose(EMenuType::Type NewMenu)
 void SDemoMenuWidget::QuitGame()
 {
 	// 使用控制台结束游戏
-	Cast<ADemoMenuController>(UGameplayStatics::GetPlayerController(GWorld, 0))->ConsoleCommand("quit");		// 在控制台上执行命令
+	Cast<ADemoMenuController>(UGameplayStatics::GetPlayerController(GWorld, 0))->ConsoleCommand("quit");
 }
 
 void SDemoMenuWidget::EnterGame()
 {
 	DemoHelper::Debug("EnterGame");
-	UGameplayStatics::OpenLevel(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), FName("GameMap_New"));		// 跳转场景
+	// 跳转场景
+	UGameplayStatics::OpenLevel(UGameplayStatics::GetPlayerController(GWorld, 0)->GetWorld(), FName("GameMap_New"));
 }

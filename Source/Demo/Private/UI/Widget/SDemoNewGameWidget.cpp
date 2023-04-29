@@ -4,6 +4,8 @@
 #include "UI/Widget/SDemoNewGameWidget.h"
 #include "SlateOptMacros.h"
 #include "Data/DemoDataHandle.h"
+#include "GamePlay/DemoGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 #include "UI/Style/DemoMenuWidgetStyle.h"
 #include "UI/Style/DemoStyle.h"
 #include "Widgets/Input/SEditableTextBox.h"
@@ -87,6 +89,8 @@ bool SDemoNewGameWidget::AllowEnterGame()
 	}
 	//保存新的存档名
 	DemoDataHandle::Get()->RecordName = InputText.ToString();
+
+	Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GWorld))->GameName = InputText.ToString();
 
 	return true;
 }
