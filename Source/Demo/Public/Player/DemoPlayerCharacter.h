@@ -107,11 +107,11 @@ private:
 private:
 	//第一人称的骨骼模型
 	UPROPERTY(VisibleDefaultsOnly, Category = "Demo")
-		USkeletalMeshComponent* MeshFirst;
+	USkeletalMeshComponent* MeshFirst;
 
 	//手上物品
 	UPROPERTY(VisibleDefaultsOnly, Category = "Demo")
-		class UChildActorComponent* HandObject;
+	class UChildActorComponent* HandObject;
 
 	// 旋转速度
 	float BaseLookUpRate;

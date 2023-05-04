@@ -28,7 +28,7 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> StaticMeshFirst(TEXT("SkeletalMesh'/Game/Res/PolygonAdventure/Mannequin/FirstPlayer/SkMesh/FirstPlayer.FirstPlayer'"));
 	MeshFirst = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshFirst"));
 	MeshFirst->SetSkeletalMesh(StaticMeshFirst.Object);
-	MeshFirst->SetupAttachment((USceneComponent*)GetCapsuleComponent());			// 关联到哪个组件上，这里可以是 RootComponent
+	MeshFirst->SetupAttachment((USceneComponent*)GetCapsuleComponent());							// 关联到哪个组件上，这里可以是 RootComponent
 	MeshFirst->bOnlyOwnerSee = true;																// 如果该值为True，则该组件仅在视图参与者是该组件的直接或间接所有者时才可见。
 	MeshFirst->bCastDynamicShadow = false;															// 是否投射影子
 	MeshFirst->bReceivesDecals = false;																// 是否接受贴花
