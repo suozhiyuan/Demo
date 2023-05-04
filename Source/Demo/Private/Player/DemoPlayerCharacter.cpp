@@ -47,7 +47,6 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	static ConstructorHelpers::FClassFinder<UAnimInstance> StaticAnimFirst(TEXT("AnimBlueprint'/Game/Blueprint/Player/FirstPlayer_Animation.FirstPlayer_Animation_C'"));
 	MeshFirst->AnimClass = StaticAnimFirst.Class;
 
-
 	//给默认Mesh添加骨骼模型  创建 UObject 对象用 FObjectFinder
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> StaticMeshThird(TEXT("SkeletalMesh'/Game/Res/PolygonAdventure/Mannequin/Player/SkMesh/Player.Player'"));
 	GetMesh()->SetSkeletalMesh(StaticMeshThird.Object);												// 将 骨骼模型 赋到 Mesh
@@ -137,7 +136,6 @@ void ADemoPlayerCharacter::BeginPlay()
 void ADemoPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
