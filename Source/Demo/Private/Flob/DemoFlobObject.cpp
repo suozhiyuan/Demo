@@ -65,7 +65,7 @@ void ADemoFlobObject::BeginPlay()
 	//每秒运行一次,循环运行,延迟3秒运行
 	GetWorld()->GetTimerManager().SetTimer(DetectTimer, DetectPlayerDele, 1.f, true, 3.f);
 
-	//注册销毁事件
+	// 绑定时间委托，销毁事件
 	FTimerDelegate DestroyDele;
 	DestroyDele.BindUObject(this, &ADemoFlobObject::DestroyEvent);
 	GetWorld()->GetTimerManager().SetTimer(DestroyTimer, DestroyDele, 30.f, false);
