@@ -70,7 +70,7 @@ public:
 
 	//玩家控制器指针
 	class ADemoPlayerController* SPController;
-
+	
 	//当前的视角模式
 	EGameViewMode::Type GameView;
 
