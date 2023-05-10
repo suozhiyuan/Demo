@@ -5,7 +5,6 @@
 
 #include "Player/DemoPlayerCharacter.h"
 
-
 UDemoPlayerAnim::UDemoPlayerAnim()
 {
 
@@ -13,7 +12,6 @@ UDemoPlayerAnim::UDemoPlayerAnim()
 	SpineRotator = FRotator(0.f, 0.f, 0.f);
 
 }
-
 
 void UDemoPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 {
