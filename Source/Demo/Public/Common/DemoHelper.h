@@ -51,6 +51,4 @@ namespace DemoHelper
 		World->GetTimerManager().SetTimer(Result, Callback, SoundDuration, false);
 		return Result;
 	}
-
-
 }
