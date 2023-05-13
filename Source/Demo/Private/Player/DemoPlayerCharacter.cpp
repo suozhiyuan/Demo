@@ -21,7 +21,7 @@ ADemoPlayerCharacter::ADemoPlayerCharacter()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//开始设置人物碰撞体的属性为PlayerProfile,下面的骨骼模型的碰撞就都可以设置为无碰撞
+	//开始设置人物碰撞体的名称为PlayerProfile,下面的骨骼模型的碰撞就都可以设置为无碰撞
 	GetCapsuleComponent()->SetCollisionProfileName(FName("PlayerProfile"));
 
 	//添加第一人称骨骼模型
