@@ -7,7 +7,8 @@
 
 ADemoMenuHUD::ADemoMenuHUD()
 {
-	if (GEngine && GEngine->GameViewport) {
+	if (GEngine && GEngine->GameViewport) 
+	{
 
 		SAssignNew(MenuHUDWidget, SDemoMenuHUDWidget);
 

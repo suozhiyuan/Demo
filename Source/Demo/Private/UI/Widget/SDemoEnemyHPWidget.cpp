@@ -12,7 +12,6 @@ void SDemoEnemyHPWidget::Construct(const FArguments& InArgs)
 	ChildSlot
 	[
 		// Populate the widget
-
 		SAssignNew(HPBar, SProgressBar)
 	];
 }
