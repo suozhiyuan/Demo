@@ -27,7 +27,6 @@ private:
 
 };
 
-
 template<class T>
 TSharedPtr<T> DemoSingleton<T>::TInstance = NULL;
 

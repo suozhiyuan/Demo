@@ -14,7 +14,6 @@ public:
 	{
 		return;
 	}
-
 };
 
 #define LOCTEXT_NAMESPACE "DemoMenu"		//LocText的命名空间开始，或者下方写成 DemoInternation::Register(NSLOCTEXT ("DemoMenu","Menu", "Menu"));
@@ -45,8 +44,6 @@ DemoInternation::Register(LOCTEXT("Sound", "Sound"));				//音效
 DemoInternation::Register(LOCTEXT("GoBack", "GoBack"));				//返回
 
 #undef LOCTEXT_NAMESPACE
-
-
 
 #define LOCTEXT_NAMESPACE "DemoGame"
 DemoInternation::Register(LOCTEXT("E", "E"));//东
