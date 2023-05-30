@@ -54,5 +54,4 @@ protected:
 
 	//打到物品时的音效
 	class USoundWave* OverlaySound;
-
 };

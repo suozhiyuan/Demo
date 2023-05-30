@@ -19,4 +19,3 @@ void ADemoMenuGameMode::BeginPlay()
 
 	Cast<UDemoGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()))->GameName = FString("Demo");
 }
-
