@@ -135,7 +135,6 @@ void UDemoPlayerAnim::UpdateMontage()
 		}
 		break;
 	}
-
 }
 
 void UDemoPlayerAnim::AllowViewChange(bool IsAllow)
