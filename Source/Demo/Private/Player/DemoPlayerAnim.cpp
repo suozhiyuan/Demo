@@ -23,7 +23,6 @@ void UDemoPlayerAnim::NativeUpdateAnimation(float DeltaSeconds)
 
 	//更新动作
 	UpdateMontage();
-
 }
 
 void UDemoPlayerAnim::ChangeDetection(bool IsOpen)
