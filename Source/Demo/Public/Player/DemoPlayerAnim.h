@@ -43,7 +43,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
 		FRotator SpineRotator;											// 旋转
 
-
 protected:
 	//获取角色指针
 	void InitSPCharacter();
