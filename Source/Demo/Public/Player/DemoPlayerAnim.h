@@ -36,6 +36,7 @@ public:
 		void EatUpEvent();
 
 public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
 		float Speed;													// 速度
 
@@ -43,7 +44,7 @@ public:
 		FRotator SpineRotator;											// 旋转
 
 
-protected
+protected:
 	//获取角色指针
 	void InitSPCharacter();
 
