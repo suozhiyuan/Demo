@@ -36,7 +36,6 @@ public:
 		void EatUpEvent();
 
 public:
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = PlayAnim)
 		float Speed;													// ËÙ¶È
 
