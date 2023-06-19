@@ -55,10 +55,7 @@ protected:
 	//修改是否允许切换视角
 	void AllowViewChange(bool IsAllow);
 
-
 protected:
-
-
 	//角色指针
 	class ADemoPlayerCharacter* SPCharacter;
 
