@@ -270,6 +270,7 @@ void ADemoPlayerController::PlayerDead()
 
 	//添加时间委托
 	FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ADemoPlayerController::DeadTimeOut);
+
 	//通过时间委托延时跳转UI
 	GetWorld()->GetTimerManager().SetTimer(DeadHandle, TimerDelegate, DeadDuration, false);
 }
