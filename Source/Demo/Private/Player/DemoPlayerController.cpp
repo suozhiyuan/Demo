@@ -256,7 +256,6 @@ void ADemoPlayerController::TickMiniMap()
 	}
 }
 
-
 void ADemoPlayerController::PlayerDead()
 {
 	// 先转换到第三视角
